@@ -1,0 +1,2 @@
+insert into ums_department (ID, NAME, DESCRIPTION, CREATE_TIME, UPDATE_TIME, CREATED_BY, UPDATED_BY)
+values ('1', '行政部', '行政部', to_date('02-02-2021 11:33:00', 'dd-mm-yyyy hh24:mi:ss'), to_date('16-03-2021 09:45:46', 'dd-mm-yyyy hh24:mi:ss'), '系统管理员', '系统管理员');

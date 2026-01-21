@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: wechat-cms
+  profiles:
+    active: @spring.profiles.active@
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.qdbank.mall.model.*
+server:
+  port: 8091
+  servlet:
+    context-path: /wechatcms/
+redis:
+  database: wechat-cms
+  key:
+    admin: 'wechatcms:admin'
+    resourceList: 'wechatums:resourceList'
+    orderId: 'wechatoms:orderId'
+    merchant: 'wechatums:merchant'
+  expire:
+    common: 86400 # 24小时
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-admin-secret #JWT加解密使用的密钥
+  expiration: 3600 #JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  #JWT负载中拿到开头
+
+#监控配置
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    enable:
+      all: true
+      jvm: true
+      logback: false
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+        loggerLevel: basic

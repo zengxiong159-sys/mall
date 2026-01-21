@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.qdbank.mall.mapper.bind.WechatBindInfoMapper">
+
+    <resultMap id="ResultMap" type="com.qdbank.mall.model.bind.WechatBindInfoDO">
+        <result column="open_id" jdbcType="VARCHAR" property="openId" />
+        <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+        <result column="union_id" jdbcType="VARCHAR" property="unionId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="gender" jdbcType="VARCHAR" property="gender" />
+        <result column="mobile_no" jdbcType="VARCHAR" property="mobileNo" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="user_type" jdbcType="VARCHAR" property="userType"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.qdbank.mall.model.bind.WechatBindInfoDO">
+        insert into wechat_bind_info (open_id, id_no, union_id,
+                                      user_name, gender, mobile_no,
+                                      status,user_type)
+        values (#{openId}, #{idNo}, #{unionId},
+                #{userName}, #{gender}, #{mobileNo},
+                #{status},#{userType})
+    </insert>
+
+    <update id="disableByOpenId">
+        update wechat_bind_info set status='0',update_date=sysdate where open_id=#{openId}  and status='1'
+    </update>
+
+
+    <update id="disable">
+        update
+            wechat_bind_info
+        set
+            status='0',
+            update_date=sysdate
+        where
+            (open_id=#{openId,jdbcType=VARCHAR} or id_no=#{idNo,jdbcType=VARCHAR})
+            and status='1'
+    </update>
+
+    <update id="enableByIdNoAndOpenId" parameterType="com.qdbank.mall.model.bind.WechatBindInfoDO">
+        update
+            wechat_bind_info
+        set
+        <trim  prefixOverrides="," >
+            <if test="unionId!=null">
+                , union_id=#{unionId}
+            </if>
+            <if test="userName!=null">
+                , user_name=#{userName}
+            </if>
+            <if test="gender!=null">
+                , gender=#{gender}
+            </if>
+            <if test="mobileNo!=null">
+                , mobile_no=#{mobileNo}
+            </if>
+            <if test="status!=null">
+                , status=#{status}
+            </if>
+            <if test="updateDate!=null">
+                , update_date=#{updateDate}
+            </if>
+        </trim>
+        where
+            open_id=#{openId}
+            and id_no=#{idNo}
+            and status='0'
+    </update>
+
+    <select id="queryByOpenId" resultMap="ResultMap">
+        select open_id,id_no,union_id,user_name,gender,mobile_no,status,create_date,update_date,user_type from wechat_bind_info where open_id=#{openId} and status='1'
+    </select>
+
+</mapper>

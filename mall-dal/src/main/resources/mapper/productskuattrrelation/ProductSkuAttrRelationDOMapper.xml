@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.productskuattrrelation.ProductSkuAttrRelationMapper">
+    <!-- 新增商品规格和规格属性关系数据 -->
+    <insert id="insert" parameterType="com.qdbank.mall.model.productskuattrrelation.ProductSkuAttrRelationDO">
+        insert into PMS_PRODUCT_SKU_ATTR_RELATION
+        (
+          ID,
+          PRODUCT_ID,
+          SKU_STOCK_ID,
+          ATTRIBUTE_ID,
+          CREATE_TIME,
+          UPDATE_TIME,
+          CREATED_BY,
+          UPDATED_BY
+        )
+        values
+        (
+          #{id,jdbcType=DECIMAL},
+          #{productId,jdbcType=DECIMAL},
+          #{skuStockId,jdbcType=DECIMAL},
+          #{attributeId,jdbcType=DECIMAL},
+          #{createTime,jdbcType=TIMESTAMP},
+          #{updateTime,jdbcType=TIMESTAMP},
+          #{createdBy,jdbcType=VARCHAR},
+          #{updatedBy,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 删除商品-规格-规格属性关联关系数据 -->
+    <delete id="delete" parameterType="com.qdbank.mall.model.productskuattrrelation.ProductSkuAttrRelationDO">
+        delete from PMS_PRODUCT_SKU_ATTR_RELATION
+        <where>
+            <if test="productId != null">
+                and PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+            </if>
+            <if test="skuStockId != null">
+                and SKU_STOCK_ID = #{skuStockId,jdbcType=DECIMAL}
+            </if>
+            <if test="attributeId != null">
+                and ATTRIBUTE_ID = #{attributeId,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </delete>
+
+    <!-- 根据指定条件查询商品规格和规格属性关系 -->
+    <select id="select" parameterType="com.qdbank.mall.model.productskuattrrelation.ProductSkuAttrRelationDO" resultType="com.qdbank.mall.model.productskuattrrelation.ProductSkuAttrRelationDO">
+        select
+          ID as id,
+          PRODUCT_ID as productId,
+          SKU_STOCK_ID as skuStockId,
+          ATTRIBUTE_ID as attributeId,
+          CREATE_TIME as createTime,
+          UPDATE_TIME as updateTime,
+          CREATED_BY as createdBy,
+          UPDATED_BY as updatedBy
+        from
+        PMS_PRODUCT_SKU_ATTR_RELATION
+        <where>
+            <if test="productId != null">
+                and PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+            </if>
+            <if test="skuStockId != null">
+                and SKU_STOCK_ID = #{skuStockId,jdbcType=DECIMAL}
+            </if>
+            <if test="attributeId != null">
+                and ATTRIBUTE_ID = #{attributeId,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据规格属性id查询指定商品状态(已上架、已入库、待入库等)的商品-规格关联信息 -->
+    <select id="selectByAttrIdAndProductStatus" resultType="com.qdbank.mall.model.productskuattrrelation.ProductSkuAttrRelationDO">
+        select
+	      pp.PRODUCT_ID as productId,
+          psar.SKU_STOCK_ID as skuStockId
+        from
+	    PMS_PRODUCT_SKU_ATTR_RELATION psar
+	    left join PMS_PRODUCT pp on psar.PRODUCT_ID = pp.PRODUCT_ID
+        <where>
+            <if test="productStatusList != null and productStatusList.size()>0">
+                pp.PUBLISH_STATUS in
+                <foreach item="item" index="index" collection="productStatusList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="attributeId != null">
+                and psar.ATTRIBUTE_ID = #{attributeId,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+</mapper>

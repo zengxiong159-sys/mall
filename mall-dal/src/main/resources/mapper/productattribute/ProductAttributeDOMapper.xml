@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.productattribute.ProductAttributeDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.productattribute.ProductAttributeDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PRODUCT_ATTRIBUTE_CATEGORY_ID" jdbcType="DECIMAL" property="productAttributeCategoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="SELECT_TYPE" jdbcType="DECIMAL" property="selectType" />
+    <result column="INPUT_TYPE" jdbcType="DECIMAL" property="inputType" />
+    <result column="INPUT_LIST" jdbcType="VARCHAR" property="inputList" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+    <result column="FILTER_TYPE" jdbcType="DECIMAL" property="filterType" />
+    <result column="SEARCH_TYPE" jdbcType="DECIMAL" property="searchType" />
+    <result column="RELATED_STATUS" jdbcType="DECIMAL" property="relatedStatus" />
+    <result column="HAND_ADD_STATUS" jdbcType="DECIMAL" property="handAddStatus" />
+    <result column="type" jdbcType="DECIMAL" property="type" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PRODUCT_ATTRIBUTE_CATEGORY_ID, name, SELECT_TYPE, INPUT_TYPE, INPUT_LIST, sort, 
+    FILTER_TYPE, SEARCH_TYPE, RELATED_STATUS, HAND_ADD_STATUS, type
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_PRODUCT_ATTRIBUTE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_PRODUCT_ATTRIBUTE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from PMS_PRODUCT_ATTRIBUTE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDOExample">
+    delete from PMS_PRODUCT_ATTRIBUTE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDO">
+    insert into PMS_PRODUCT_ATTRIBUTE (ID, PRODUCT_ATTRIBUTE_CATEGORY_ID, name, 
+      SELECT_TYPE, INPUT_TYPE, INPUT_LIST, 
+      sort, FILTER_TYPE, SEARCH_TYPE, 
+      RELATED_STATUS, HAND_ADD_STATUS, type
+      )
+    values (#{id,jdbcType=DECIMAL}, #{productAttributeCategoryId,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, 
+      #{selectType,jdbcType=DECIMAL}, #{inputType,jdbcType=DECIMAL}, #{inputList,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=DECIMAL}, #{filterType,jdbcType=DECIMAL}, #{searchType,jdbcType=DECIMAL}, 
+      #{relatedStatus,jdbcType=DECIMAL}, #{handAddStatus,jdbcType=DECIMAL}, #{type,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDO">
+    insert into PMS_PRODUCT_ATTRIBUTE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="productAttributeCategoryId != null">
+        PRODUCT_ATTRIBUTE_CATEGORY_ID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="selectType != null">
+        SELECT_TYPE,
+      </if>
+      <if test="inputType != null">
+        INPUT_TYPE,
+      </if>
+      <if test="inputList != null">
+        INPUT_LIST,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="filterType != null">
+        FILTER_TYPE,
+      </if>
+      <if test="searchType != null">
+        SEARCH_TYPE,
+      </if>
+      <if test="relatedStatus != null">
+        RELATED_STATUS,
+      </if>
+      <if test="handAddStatus != null">
+        HAND_ADD_STATUS,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="productAttributeCategoryId != null">
+        #{productAttributeCategoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null">
+        #{selectType,jdbcType=DECIMAL},
+      </if>
+      <if test="inputType != null">
+        #{inputType,jdbcType=DECIMAL},
+      </if>
+      <if test="inputList != null">
+        #{inputList,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="filterType != null">
+        #{filterType,jdbcType=DECIMAL},
+      </if>
+      <if test="searchType != null">
+        #{searchType,jdbcType=DECIMAL},
+      </if>
+      <if test="relatedStatus != null">
+        #{relatedStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="handAddStatus != null">
+        #{handAddStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_PRODUCT_ATTRIBUTE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_PRODUCT_ATTRIBUTE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productAttributeCategoryId != null">
+        PRODUCT_ATTRIBUTE_CATEGORY_ID = #{record.productAttributeCategoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selectType != null">
+        SELECT_TYPE = #{record.selectType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inputType != null">
+        INPUT_TYPE = #{record.inputType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.inputList != null">
+        INPUT_LIST = #{record.inputList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.filterType != null">
+        FILTER_TYPE = #{record.filterType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.searchType != null">
+        SEARCH_TYPE = #{record.searchType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.relatedStatus != null">
+        RELATED_STATUS = #{record.relatedStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handAddStatus != null">
+        HAND_ADD_STATUS = #{record.handAddStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_PRODUCT_ATTRIBUTE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      PRODUCT_ATTRIBUTE_CATEGORY_ID = #{record.productAttributeCategoryId,jdbcType=DECIMAL},
+      name = #{record.name,jdbcType=VARCHAR},
+      SELECT_TYPE = #{record.selectType,jdbcType=DECIMAL},
+      INPUT_TYPE = #{record.inputType,jdbcType=DECIMAL},
+      INPUT_LIST = #{record.inputList,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=DECIMAL},
+      FILTER_TYPE = #{record.filterType,jdbcType=DECIMAL},
+      SEARCH_TYPE = #{record.searchType,jdbcType=DECIMAL},
+      RELATED_STATUS = #{record.relatedStatus,jdbcType=DECIMAL},
+      HAND_ADD_STATUS = #{record.handAddStatus,jdbcType=DECIMAL},
+      type = #{record.type,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDO">
+    update PMS_PRODUCT_ATTRIBUTE
+    <set>
+      <if test="productAttributeCategoryId != null">
+        PRODUCT_ATTRIBUTE_CATEGORY_ID = #{productAttributeCategoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="selectType != null">
+        SELECT_TYPE = #{selectType,jdbcType=DECIMAL},
+      </if>
+      <if test="inputType != null">
+        INPUT_TYPE = #{inputType,jdbcType=DECIMAL},
+      </if>
+      <if test="inputList != null">
+        INPUT_LIST = #{inputList,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="filterType != null">
+        FILTER_TYPE = #{filterType,jdbcType=DECIMAL},
+      </if>
+      <if test="searchType != null">
+        SEARCH_TYPE = #{searchType,jdbcType=DECIMAL},
+      </if>
+      <if test="relatedStatus != null">
+        RELATED_STATUS = #{relatedStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="handAddStatus != null">
+        HAND_ADD_STATUS = #{handAddStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.productattribute.ProductAttributeDO">
+    update PMS_PRODUCT_ATTRIBUTE
+    set PRODUCT_ATTRIBUTE_CATEGORY_ID = #{productAttributeCategoryId,jdbcType=DECIMAL},
+      name = #{name,jdbcType=VARCHAR},
+      SELECT_TYPE = #{selectType,jdbcType=DECIMAL},
+      INPUT_TYPE = #{inputType,jdbcType=DECIMAL},
+      INPUT_LIST = #{inputList,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=DECIMAL},
+      FILTER_TYPE = #{filterType,jdbcType=DECIMAL},
+      SEARCH_TYPE = #{searchType,jdbcType=DECIMAL},
+      RELATED_STATUS = #{relatedStatus,jdbcType=DECIMAL},
+      HAND_ADD_STATUS = #{handAddStatus,jdbcType=DECIMAL},
+      type = #{type,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,2 @@
+insert into ums_role (ID, ROLE_NAME, ROLE_DESCRIPTION, CREATE_TIME, STATUS, ROLE_SORT, UPDATE_TIME, CREATED_BY, UPDATED_BY)
+values ('101464407145578496', '管理员', '管理员', to_date('30-04-2021 15:57:16', 'dd-mm-yyyy hh24:mi:ss'), '1', '0', to_date('30-04-2021 15:57:16', 'dd-mm-yyyy hh24:mi:ss'), '管理员', '管理员');

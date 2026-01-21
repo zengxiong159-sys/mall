@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.productcategory.ProductcategoryDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.productcategory.ProductcategoryDO">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="CATEGORY_NAME" jdbcType="VARCHAR" property="categoryName" />
+    <result column="CATEGORY_LEVEL" jdbcType="DECIMAL" property="categoryLevel" />
+    <result column="CATEGORY_SORT" jdbcType="DECIMAL" property="categorySort" />
+    <result column="CATEGORY_TYPE" jdbcType="DECIMAL" property="categoryType" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PARENT_ID, CATEGORY_NAME, CATEGORY_LEVEL, CATEGORY_SORT, CATEGORY_TYPE, CREATE_TIME, 
+    UPDATE_TIME, CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.productcategory.ProductcategoryDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_PRODUCT_CATEGORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.productcategory.ProductcategoryDOExample">
+    delete from PMS_PRODUCT_CATEGORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PMS_PRODUCT_CATEGORY where ID = #{id}
+  </delete>
+
+  <delete id="deleteByParentId" parameterType="java.lang.Long">
+    delete from PMS_PRODUCT_CATEGORY where PARENT_ID = #{parentId}
+  </delete>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PMS_PRODUCT_CATEGORY
+    where ID = #{id}
+  </select>
+  <insert id="insert" parameterType="com.qdbank.mall.model.productcategory.ProductcategoryDO">
+    insert into PMS_PRODUCT_CATEGORY (ID, PARENT_ID, CATEGORY_NAME, 
+      CATEGORY_LEVEL, CATEGORY_SORT, CATEGORY_TYPE, 
+      CREATE_TIME, UPDATE_TIME, CREATED_BY, 
+      UPDATED_BY)
+    values (#{id,jdbcType=DECIMAL}, #{parentId,jdbcType=DECIMAL}, #{categoryName,jdbcType=VARCHAR}, 
+      #{categoryLevel,jdbcType=DECIMAL}, #{categorySort,jdbcType=DECIMAL}, #{categoryType,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.productcategory.ProductcategoryDO">
+    insert into PMS_PRODUCT_CATEGORY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="categoryName != null">
+        CATEGORY_NAME,
+      </if>
+      <if test="categoryLevel != null">
+        CATEGORY_LEVEL,
+      </if>
+      <if test="categorySort != null">
+        CATEGORY_SORT,
+      </if>
+      <if test="categoryType != null">
+        CATEGORY_TYPE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryLevel != null">
+        #{categoryLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="categorySort != null">
+        #{categorySort,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryType != null">
+        #{categoryType,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.productcategory.ProductcategoryDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_PRODUCT_CATEGORY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_PRODUCT_CATEGORY
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryName != null">
+        CATEGORY_NAME = #{record.categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryLevel != null">
+        CATEGORY_LEVEL = #{record.categoryLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categorySort != null">
+        CATEGORY_SORT = #{record.categorySort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryType != null">
+        CATEGORY_TYPE = #{record.categoryType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_PRODUCT_CATEGORY
+    set ID = #{record.id,jdbcType=DECIMAL},
+      PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      CATEGORY_NAME = #{record.categoryName,jdbcType=VARCHAR},
+      CATEGORY_LEVEL = #{record.categoryLevel,jdbcType=DECIMAL},
+      CATEGORY_SORT = #{record.categorySort,jdbcType=DECIMAL},
+      CATEGORY_TYPE = #{record.categoryType,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

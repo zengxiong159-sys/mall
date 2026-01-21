@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.mobileSku.MobileSkuDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.mobileSku.MobileSkuDO">
+    <id column="MOBILE_SKU_ID" jdbcType="DECIMAL" property="mobileSkuId" />
+    <result column="PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="SUPPLY_PRODUCT_ID" jdbcType="VARCHAR" property="supplyProductId" />
+    <result column="SUPPLY_TYPE" jdbcType="VARCHAR" property="supplyType" />
+    <result column="SUPPLY_PRODUCT_SIZE" jdbcType="VARCHAR" property="supplyProductSize" />
+    <result column="SUPPLY_SUPPLIER_TYPE" jdbcType="VARCHAR" property="supplySupplierType" />
+    <result column="SUPPLY_PRICE" jdbcType="DECIMAL" property="supplyPrice" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MOBILE_SKU_ID, PRODUCT_PRICE, PRODUCT_NAME, SKU_PIC_URL, PRODUCT_ID, SUPPLY_PRODUCT_ID, 
+    SUPPLY_TYPE, SUPPLY_PRODUCT_SIZE, SUPPLY_SUPPLIER_TYPE, SUPPLY_PRICE, STATUS, CREATE_TIME, 
+    UPDATE_TIME, CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_MOBILE_SKU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_MOBILE_SKU
+    where MOBILE_SKU_ID = #{mobileSkuId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PMS_MOBILE_SKU
+    where MOBILE_SKU_ID = #{mobileSkuId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDOExample">
+    delete from PMS_MOBILE_SKU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDO">
+    insert into PMS_MOBILE_SKU (MOBILE_SKU_ID, PRODUCT_PRICE, PRODUCT_NAME, 
+      SKU_PIC_URL, PRODUCT_ID, SUPPLY_PRODUCT_ID, 
+      SUPPLY_TYPE, SUPPLY_PRODUCT_SIZE, SUPPLY_SUPPLIER_TYPE, 
+      SUPPLY_PRICE, STATUS, CREATE_TIME, 
+      UPDATE_TIME, CREATED_BY, UPDATED_BY
+      )
+    values (#{mobileSkuId,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{productName,jdbcType=VARCHAR}, 
+      #{skuPicUrl,jdbcType=VARCHAR}, #{productId,jdbcType=DECIMAL}, #{supplyProductId,jdbcType=VARCHAR}, 
+      #{supplyType,jdbcType=VARCHAR}, #{supplyProductSize,jdbcType=VARCHAR}, #{supplySupplierType,jdbcType=VARCHAR}, 
+      #{supplyPrice,jdbcType=DECIMAL}, #{status,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDO">
+    insert into PMS_MOBILE_SKU
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mobileSkuId != null">
+        MOBILE_SKU_ID,
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="skuPicUrl != null">
+        SKU_PIC_URL,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="supplyProductId != null">
+        SUPPLY_PRODUCT_ID,
+      </if>
+      <if test="supplyType != null">
+        SUPPLY_TYPE,
+      </if>
+      <if test="supplyProductSize != null">
+        SUPPLY_PRODUCT_SIZE,
+      </if>
+      <if test="supplySupplierType != null">
+        SUPPLY_SUPPLIER_TYPE,
+      </if>
+      <if test="supplyPrice != null">
+        SUPPLY_PRICE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mobileSkuId != null">
+        #{mobileSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuPicUrl != null">
+        #{skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="supplyProductId != null">
+        #{supplyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyType != null">
+        #{supplyType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyProductSize != null">
+        #{supplyProductSize,jdbcType=VARCHAR},
+      </if>
+      <if test="supplySupplierType != null">
+        #{supplySupplierType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyPrice != null">
+        #{supplyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_MOBILE_SKU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_MOBILE_SKU
+    <set>
+      <if test="record.mobileSkuId != null">
+        MOBILE_SKU_ID = #{record.mobileSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productPrice != null">
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skuPicUrl != null">
+        SKU_PIC_URL = #{record.skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.supplyProductId != null">
+        SUPPLY_PRODUCT_ID = #{record.supplyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplyType != null">
+        SUPPLY_TYPE = #{record.supplyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplyProductSize != null">
+        SUPPLY_PRODUCT_SIZE = #{record.supplyProductSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplySupplierType != null">
+        SUPPLY_SUPPLIER_TYPE = #{record.supplySupplierType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplyPrice != null">
+        SUPPLY_PRICE = #{record.supplyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_MOBILE_SKU
+    set MOBILE_SKU_ID = #{record.mobileSkuId,jdbcType=DECIMAL},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      SKU_PIC_URL = #{record.skuPicUrl,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      SUPPLY_PRODUCT_ID = #{record.supplyProductId,jdbcType=VARCHAR},
+      SUPPLY_TYPE = #{record.supplyType,jdbcType=VARCHAR},
+      SUPPLY_PRODUCT_SIZE = #{record.supplyProductSize,jdbcType=VARCHAR},
+      SUPPLY_SUPPLIER_TYPE = #{record.supplySupplierType,jdbcType=VARCHAR},
+      SUPPLY_PRICE = #{record.supplyPrice,jdbcType=DECIMAL},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDO">
+    update PMS_MOBILE_SKU
+    <set>
+      <if test="productPrice != null">
+        PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="skuPicUrl != null">
+        SKU_PIC_URL = #{skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="supplyProductId != null">
+        SUPPLY_PRODUCT_ID = #{supplyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyType != null">
+        SUPPLY_TYPE = #{supplyType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyProductSize != null">
+        SUPPLY_PRODUCT_SIZE = #{supplyProductSize,jdbcType=VARCHAR},
+      </if>
+      <if test="supplySupplierType != null">
+        SUPPLY_SUPPLIER_TYPE = #{supplySupplierType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyPrice != null">
+        SUPPLY_PRICE = #{supplyPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MOBILE_SKU_ID = #{mobileSkuId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.mobileSku.MobileSkuDO">
+    update PMS_MOBILE_SKU
+    set PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      SKU_PIC_URL = #{skuPicUrl,jdbcType=VARCHAR},
+      PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      SUPPLY_PRODUCT_ID = #{supplyProductId,jdbcType=VARCHAR},
+      SUPPLY_TYPE = #{supplyType,jdbcType=VARCHAR},
+      SUPPLY_PRODUCT_SIZE = #{supplyProductSize,jdbcType=VARCHAR},
+      SUPPLY_SUPPLIER_TYPE = #{supplySupplierType,jdbcType=VARCHAR},
+      SUPPLY_PRICE = #{supplyPrice,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where MOBILE_SKU_ID = #{mobileSkuId,jdbcType=DECIMAL}
+  </update>
+</mapper>

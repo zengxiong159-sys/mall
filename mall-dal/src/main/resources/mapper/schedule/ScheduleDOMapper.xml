@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.schedule.ScheduleDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.schedule.ScheduleDO">
+    <id column="JOB_ID" jdbcType="DECIMAL" property="jobId" />
+    <result column="BEAN_NAME" jdbcType="VARCHAR" property="beanName" />
+    <result column="PARAMS" jdbcType="VARCHAR" property="params" />
+    <result column="CRON_EXPRESSION" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    JOB_ID, BEAN_NAME, PARAMS, CRON_EXPRESSION, STATUS, REMARK, CREATE_TIME, UPDATE_TIME, 
+    CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.schedule.ScheduleDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SCHEDULE_JOB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SCHEDULE_JOB
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SCHEDULE_JOB
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.schedule.ScheduleDOExample">
+    delete from SCHEDULE_JOB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.schedule.ScheduleDO">
+    insert into SCHEDULE_JOB (JOB_ID, BEAN_NAME, PARAMS, 
+      CRON_EXPRESSION, STATUS, REMARK, 
+      CREATE_TIME, UPDATE_TIME, CREATED_BY, 
+      UPDATED_BY)
+    values (#{jobId,jdbcType=DECIMAL}, #{beanName,jdbcType=VARCHAR}, #{params,jdbcType=VARCHAR}, 
+      #{cronExpression,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR},
+      #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.schedule.ScheduleDO">
+    insert into SCHEDULE_JOB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        JOB_ID,
+      </if>
+      <if test="beanName != null">
+        BEAN_NAME,
+      </if>
+      <if test="params != null">
+        PARAMS,
+      </if>
+      <if test="cronExpression != null">
+        CRON_EXPRESSION,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jobId != null">
+        #{jobId,jdbcType=DECIMAL},
+      </if>
+      <if test="beanName != null">
+        #{beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null">
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.schedule.ScheduleDOExample" resultType="java.lang.Long">
+    select count(*) from SCHEDULE_JOB
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update SCHEDULE_JOB
+    <set>
+      <if test="record.jobId != null">
+        JOB_ID = #{record.jobId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.beanName != null">
+        BEAN_NAME = #{record.beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.params != null">
+        PARAMS = #{record.params,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cronExpression != null">
+        CRON_EXPRESSION = #{record.cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update SCHEDULE_JOB
+    set JOB_ID = #{record.jobId,jdbcType=DECIMAL},
+      BEAN_NAME = #{record.beanName,jdbcType=VARCHAR},
+      PARAMS = #{record.params,jdbcType=VARCHAR},
+      CRON_EXPRESSION = #{record.cronExpression,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.schedule.ScheduleDO">
+    update SCHEDULE_JOB
+    <set>
+      <if test="beanName != null">
+        BEAN_NAME = #{beanName,jdbcType=VARCHAR},
+      </if>
+        PARAMS = #{params,jdbcType=VARCHAR},
+      <if test="cronExpression != null">
+        CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.schedule.ScheduleDO">
+    update SCHEDULE_JOB
+    set BEAN_NAME = #{beanName,jdbcType=VARCHAR},
+      PARAMS = #{params,jdbcType=VARCHAR},
+      CRON_EXPRESSION = #{cronExpression,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </update>
+</mapper>

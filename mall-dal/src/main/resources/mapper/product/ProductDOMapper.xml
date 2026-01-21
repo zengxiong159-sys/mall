@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.product.ProductDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.product.ProductDO">
+    <id column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="MERCHANT_NO" jdbcType="DECIMAL" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="MAIL_PIC_URL" jdbcType="VARCHAR" property="mailPicUrl" />
+    <result column="CATEGORY_ID_1" jdbcType="DECIMAL" property="categoryId1" />
+    <result column="CATEGORY_ID_2" jdbcType="DECIMAL" property="categoryId2" />
+    <result column="CATEGORY_ID_3" jdbcType="DECIMAL" property="categoryId3" />
+    <result column="CATEGORY_ID_4" jdbcType="DECIMAL" property="categoryId4" />
+    <result column="PUBLISH_STATUS" jdbcType="DECIMAL" property="publishStatus" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_DESCRIPTION" jdbcType="VARCHAR" property="productDescription" />
+    <result column="FREIGHT_TEMPLATE_ID" jdbcType="DECIMAL" property="freightTemplateId" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="IDENTIFICATION" jdbcType="DECIMAL" property="identification"/>
+    <result column="product_attr" jdbcType="DECIMAL" property="productAttr"/>
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.qdbank.mall.model.product.ProductDO">
+    <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+  </resultMap>
+
+  <resultMap id="ProductInfoResultMap" type="com.qdbank.mall.model.product.ProductInfoDO" extends="com.qdbank.mall.mapper.product.ProductDOMapper.BaseResultMap">
+    <result column="templateName" jdbcType="VARCHAR" property="templateName"/>
+    <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+    <result column="productCashMin" jdbcType="DECIMAL" property="productCashMin"/>
+    <result column="productCashMax" jdbcType="DECIMAL" property="productCashMax"/>
+    <collection property="skustocks"  ofType="com.qdbank.mall.model.skustock.SkustockDO" select="selectProductSkus" column="{PRODUCT_ID=PRODUCT_ID,productCashMin=productCashMin,productCashMax=productCashMax}"/>
+    <collection property="picUrls"  ofType="com.qdbank.mall.model.productpicurl.ProductPicUrlDO"  select="selectProductPicUrls" column="PRODUCT_ID"/>
+  </resultMap>
+  <resultMap id="ProductDetailResultMap" type="com.qdbank.mall.model.product.ProductInfoDO" extends="com.qdbank.mall.mapper.product.ProductDOMapper.BaseResultMap">
+    <result column="templateName" jdbcType="VARCHAR" property="templateName"/>
+    <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+    <collection property="skustocks"  resultMap="com.qdbank.mall.mapper.skustock.SkustockDOMapper.BaseResultMap" columnPrefix="sku_"/>
+<!--    <collection property="picUrls"  resultMap="com.qdbank.mall.mapper.productpicurl.ProductPicUrlDOMapper.BaseResultMap" columnPrefix="pic_"/>-->
+  </resultMap>
+  <resultMap id="ProductSkuInfoResultMap" type="com.qdbank.mall.model.product.ProductSkuDO" extends="com.qdbank.mall.mapper.product.ProductDOMapper.BaseResultMap">
+    <collection property="skustocks"  resultMap="com.qdbank.mall.mapper.skustock.SkustockDOMapper.BaseResultMap" columnPrefix="sku_"/>
+  </resultMap>
+  <resultMap id="ProductSkuInfoResultWithCLobMap" type="com.qdbank.mall.model.product.ProductSkuDO" extends="com.qdbank.mall.mapper.product.ProductDOMapper.BaseResultMap">
+    <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+    <collection property="skustocks"  resultMap="com.qdbank.mall.mapper.skustock.SkustockDOMapper.BaseResultMap" columnPrefix="sku_"/>
+    <collection property="picUrls"  resultMap="com.qdbank.mall.mapper.productpicurl.ProductPicUrlDOMapper.BaseResultMap" columnPrefix="pic_"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PRODUCT_ID, MERCHANT_NO, MERCHANT_NAME, MAIL_PIC_URL, CATEGORY_ID_1, CATEGORY_ID_2, 
+    CATEGORY_ID_3, CATEGORY_ID_4, PUBLISH_STATUS, PRODUCT_NAME, PRODUCT_DESCRIPTION, 
+    FREIGHT_TEMPLATE_ID, CREATE_TIME, UPDATE_TIME, CREATED_BY, UPDATED_BY,IDENTIFICATION,product_attr
+  </sql>
+  <sql id="Blob_Column_List">
+    PRODUCT_DETAIL
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.qdbank.mall.model.product.ProductDOExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PMS_PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.product.ProductDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from PMS_PRODUCT
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByMerchantNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    PRODUCT_NAME
+    from PMS_PRODUCT
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectIdAndNameByMerchantNo" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    PRODUCT_ID,
+    PRODUCT_NAME
+    from PMS_PRODUCT
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PMS_PRODUCT
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.product.ProductDOExample">
+    delete from PMS_PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.product.ProductDO">
+    insert into PMS_PRODUCT (PRODUCT_ID, MERCHANT_NO, MERCHANT_NAME, 
+      MAIL_PIC_URL, CATEGORY_ID_1, CATEGORY_ID_2, 
+      CATEGORY_ID_3, CATEGORY_ID_4, PUBLISH_STATUS, 
+      PRODUCT_NAME, PRODUCT_DESCRIPTION, FREIGHT_TEMPLATE_ID, 
+      CREATE_TIME, UPDATE_TIME, CREATED_BY, 
+      UPDATED_BY, PRODUCT_DETAIL)
+    values (#{productId,jdbcType=DECIMAL}, #{merchantNo,jdbcType=DECIMAL}, #{merchantName,jdbcType=VARCHAR}, 
+      #{mailPicUrl,jdbcType=VARCHAR}, #{categoryId1,jdbcType=DECIMAL}, #{categoryId2,jdbcType=DECIMAL}, 
+      #{categoryId3,jdbcType=DECIMAL}, #{categoryId4,jdbcType=DECIMAL}, #{publishStatus,jdbcType=DECIMAL}, 
+      #{productName,jdbcType=VARCHAR}, #{productDescription,jdbcType=VARCHAR}, #{freightTemplateId,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{updatedBy,jdbcType=VARCHAR}, #{productDetail,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.product.ProductDO">
+    insert into PMS_PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="mailPicUrl != null">
+        MAIL_PIC_URL,
+      </if>
+      <if test="categoryId1 != null">
+        CATEGORY_ID_1,
+      </if>
+      <if test="categoryId2 != null">
+        CATEGORY_ID_2,
+      </if>
+      <if test="categoryId3 != null">
+        CATEGORY_ID_3,
+      </if>
+      <if test="categoryId4 != null">
+        CATEGORY_ID_4,
+      </if>
+      <if test="publishStatus != null">
+        PUBLISH_STATUS,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productDescription != null">
+        PRODUCT_DESCRIPTION,
+      </if>
+      <if test="freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      <if test="productDetail != null">
+        PRODUCT_DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productId != null">
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="mailPicUrl != null">
+        #{mailPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId1 != null">
+        #{categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId2 != null">
+        #{categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId3 != null">
+        #{categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId4 != null">
+        #{categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="publishStatus != null">
+        #{publishStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="freightTemplateId != null">
+        #{freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null">
+        #{productDetail,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.product.ProductDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_PRODUCT
+    <set>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailPicUrl != null">
+        MAIL_PIC_URL = #{record.mailPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryId1 != null">
+        CATEGORY_ID_1 = #{record.categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId2 != null">
+        CATEGORY_ID_2 = #{record.categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId3 != null">
+        CATEGORY_ID_3 = #{record.categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId4 != null">
+        CATEGORY_ID_4 = #{record.categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publishStatus != null">
+        PUBLISH_STATUS = #{record.publishStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDescription != null">
+        PRODUCT_DESCRIPTION = #{record.productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID = #{record.freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDetail != null">
+        PRODUCT_DETAIL = #{record.productDetail,jdbcType=CLOB},
+      </if>
+      <if test="record.identification != null">
+        IDENTIFICATION = #{record.identification,jdbcType=DECIMAL}
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update PMS_PRODUCT
+    set PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      MAIL_PIC_URL = #{record.mailPicUrl,jdbcType=VARCHAR},
+      CATEGORY_ID_1 = #{record.categoryId1,jdbcType=DECIMAL},
+      CATEGORY_ID_2 = #{record.categoryId2,jdbcType=DECIMAL},
+      CATEGORY_ID_3 = #{record.categoryId3,jdbcType=DECIMAL},
+      CATEGORY_ID_4 = #{record.categoryId4,jdbcType=DECIMAL},
+      PUBLISH_STATUS = #{record.publishStatus,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_DESCRIPTION = #{record.productDescription,jdbcType=VARCHAR},
+      FREIGHT_TEMPLATE_ID = #{record.freightTemplateId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      PRODUCT_DETAIL = #{record.productDetail,jdbcType=CLOB}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_PRODUCT
+    set PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      MAIL_PIC_URL = #{record.mailPicUrl,jdbcType=VARCHAR},
+      CATEGORY_ID_1 = #{record.categoryId1,jdbcType=DECIMAL},
+      CATEGORY_ID_2 = #{record.categoryId2,jdbcType=DECIMAL},
+      CATEGORY_ID_3 = #{record.categoryId3,jdbcType=DECIMAL},
+      CATEGORY_ID_4 = #{record.categoryId4,jdbcType=DECIMAL},
+      PUBLISH_STATUS = #{record.publishStatus,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_DESCRIPTION = #{record.productDescription,jdbcType=VARCHAR},
+      FREIGHT_TEMPLATE_ID = #{record.freightTemplateId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.product.ProductDO">
+    update PMS_PRODUCT
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="mailPicUrl != null">
+        MAIL_PIC_URL = #{mailPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId1 != null">
+        CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId2 != null">
+        CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId3 != null">
+        CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId4 != null">
+        CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="publishStatus != null">
+        PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        PRODUCT_DESCRIPTION = #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null">
+        PRODUCT_DETAIL = #{productDetail,jdbcType=CLOB},
+      </if>
+      <if test="identification != null">
+        IDENTIFICATION = #{identification,jdbcType=DECIMAL}
+      </if>
+    </set>
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qdbank.mall.model.product.ProductDO">
+    update PMS_PRODUCT
+    set MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      MAIL_PIC_URL = #{mailPicUrl,jdbcType=VARCHAR},
+      CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL},
+      CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL},
+      CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL},
+      CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL},
+      PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_DESCRIPTION = #{productDescription,jdbcType=VARCHAR},
+      FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      PRODUCT_DETAIL = #{productDetail,jdbcType=CLOB}
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.product.ProductDO">
+    update PMS_PRODUCT
+    set MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      MAIL_PIC_URL = #{mailPicUrl,jdbcType=VARCHAR},
+      CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL},
+      CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL},
+      CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL},
+      CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL},
+      PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_DESCRIPTION = #{productDescription,jdbcType=VARCHAR},
+      FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      PRODUCT_DETAIL = #{productDetail,jdbcType=CLOB}
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </update>
+  <select id="selectProductInfo" resultMap="ProductInfoResultMap" parameterType="com.qdbank.mall.model.product.ProductInfoQueryDO">
+    select
+    p.*,
+    #{productCashMin} as productCashMin,
+    #{productCashMax} as productCashMax,
+    t.template_name  as templateName
+    from pms_product p
+    left join pms_freight_template t on p.FREIGHT_TEMPLATE_ID = t.freight_template_id
+    where 1=1
+    <if test="productId != null">
+      and p.PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and p.MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantName != null and merchantName != ''">
+      and p.MERCHANT_NAME like  '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="categoryId1 != null ">
+      and  p.CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId2 != null ">
+      and  p.CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId3 != null">
+      and  p.CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId4 != null">
+      and  p.CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL}
+    </if>
+    <if test="productName != null and productName != ''">
+      and p.PRODUCT_NAME like '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="publishStatus != null">
+      and p.PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL}
+    </if>
+
+    <if test="mulStatus != null">
+      and p.PUBLISH_STATUS in (${mulStatus})
+    </if>
+    <if test="identification != null">
+      and p.IDENTIFICATION = #{identification,jdbcType=DECIMAL}
+    </if>
+    <if test="filterProducts != null">
+      <foreach open="and p.CATEGORY_ID_1 not in (" separator=","  close=")" item="item" index="index" collection="filterProducts">
+        ${item}
+      </foreach>
+    </if>
+    order by p.UPDATE_TIME desc
+  </select>
+
+  <select id="selectProductSkus" resultMap="com.qdbank.mall.mapper.skustock.SkustockDOMapper.BaseResultMap" parameterType="java.util.Map">
+    select * from PMS_SKU_STOCK t
+    where
+       t.PRODUCT_ID = #{PRODUCT_ID}
+      and t.ADVICE_PRICE &gt;= #{productCashMin,jdbcType=DECIMAL}
+      and t.ADVICE_PRICE &lt;= #{productCashMax,jdbcType=DECIMAL}
+      and t.status = 0
+  </select>
+  <select id="selectProductPicUrls" resultMap="PictureResultMap" >
+    select
+    PRODUCT_ID,
+    MAIN_FLAG,
+    PIC_URL,
+    FILE_NAME,
+    FILE_SOURCE,
+    CREATE_TIME,
+    UPDATE_TIME,
+    CREATED_BY,
+    UPDATED_BY,
+    GROUP_ID
+    from PMS_PRODUCT_PIC_URL where PRODUCT_ID =  #{PRODUCT_ID} and FILE_SOURCE = 1
+  </select>
+  <resultMap id="PictureResultMap" type="com.qdbank.mall.model.productpicurl.ProductPicUrlDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="MAIN_FLAG" jdbcType="DECIMAL" property="mainFlag" />
+    <result column="PIC_URL" jdbcType="VARCHAR" property="picUrl" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="FILE_SOURCE" jdbcType="VARCHAR" property="fileSource" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId" />
+  </resultMap>
+  <select id="selectProductSkuInfo" resultMap="ProductSkuInfoResultMap" parameterType="com.qdbank.mall.model.product.ProductInfoQueryDO">
+  select
+  p.*,
+  s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+  s.PRODUCT_ID as sku_PRODUCT_ID,
+  s.MARKET_PRICE as sku_MARKET_PRICE,
+  s.ADVICE_PRICE as sku_ADVICE_PRICE,
+  s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+  s.PRODUCT_CASH as sku_PRODUCT_CASH,
+  s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+  s.PRODUCT_NAME as sku_PRODUCT_NAME,
+  s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+  s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+  s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+  s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+  s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+  s.SKU_PIC_URL as  sku_SKU_PIC_URL,
+  s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+  s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA,
+    s. STATUS as sku_STATUS
+  from
+  pms_product p ,pms_sku_stock s
+  where p.product_id = s.product_id
+    <if test="productId != null">
+      and p.PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and p.MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantName != null and merchantName != ''">
+      and p.MERCHANT_NAME like '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="categoryId1 != null ">
+      and  p.CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId2 != null ">
+      and  p.CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId3 != null">
+      and  p.CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId4 != null">
+      and  p.CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL}
+    </if>
+    <if test="productName != null and productName != ''">
+      and p.PRODUCT_NAME like  '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="publishStatus != null">
+      and p.PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL}
+    </if>
+    <if test="skuStatus != null">
+      and s.STATUS = #{skuStatus,jdbcType=DECIMAL}
+    </if>
+    <if test="productSkuId != null">
+      and s.PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+    </if>
+    order by p.CREATE_TIME,s.CREATE_TIME desc
+  </select>
+
+
+
+  <select id="selectProductDetail" resultMap="ProductDetailResultMap" parameterType="com.qdbank.mall.model.product.ProductInfoQueryDO">
+    select
+    p.*,
+    s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+    s.PRODUCT_ID as sku_PRODUCT_ID,
+    s.MARKET_PRICE as sku_MARKET_PRICE,
+    s.ADVICE_PRICE as sku_ADVICE_PRICE,
+    s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+    s.PRODUCT_CASH as sku_PRODUCT_CASH,
+    s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+    s.PRODUCT_NAME as sku_PRODUCT_NAME,
+    s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+    s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+    s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+    s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+    s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+    s.SKU_PIC_URL as  sku_SKU_PIC_URL,
+    s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+    s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA,
+    s.CREATE_TIME as sku_CREATE_TIME,
+    s.UPDATE_TIME as sku_UPDATE_TIME,
+    s.STATUS as sku_STATUS,
+    s.DISCOUNT_AMOUNT  as sku_DISCOUNT_AMOUNT,
+    t.template_name  as templateName
+    from pms_product p
+    left join pms_sku_stock s on p.product_id = s.product_id
+    left join pms_freight_template t on p.FREIGHT_TEMPLATE_ID = t.freight_template_id
+    where 1=1
+    <if test="productId != null">
+      and p.PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and p.MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantName != null and merchantName != ''">
+      and p.MERCHANT_NAME like concat('%',#{merchantName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="categoryId1 != null ">
+      and  p.CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId2 != null ">
+      and  p.CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId3 != null">
+      and  p.CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId4 != null">
+      and  p.CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL}
+    </if>
+    <if test="productName != null and productName != ''">
+      and p.PRODUCT_NAME like concat( '%',#{productName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="publishStatus != null">
+      and p.PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL}
+    </if>
+    <if test="productCashMin != null">
+      and s.PRODUCT_CASH &gt;= #{productCashMin,jdbcType=DECIMAL}
+    </if>
+    <if test="productCashMax != null">
+      and s.PRODUCT_CASH &lt;= #{productCashMax,jdbcType=DECIMAL}
+    </if>
+    <if test="productSkuId != null">
+      and s.PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+    </if>
+    <if test="skuStatus != null">
+      and s.STATUS = #{skuStatus,jdbcType=DECIMAL}
+    </if>
+    order by p.CREATE_TIME,s.CREATE_TIME desc
+  </select>
+
+
+
+  <select id="selectProductDetailSkuInfo" resultMap="ProductSkuInfoResultWithCLobMap" parameterType="com.qdbank.mall.model.product.ProductInfoQueryDO">
+    select
+    p.*,
+    s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+    s.PRODUCT_ID as sku_PRODUCT_ID,
+    s.MARKET_PRICE as sku_MARKET_PRICE,
+    s.ADVICE_PRICE as sku_ADVICE_PRICE,
+    s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+    s.PRODUCT_CASH as sku_PRODUCT_CASH,
+    s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+    s.PRODUCT_NAME as sku_PRODUCT_NAME,
+    s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+    s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+    s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+    s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+    s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+    s.SKU_PIC_URL as  sku_SKU_PIC_URL,
+    s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+    s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA,
+    s.STATUS  as sku_STATUS,
+    s.MAX_INTEGRAL_DEDUCT  as sku_MAX_INTEGRAL_DEDUCT,
+    s.MIN_INTEGRAL_DEDUCT  as sku_min_INTEGRAL_DEDUCT,
+    s.DISCOUNT_AMOUNT  as sku_DISCOUNT_AMOUNT,
+    u.ID as pic_id,
+    u.PRODUCT_ID as pic_PRODUCT_ID,
+    u.MAIN_FLAG as pic_MAIN_FLAG,
+    u.PIC_URL as pic_PIC_URL,
+    u.FILE_SOURCE as pic_FILE_SOURCE
+    from
+    pms_product p left join
+    pms_sku_stock s on p.product_id = s.product_id
+    left join pms_product_pic_url u on u.product_id = p.product_id
+    where 1=1
+    <if test="productId != null">
+      and p.PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and p.MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantName != null and merchantName != ''">
+      and p.MERCHANT_NAME like '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="categoryId1 != null ">
+      and  p.CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId2 != null ">
+      and  p.CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId3 != null">
+      and  p.CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId4 != null">
+      and  p.CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL}
+    </if>
+    <if test="productName != null and productName != ''">
+      and p.PRODUCT_NAME like  '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="publishStatus != null">
+      and p.PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL}
+    </if>
+    <if test="skuStatus != null">
+      and s.status = #{skuStatus,jdbcType=DECIMAL}
+    </if>
+    <if test="productSkuId != null">
+      and s.PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+    </if>
+    order by p.CREATE_TIME,s.CREATE_TIME desc
+  </select>
+    <select id="selectTemplateProduct" resultType="java.lang.Long">
+        select
+            count(1)
+        from
+            pms_product
+        where
+            FREIGHT_TEMPLATE_ID = #{templateId,jdbcType=DECIMAL}
+            <if test="publishStatus != null">
+              and PUBLISH_STATUS in (1,2)
+            </if>
+    </select>
+  <update id="updateTemplateProduct">
+    update
+        pms_product
+    set
+        FREIGHT_TEMPLATE_ID = null
+    where
+        FREIGHT_TEMPLATE_ID = #{templateId,jdbcType=DECIMAL}
+    and
+        PUBLISH_STATUS = 0
+  </update>
+
+
+  <select id="selectProductInfoNew" resultMap="BaseResultMap" parameterType="com.qdbank.mall.model.product.ProductInfoQueryDO">
+    select
+    <include refid="Base_Column_List" />
+    from pms_product p
+    where 1=1
+    <if test="productId != null">
+      and p.PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and p.MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+    <if test="merchantName != null and merchantName != ''">
+      and p.MERCHANT_NAME like  '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="categoryId1 != null ">
+      and  p.CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId2 != null ">
+      and  p.CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId3 != null">
+      and  p.CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL}
+    </if>
+    <if test="categoryId4 != null">
+      and  p.CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL}
+    </if>
+    <if test="productName != null and productName != ''">
+      and p.PRODUCT_NAME like '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="publishStatus != null">
+      and p.PUBLISH_STATUS = #{publishStatus,jdbcType=DECIMAL}
+    </if>
+
+    <if test="mulStatus != null">
+      and p.PUBLISH_STATUS in (${mulStatus})
+    </if>
+    <if test="identification != null">
+      and p.IDENTIFICATION = #{identification,jdbcType=DECIMAL}
+    </if>
+    <if test="filterProducts != null">
+      <foreach open="and p.CATEGORY_ID_1 not in (" separator=","  close=")" item="item" index="index" collection="filterProducts">
+        ${item}
+      </foreach>
+    </if>
+    order by p.UPDATE_TIME desc
+  </select>
+
+</mapper>

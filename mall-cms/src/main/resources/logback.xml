@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <property name="APP_NAME" value="wechatcms"/>
+    <property name="LOG_HOME" value="/home/acmsapp/logs" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!--替换成AspectLogbackEncoder-->
+        <encoder class="com.yomahub.tlog.core.enhance.logback.AspectLogbackEncoder" charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]  %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_HOME}/${APP_NAME}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>7</MaxHistory>
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <!--替换成AspectLogbackEncoder-->
+        <encoder class="com.yomahub.tlog.core.enhance.logback.AspectLogbackEncoder" charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]  @%logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="com.yomahub.tlog.web" level="OFF"></logger>
+
+    <logger name="com.qdbank.mall.mapper" level="DEBUG" additivity="true" />
+
+    <!-- 日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

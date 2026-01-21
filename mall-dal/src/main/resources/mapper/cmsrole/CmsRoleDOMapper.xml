@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.cmsrole.CmsRoleDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.role.RoleDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+    <result column="ROLE_DESCRIPTION" jdbcType="VARCHAR" property="roleDescription" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="ROLE_SORT" jdbcType="DECIMAL" property="roleSort" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, ROLE_NAME, ROLE_DESCRIPTION, CREATE_TIME, STATUS, ROLE_SORT, UPDATE_TIME, CREATED_BY, 
+    UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.role.RoleDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CMS_ROLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CMS_ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CMS_ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.role.RoleDOExample">
+    delete from CMS_ROLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.role.RoleDO">
+    insert into CMS_ROLE (ID, ROLE_NAME, ROLE_DESCRIPTION,
+      CREATE_TIME, STATUS, ROLE_SORT, 
+      UPDATE_TIME, CREATED_BY, UPDATED_BY
+      )
+    values (#{id,jdbcType=DECIMAL}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, #{roleSort,jdbcType=DECIMAL}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.role.RoleDO">
+    insert into CMS_ROLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="roleName != null">
+        ROLE_NAME,
+      </if>
+      <if test="roleDescription != null">
+        ROLE_DESCRIPTION,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="roleSort != null">
+        ROLE_SORT,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null">
+        #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="roleSort != null">
+        #{roleSort,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.role.RoleDOExample" resultType="java.lang.Long">
+    select count(*) from CMS_ROLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CMS_ROLE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.roleName != null">
+        ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleDescription != null">
+        ROLE_DESCRIPTION = #{record.roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.roleSort != null">
+        ROLE_SORT = #{record.roleSort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CMS_ROLE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+      ROLE_DESCRIPTION = #{record.roleDescription,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      ROLE_SORT = #{record.roleSort,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.role.RoleDO">
+    update CMS_ROLE
+    <set>
+      <if test="roleName != null">
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDescription != null">
+        ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="roleSort != null">
+        ROLE_SORT = #{roleSort,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.role.RoleDO">
+    update CMS_ROLE
+    set ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+      ROLE_DESCRIPTION = #{roleDescription,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      ROLE_SORT = #{roleSort,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="getMenuList" resultType="com.qdbank.mall.model.menu.UmsMenuDO">
+      SELECT
+         distinct  m.id id,
+          m.parent_id parentId,
+          m.create_time createTime,
+          m.MENU_LEVEL menuLevel,
+          m.MENU_SORT menuSort,
+          m.MENU_NAME menuName,
+          m.menu_icon menuIcon,
+          m.route_name routeName,
+          m.CREATE_TIME createTime,
+          m.UPDATE_TIME updateTime,
+          m.CREATED_BY createdBy,
+          m.UPDATED_BY updatedBy
+      FROM
+          cms_admin_role_relation arr
+              LEFT JOIN cms_role r ON arr.role_id = r.id
+              LEFT JOIN cms_role_menu_relation rmr ON r.id = rmr.role_id
+              LEFT JOIN cms_menu m ON rmr.menu_id = m.id
+      WHERE
+          arr.admin_id = #{adminId}
+        AND m.id IS NOT NULL
+  </select>
+  <select id="getMenuListByRoleId" resultType="com.qdbank.mall.model.menu.UmsMenuDO">
+      SELECT
+        distinct  m.id id,
+          m.parent_id parentId,
+          m.create_time createTime,
+          m.MENU_LEVEL menuLevel,
+          m.MENU_SORT menuSort,
+          m.MENU_NAME menuName,
+           m.menu_icon menuIcon,
+          m.route_name routeName
+      FROM
+           cms_role_menu_relation rmr
+              LEFT JOIN cms_menu m ON rmr.menu_id = m.id
+      WHERE
+          rmr.role_id = #{roleId}
+        AND m.id IS NOT NULL
+  </select>
+  <select id="getResourceListByRoleId" resultType="com.qdbank.mall.model.user.UmsResourceDO">
+      SELECT
+      distinct    r.id id,
+          r.create_time createTime,
+          r.resource_name resourceName,
+          r.resource_url resourceUrl,
+          r.resource_description resourceDescription,
+          r.category_id categoryId
+      FROM
+          cms_role_resource_relation rrr
+              LEFT JOIN cms_resource r ON rrr.resource_id = r.id
+      WHERE
+          rrr.role_id = #{roleId}
+        AND r.id IS NOT NULL
+  </select>
+</mapper>

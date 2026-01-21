@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: wechat-oms
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        prefix: wechat-oms-sit
+        username: nacos
+        password: nacos
+        namespace: sit_second
+        server-addr: 10.1.94.228:8848

@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: wechat-front
+  servlet:
+    multipart:
+      enabled: true #开启文件上传
+      max-file-size: 10MB #限制文件上传大小为10M
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.qdbank.mall.model.*
+  configuration:
+    jdbc-type-for-null: 'null'
+server:
+  port: 8092
+  servlet:
+    context-path: /wechatmall/
+redis:
+  database: wechat-front
+  key:
+    admin: 'wechatums:front'
+    resourceList: 'wechatums:resourceList'
+    orderId: 'wechatoms:orderId'
+    merchant: 'wechatums:merchant'
+  expire:
+    common: 86400 # 24小时
+http:
+  request:
+    rsa:
+      public:
+        key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCuKTf7bKDCAUKca57lutcvfjWp9/DeH4puazwK9LHdOUAPB3LtHGZzFoKe0F8Kw0ySbfaeO9nGbtEEqT5RFfM1GN3i11b0ErUwYU5FchN5iZwbCNoM3CNqjroNO4WffWM0FpnpkIDCch8Fw0OCJSdnceXyWIeZ0/8YsugXVf2FcwIDAQAB
+      private:
+        key: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAK4pN/tsoMIBQpxrnuW61y9+Nan38N4fim5rPAr0sd05QA8Hcu0cZnMWgp7QXwrDTJJt9p472cZu0QSpPlEV8zUY3eLXVvQStTBhTkVyE3mJnBsI2gzcI2qOug07hZ99YzQWmemQgMJyHwXDQ4IlJ2dx5fJYh5nT/xiy6BdV/YVzAgMBAAECgYA4Oepu62UC/TEqGryT4jwygwaENx22OGyStWAPEWySxTbfI0KBNlgE89F7wD3O1bpU09d4wk3OeFxWquUJfJKlm0QNyR9g/iFwHj1fUSskK1wxojCsX5fDP97X+V5+8+ewu1nRnnhKP0ydok2voBwUsPmBnsIF8k2/ZwlCP4N0AQJBAN0RG45cO8wIdgI7o5y0lUq1Y/VkA6f45G3CKy3MUGlyfiA8Xo+lC21m3BsFSE/iz4KGecw0nHDC2Nw4lOvjoHMCQQDJrp0qLy5+WeRoozOgDhNIQwWYxN59UVQpmy3RV4qgYgCUQad1LvNNhfy1cI95s/JzR1ZgSVmhPJFIVvlwfkcBAkBSJ0BpWEd0nJRWYhl8a/OrLtu13vQo4SrqyyTGwU4E0eKjUiwGD9y+TGJxvDXSUkSxig4LYGXe1dpHhNN7Ej2XAkEAqjQeltcymZcrV9NDYjP+ueE1+/NJAOF98Y7wX9dNOoT6kCPIOvDgi/AjkMvpiX//gKIXlzLP3W7L/QzJfdJUAQJABqVDMPZWVu71GMFU47tbNE17wotlybnyklRV3A62CdISKmRYbJGuVoSql8CcfnWlBSOvpn7LeJrTwyGHq+nyWw==
+
+#监控配置
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    enable:
+      all: true
+      jvm: true
+      logback: false
+    export:
+      prometheus:
+        enabled: true
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+        loggerLevel: basic

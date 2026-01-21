@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.orderrefund.OrderRefundDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.orderrefund.OrderRefundDO">
+    <id column="REFUND_SERIAL" jdbcType="VARCHAR" property="refundSerial" />
+    <result column="CUST_NO" jdbcType="VARCHAR" property="custNo" />
+    <result column="CUST_NAME" jdbcType="VARCHAR" property="custName" />
+    <result column="CUST_MOBILE" jdbcType="DECIMAL" property="custMobile" />
+    <result column="ORDER_SN" jdbcType="VARCHAR" property="orderSn" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_COUNT" jdbcType="DECIMAL" property="productCount" />
+    <result column="PRODUCT_SKU_ID" jdbcType="DECIMAL" property="productSkuId" />
+    <result column="CATEGORY_ID_1" jdbcType="DECIMAL" property="categoryId1" />
+    <result column="CATEGORY_ID_2" jdbcType="DECIMAL" property="categoryId2" />
+    <result column="CATEGORY_ID_3" jdbcType="DECIMAL" property="categoryId3" />
+    <result column="CATEGORY_ID_4" jdbcType="DECIMAL" property="categoryId4" />
+    <result column="ORDER_CASH" jdbcType="DECIMAL" property="orderCash" />
+    <result column="ORDER_INTEGRATION" jdbcType="DECIMAL" property="orderIntegration" />
+    <result column="REFUND_AMOUNT" jdbcType="DECIMAL" property="refundAmount" />
+    <result column="REFUND_CASH" jdbcType="DECIMAL" property="refundCash" />
+    <result column="FREIGHT_AMOUNT" jdbcType="DECIMAL" property="freightAmount" />
+    <result column="REFUND_INTEGRATION" jdbcType="DECIMAL" property="refundIntegration" />
+    <result column="REFUND_STATUS" jdbcType="DECIMAL" property="refundStatus" />
+    <result column="PRODUCT_TYPE" jdbcType="DECIMAL" property="productType" />
+    <result column="HANDLE_START_TIME" jdbcType="TIMESTAMP" property="handleStartTime" />
+    <result column="HANDLE_FINISH_TIME" jdbcType="TIMESTAMP" property="handleFinishTime" />
+    <result column="HANDLE_RESULT" jdbcType="DECIMAL" property="handleResult" />
+    <result column="REASON" jdbcType="VARCHAR" property="reason" />
+    <result column="REFUND_TYPE" jdbcType="DECIMAL" property="refundType" />
+    <result column="PROOF_PICS" jdbcType="VARCHAR" property="proofPics" />
+    <result column="ADMIN_NAME" jdbcType="VARCHAR" property="adminName" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="REFUND_NOTE" jdbcType="VARCHAR" property="refundNote" />
+    <result column="MERCHANT_NO" jdbcType="DECIMAL" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName"/>
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="INTEGRATION_PAY_FLAG" jdbcType="DECIMAL" property="integrationPayFlag" />
+    <result column="PAY_TYPE" jdbcType="DECIMAL" property="payType" />
+    <result column="INTEGRAL_DEDUCT" jdbcType="DECIMAL" property="integralDeduct"/>
+  </resultMap>
+
+  <resultMap id="BaseResultWithOrderMap" type="com.qdbank.mall.model.orderrefund.OrderRefundWithOrderDetailDO" extends="BaseResultMap">
+    <result column="PRODUCT_CASH" jdbcType="DECIMAL" property="productCash" />
+    <result column="PRODUCT_INTEGRATION" jdbcType="DECIMAL" property="productIntegration" />
+  </resultMap>
+
+  <resultMap id="BaseListMap" type="com.qdbank.mall.model.orderrefund.OrderRefundListDO" extends="BaseResultMap">
+    <result column="error_status" jdbcType="VARCHAR" property="errorStatus"/>
+    <association property="skustockDO" javaType="com.qdbank.mall.model.skustock.SkustockDO" >
+      <result column="PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+      <result column="SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+    </association>
+    <association property="orderDO" javaType="com.qdbank.mall.model.order.OrderDO" >
+      <result column="PAY_AMOUNT" jdbcType="DECIMAL" property="payAmount" />
+      <result column="PRODUCT_COUNT" jdbcType="DECIMAL" property="productCount" />
+      <result column="ORDER_CASH" jdbcType="DECIMAL" property="orderCash" />
+      <result column="ORDER_INTEGRATION" jdbcType="DECIMAL" property="orderIntegration" />
+      <result column="FREIGHT_AMOUNT" jdbcType="DECIMAL" property="freightAmount" />
+      <result column="PAY_TYPE" jdbcType="DECIMAL" property="payType" />
+      <result column="STATUS" jdbcType="DECIMAL" property="status" />
+      <result column="ORDER_ID" jdbcType="DECIMAL" property="orderId" />
+      <result column="ORDER_MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName"/>
+    </association>
+  </resultMap>
+
+
+  <resultMap id="BaseExportMap" type="com.qdbank.mall.model.orderrefund.OrderRefundExportDO" extends="BaseResultMap">
+    <result column="PRODUCT_CASH" jdbcType="DECIMAL" property="productCash" />
+    <result column="PRODUCT_INTEGRATION" jdbcType="DECIMAL" property="productIntegration" />
+    <result column="PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+  </resultMap>
+
+  <resultMap id="BaseDetailMap" type="com.qdbank.mall.model.orderrefund.OrderRefundDetailDO" extends="BaseResultMap">
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+    <result column="PAY_AMOUNT" jdbcType="DECIMAL" property="payAmount" />
+    <result column="PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+    <result column="SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+    <result column="RECEIVER_NAME" jdbcType="VARCHAR" property="receiverName" />
+    <result column="RECEIVER_PHONE" jdbcType="VARCHAR" property="receiverPhone" />
+    <result column="RECEIVER_DETAIL_ADDRESS" jdbcType="VARCHAR" property="receiverDetailAddress" />
+    <result column="DELIVERY_COMPANY_NAME" jdbcType="VARCHAR" property="deliveryCompanyName" />
+    <result column="DELIVERY_SN" jdbcType="VARCHAR" property="deliverySn" />
+    <result column="COUPON_NAME" jdbcType="VARCHAR" property="couponName" />
+    <result column="COUPON_COUPON_TYPE" jdbcType="DECIMAL" property="couponType" />
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
+    <result column="COUPON_ID" jdbcType="DECIMAL" property="couponId" />
+    <result column="COUPON_COUPON_AMOUNT" jdbcType="DECIMAL" property="couponAmount" />
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    REFUND_SERIAL, CUST_NO, CUST_NAME, CUST_MOBILE, ORDER_SN, PRODUCT_ID, PRODUCT_NAME, 
+    PRODUCT_COUNT, PRODUCT_SKU_ID, CATEGORY_ID_1, CATEGORY_ID_2, CATEGORY_ID_3, CATEGORY_ID_4, 
+    ORDER_CASH, ORDER_INTEGRATION, REFUND_AMOUNT, REFUND_CASH, FREIGHT_AMOUNT, REFUND_INTEGRATION,
+    REFUND_STATUS, PRODUCT_TYPE, HANDLE_START_TIME, HANDLE_FINISH_TIME, HANDLE_RESULT, 
+    REASON, REFUND_TYPE, PROOF_PICS, ADMIN_NAME, EMAIL, REFUND_NOTE, MERCHANT_NO,MERCHANT_NAME, CREATE_TIME,
+    UPDATE_TIME,INTEGRAL_DEDUCT
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from OMS_ORDER_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectList" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundLikeQueryDO" resultMap="BaseListMap">
+    select
+    o.*,
+    k.PRODUCT_SP_DATA,
+    k.SKU_PIC_URL,
+    d.PAY_AMOUNT,
+    d.PAY_TYPE,
+    d.MERCHANT_NAME as ORDER_MERCHANT_NAME,
+    d.ORDER_ID,
+    d.status
+    from OMS_ORDER_REFUND o
+    left join oms_order d on o.ORDER_SN = d.ORDER_SN
+    left join pms_sku_stock k on o.PRODUCT_SKU_ID = k.PRODUCT_SKU_ID
+    where 1=1 and d.PRODUCT_TYPE = 0
+    and o.REFUND_TYPE != 2
+    <if test="categoryId2 != null">
+      and o.CATEGORY_ID_2 =#{categoryId2,jdbcType = DECIMAL}
+    </if>
+      <if test="refundType != null">
+      and o.REFUND_TYPE =#{refundType,jdbcType=DECIMAL}
+    </if>
+    <if test="orderSn != null">
+      and o.ORDER_SN =#{orderSn,jdbcType=VARCHAR}
+    </if>
+    <if test="refundSerial != null">
+      and o.REFUND_SERIAL =#{refundSerial,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and o.CREATE_TIME &gt;=#{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and o.CREATE_TIME &lt;=#{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="refundStatus != null">
+      and o.REFUND_STATUS =#{refundStatus,jdbcType =DECIMAL}
+    </if>
+    <if test="productName != null">
+      and d.PRODUCT_NAME like  '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="merchantNo != null">
+      and d.MERCHANT_NO =#{merchantNo,jdbcType=VARCHAR}
+    </if>
+    <if test="merchantName != null">
+      and d.MERCHANT_NAME  like  '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    order by o.CREATE_TIME desc
+  </select>
+
+
+  <select id="selectExport" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundLikeQueryDO" resultMap="BaseExportMap">
+    select
+    o.*,
+    k.PRODUCT_CASH,
+    k.PRODUCT_INTEGRATION,
+    k.PRODUCT_SP_DATA
+    from OMS_ORDER_REFUND o
+    left join pms_sku_stock k on o.PRODUCT_SKU_ID = k.PRODUCT_SKU_ID
+    where 1=1
+    and o.REFUND_TYPE != 2
+    <if test="categoryId2 != null">
+      and o.CATEGORY_ID_2 =#{categoryId2,jdbcType = DECIMAL}
+    </if>
+    <if test="refundType != null">
+      and o.REFUND_TYPE =#{refundType,jdbcType=DECIMAL}
+    </if>
+    <if test="orderSn != null and orderSn !=''">
+      and o.ORDER_SN =#{orderSn,jdbcType=VARCHAR}
+    </if>
+    <if test="refundSerial != null">
+      and o.REFUND_SERIAL =#{refundSerial,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and o.CREATE_TIME &gt;=#{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and o.CREATE_TIME &lt;=#{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="refundStatus != null">
+      and o.REFUND_STATUS =#{refundStatus,jdbcType =DECIMAL}
+    </if>
+    <if test="merchantNo != null">
+      and o.MERCHANT_NO =#{merchantNo,jdbcType =DECIMAL}
+    </if>
+    <if test="productName != null and productName!=''">
+      and o.PRODUCT_NAME like  '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="merchantName != null and merchantName!=''">
+      and o.MERCHANT_NAME  like  '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+  </select>
+
+  <select id="queryDetail" resultMap="BaseDetailMap">
+    select
+    o.*,
+    k.PRODUCT_SP_DATA,
+    k.SKU_PIC_URL,
+    d.RECEIVER_NAME,
+    d.RECEIVER_PHONE,
+    d.RECEIVER_DETAIL_ADDRESS,
+    d.DELIVERY_COMPANY_NAME,
+    d.DELIVERY_SN,
+    d.PAY_AMOUNT,
+    d.PRODUCT_PRICE,
+    d.STATUS,
+    p.COUPON_NAME,
+    p.COUPON_TYPE as COUPON_COUPON_TYPE,
+    p.BATCH_NO,
+    p.COUPON_ID,
+    p.COUPON_AMOUNT as COUPON_COUPON_AMOUNT
+    from OMS_ORDER_REFUND o
+    left join pms_sku_stock k on o.PRODUCT_SKU_ID = k.PRODUCT_SKU_ID
+    left join oms_order d on o.ORDER_SN = d.ORDER_SN
+    left join sms_user_coupon s on d.USER_COUPON_ID = s.USER_COUPON_ID
+    inner join sms_coupon p on s.COUPON_ID = p.COUPON_ID
+    where o.REFUND_SERIAL =#{refundSerial,jdbcType =VARCHAR}
+  </select>
+
+  <select id="queryOrderStatus" resultType="com.qdbank.mall.model.order.OrderDO">
+    select
+    d.ORDER_ID as orderId,
+    d.STATUS as status,
+    d.REFUND_STATUS as refundStatus,
+    d.ORDER_SN as orderSn,
+    d.PRODUCT_ID as productId,
+    d.CUST_NO as custNo,
+    d.PRODUCT_SKU_ID as productSkuId,
+    d.PRODUCT_COUNT as productCount
+    from OMS_ORDER_REFUND o
+    left join oms_order d on o.ORDER_SN = d.ORDER_SN
+    where o.REFUND_SERIAL =#{refundSerial,jdbcType =VARCHAR}
+  </select>
+
+
+  <select id="queryOrderRefundByOrderSn" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from OMS_ORDER_REFUND
+    where ORDER_SN = #{orderSn,jdbcType=VARCHAR} and REFUND_TYPE != 2
+  </select>
+
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDOExample">
+    delete from OMS_ORDER_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDO">
+    insert into OMS_ORDER_REFUND (REFUND_SERIAL, CUST_NO, CUST_NAME, 
+      CUST_MOBILE, ORDER_SN, PRODUCT_ID, 
+      PRODUCT_NAME, PRODUCT_COUNT, PRODUCT_SKU_ID, 
+      CATEGORY_ID_1, CATEGORY_ID_2, CATEGORY_ID_3, 
+      CATEGORY_ID_4, ORDER_CASH, ORDER_INTEGRATION,
+      REFUND_AMOUNT, REFUND_CASH, FREIGHT_AMOUNT, 
+      REFUND_INTEGRATION, REFUND_STATUS, PRODUCT_TYPE, 
+      HANDLE_START_TIME, HANDLE_FINISH_TIME, HANDLE_RESULT, 
+      REASON, REFUND_TYPE, PROOF_PICS, 
+      ADMIN_NAME, EMAIL, REFUND_NOTE, 
+      MERCHANT_NO,MERCHANT_NAME, CREATE_TIME, UPDATE_TIME,INTEGRAL_DEDUCT
+      )
+    values (#{refundSerial,jdbcType=DECIMAL}, #{custNo,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{custMobile,jdbcType=DECIMAL}, #{orderSn,jdbcType=VARCHAR}, #{productId,jdbcType=DECIMAL},
+      #{productName,jdbcType=VARCHAR}, #{productCount,jdbcType=DECIMAL}, #{productSkuId,jdbcType=DECIMAL}, 
+      #{categoryId1,jdbcType=DECIMAL}, #{categoryId2,jdbcType=DECIMAL}, #{categoryId3,jdbcType=DECIMAL}, 
+      #{categoryId4,jdbcType=DECIMAL}, #{orderCash,jdbcType=DECIMAL}, #{orderIntegration,jdbcType=DECIMAL},
+      #{refundAmount,jdbcType=DECIMAL}, #{refundCash,jdbcType=DECIMAL}, #{freightAmount,jdbcType=DECIMAL}, 
+      #{refundIntegration,jdbcType=DECIMAL}, #{refundStatus,jdbcType=DECIMAL}, #{productType,jdbcType=DECIMAL}, 
+      #{handleStartTime,jdbcType=TIMESTAMP}, #{handleFinishTime,jdbcType=TIMESTAMP}, #{handleResult,jdbcType=DECIMAL},
+      #{reason,jdbcType=VARCHAR}, #{refundType,jdbcType=DECIMAL}, #{proofPics,jdbcType=VARCHAR}, 
+      #{adminName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{refundNote,jdbcType=VARCHAR}, 
+      #{merchantNo,jdbcType=DECIMAL},#{merchantName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{integralDeduct,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDO">
+    insert into OMS_ORDER_REFUND
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="refundSerial != null">
+        REFUND_SERIAL,
+      </if>
+      <if test="custNo != null">
+        CUST_NO,
+      </if>
+      <if test="custName != null">
+        CUST_NAME,
+      </if>
+      <if test="custMobile != null">
+        CUST_MOBILE,
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productCount != null">
+        PRODUCT_COUNT,
+      </if>
+      <if test="productSkuId != null">
+        PRODUCT_SKU_ID,
+      </if>
+      <if test="categoryId1 != null">
+        CATEGORY_ID_1,
+      </if>
+      <if test="categoryId2 != null">
+        CATEGORY_ID_2,
+      </if>
+      <if test="categoryId3 != null">
+        CATEGORY_ID_3,
+      </if>
+      <if test="categoryId4 != null">
+        CATEGORY_ID_4,
+      </if>
+      <if test="orderCash != null">
+        ORDER_CASH,
+      </if>
+      <if test="orderIntegration != null">
+        ORDER_INTEGRATION,
+      </if>
+      <if test="refundAmount != null">
+        REFUND_AMOUNT,
+      </if>
+      <if test="refundCash != null">
+        REFUND_CASH,
+      </if>
+      <if test="freightAmount != null">
+        FREIGHT_AMOUNT,
+      </if>
+      <if test="refundIntegration != null">
+        REFUND_INTEGRATION,
+      </if>
+      <if test="refundStatus != null">
+        REFUND_STATUS,
+      </if>
+      <if test="productType != null">
+        PRODUCT_TYPE,
+      </if>
+      <if test="handleStartTime != null">
+        HANDLE_START_TIME,
+      </if>
+      <if test="handleFinishTime != null">
+        HANDLE_FINISH_TIME,
+      </if>
+      <if test="handleResult != null">
+        HANDLE_RESULT,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE,
+      </if>
+      <if test="proofPics != null">
+        PROOF_PICS,
+      </if>
+      <if test="adminName != null">
+        ADMIN_NAME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="refundNote != null">
+        REFUND_NOTE,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="refundSerial != null">
+        #{refundSerial,jdbcType=DECIMAL},
+      </if>
+      <if test="custNo != null">
+        #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null">
+        #{custMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="productSkuId != null">
+        #{productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId1 != null">
+        #{categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId2 != null">
+        #{categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId3 != null">
+        #{categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId4 != null">
+        #{categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCash != null">
+        #{orderCash,jdbcType=DECIMAL},
+      </if>
+      <if test="orderIntegration != null">
+        #{orderIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmount != null">
+        #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundCash != null">
+        #{refundCash,jdbcType=DECIMAL},
+      </if>
+      <if test="freightAmount != null">
+        #{freightAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundIntegration != null">
+        #{refundIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null">
+        #{refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=DECIMAL},
+      </if>
+      <if test="handleStartTime != null">
+        #{handleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleFinishTime != null">
+        #{handleFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleResult != null">
+        #{handleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        #{refundType,jdbcType=DECIMAL},
+      </if>
+      <if test="proofPics != null">
+        #{proofPics,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNote != null">
+        #{refundNote,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDOExample" resultType="java.lang.Long">
+    select count(*) from OMS_ORDER_REFUND
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OMS_ORDER_REFUND
+    <set>
+      <if test="record.refundSerial != null">
+        REFUND_SERIAL = #{record.refundSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custNo != null">
+        CUST_NO = #{record.custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custName != null">
+        CUST_NAME = #{record.custName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custMobile != null">
+        CUST_MOBILE = #{record.custMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderSn != null">
+        ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCount != null">
+        PRODUCT_COUNT = #{record.productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productSkuId != null">
+        PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId1 != null">
+        CATEGORY_ID_1 = #{record.categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId2 != null">
+        CATEGORY_ID_2 = #{record.categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId3 != null">
+        CATEGORY_ID_3 = #{record.categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.categoryId4 != null">
+        CATEGORY_ID_4 = #{record.categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderCash != null">
+        ORDER_CASH = #{record.orderCash,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderIntegration != null">
+        ORDER_INTEGRATION = #{record.orderIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundAmount != null">
+        REFUND_AMOUNT = #{record.refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundCash != null">
+        REFUND_CASH = #{record.refundCash,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freightAmount != null">
+        FREIGHT_AMOUNT = #{record.freightAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundIntegration != null">
+        REFUND_INTEGRATION = #{record.refundIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundStatus != null">
+        REFUND_STATUS = #{record.refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productType != null">
+        PRODUCT_TYPE = #{record.productType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handleStartTime != null">
+        HANDLE_START_TIME = #{record.handleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.handleFinishTime != null">
+        HANDLE_FINISH_TIME = #{record.handleFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.handleResult != null">
+        HANDLE_RESULT = #{record.handleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reason != null">
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundType != null">
+        REFUND_TYPE = #{record.refundType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.proofPics != null">
+        PROOF_PICS = #{record.proofPics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminName != null">
+        ADMIN_NAME = #{record.adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundNote != null">
+        REFUND_NOTE = #{record.refundNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="updateByRefundSerial" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDO">
+    update OMS_ORDER_REFUND
+    <set>
+      <if test="custNo != null">
+        CUST_NO = #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null">
+        CUST_MOBILE = #{custMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCount != null">
+        PRODUCT_COUNT = #{productCount,jdbcType=DECIMAL},
+      </if>
+      <if test="productSkuId != null">
+        PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId1 != null">
+        CATEGORY_ID_1 = #{categoryId1,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId2 != null">
+        CATEGORY_ID_2 = #{categoryId2,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId3 != null">
+        CATEGORY_ID_3 = #{categoryId3,jdbcType=DECIMAL},
+      </if>
+      <if test="categoryId4 != null">
+        CATEGORY_ID_4 = #{categoryId4,jdbcType=DECIMAL},
+      </if>
+      <if test="orderCash != null">
+        ORDER_CASH = #{orderCash,jdbcType=DECIMAL},
+      </if>
+      <if test="orderIntegration != null">
+        ORDER_INTEGRATION = #{orderIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmount != null">
+        REFUND_AMOUNT = #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundCash != null">
+        REFUND_CASH = #{refundCash,jdbcType=DECIMAL},
+      </if>
+      <if test="freightAmount != null">
+        FREIGHT_AMOUNT = #{freightAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundIntegration != null">
+        REFUND_INTEGRATION = #{refundIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null">
+        REFUND_STATUS = #{refundStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="productType != null">
+        PRODUCT_TYPE = #{productType,jdbcType=DECIMAL},
+      </if>
+      <if test="handleStartTime != null">
+        HANDLE_START_TIME = #{handleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleFinishTime != null">
+        HANDLE_FINISH_TIME = #{handleFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleResult != null">
+        HANDLE_RESULT = #{handleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null">
+        REFUND_TYPE = #{refundType,jdbcType=DECIMAL},
+      </if>
+      <if test="proofPics != null">
+        PROOF_PICS = #{proofPics,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        ADMIN_NAME = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNote != null">
+        REFUND_NOTE = #{refundNote,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where REFUND_SERIAL = #{refundSerial,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByExample" parameterType="map">
+    update OMS_ORDER_REFUND
+    set REFUND_SERIAL = #{record.refundSerial,jdbcType=VARCHAR},
+      CUST_NO = #{record.custNo,jdbcType=VARCHAR},
+      CUST_NAME = #{record.custName,jdbcType=VARCHAR},
+      CUST_MOBILE = #{record.custMobile,jdbcType=DECIMAL},
+      ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_COUNT = #{record.productCount,jdbcType=DECIMAL},
+      PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      CATEGORY_ID_1 = #{record.categoryId1,jdbcType=DECIMAL},
+      CATEGORY_ID_2 = #{record.categoryId2,jdbcType=DECIMAL},
+      CATEGORY_ID_3 = #{record.categoryId3,jdbcType=DECIMAL},
+      CATEGORY_ID_4 = #{record.categoryId4,jdbcType=DECIMAL},
+      ORDER_CASH = #{record.orderCash,jdbcType=DECIMAL},
+      ORDER_INTEGRATION = #{record.orderIntegration,jdbcType=DECIMAL},
+      REFUND_AMOUNT = #{record.refundAmount,jdbcType=DECIMAL},
+      REFUND_CASH = #{record.refundCash,jdbcType=DECIMAL},
+      FREIGHT_AMOUNT = #{record.freightAmount,jdbcType=DECIMAL},
+      REFUND_INTEGRATION = #{record.refundIntegration,jdbcType=DECIMAL},
+      REFUND_STATUS = #{record.refundStatus,jdbcType=DECIMAL},
+      PRODUCT_TYPE = #{record.productType,jdbcType=DECIMAL},
+      HANDLE_START_TIME = #{record.handleStartTime,jdbcType=TIMESTAMP},
+      HANDLE_FINISH_TIME = #{record.handleFinishTime,jdbcType=TIMESTAMP},
+      HANDLE_RESULT = #{record.handleResult,jdbcType=DECIMAL},
+      REASON = #{record.reason,jdbcType=VARCHAR},
+      REFUND_TYPE = #{record.refundType,jdbcType=DECIMAL},
+      PROOF_PICS = #{record.proofPics,jdbcType=VARCHAR},
+      ADMIN_NAME = #{record.adminName,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      REFUND_NOTE = #{record.refundNote,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="selectByHandleFinishTime" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundDOExample" resultMap="BaseResultMap">
+    select
+    r.REFUND_SERIAL, r.CUST_NO, r.CUST_NAME, r.CUST_MOBILE, r.ORDER_SN, r.PRODUCT_ID, r.PRODUCT_NAME,
+    r.PRODUCT_COUNT, r.PRODUCT_SKU_ID, r.CATEGORY_ID_1, r.CATEGORY_ID_2, r.CATEGORY_ID_3, r.CATEGORY_ID_4,
+    r.ORDER_CASH, r.ORDER_INTEGRATION, r.REFUND_AMOUNT, r.REFUND_CASH, r.FREIGHT_AMOUNT, r.REFUND_INTEGRATION,
+    r.REFUND_STATUS, r.PRODUCT_TYPE, r.HANDLE_START_TIME, r.HANDLE_FINISH_TIME,r.HANDLE_RESULT,
+    r.REASON, r.REFUND_TYPE, r.PROOF_PICS,r.ADMIN_NAME, r.EMAIL, r.REFUND_NOTE,r.MERCHANT_NO,r.MERCHANT_NAME, o.CREATE_TIME,
+    r.UPDATE_TIME,
+    o.INTEGRATION_PAY_FLAG,
+    o.PAY_TYPE
+    from OMS_ORDER_REFUND r left join OMS_ORDER o
+    on r.ORDER_SN = o.ORDER_SN
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+
+  <update id="updateMachineByExampleSelective" parameterType="map">
+    update OMS_ORDER_REFUND
+    <set>
+      REFUND_STATUS = #{record.refundStatus,jdbcType=DECIMAL},
+      <if test="record.orderCash != null">
+        ORDER_CASH = #{record.orderCash,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderIntegration != null">
+        ORDER_INTEGRATION = #{record.orderIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundAmount != null">
+        REFUND_AMOUNT = #{record.refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundCash != null">
+        REFUND_CASH = #{record.refundCash,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freightAmount != null">
+        FREIGHT_AMOUNT = #{record.freightAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundIntegration != null">
+        REFUND_INTEGRATION = #{record.refundIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handleStartTime != null">
+        HANDLE_START_TIME = #{record.handleStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.handleFinishTime != null">
+        HANDLE_FINISH_TIME = #{record.handleFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.handleResult != null">
+        HANDLE_RESULT = #{record.handleResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reason != null">
+        REASON = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundType != null">
+        REFUND_TYPE = #{record.refundType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.proofPics != null">
+        PROOF_PICS = #{record.proofPics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminName != null">
+        ADMIN_NAME = #{record.adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundNote != null">
+        REFUND_NOTE = #{record.refundNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <!-- 根据退款流水号查询上传图片凭证 -->
+  <select id="selectProofPicsByRefundSn" parameterType="java.lang.String" resultType="com.qdbank.mall.model.orderrefund.OrderRefundProofPicsDO">
+      SELECT
+        FILE_NAME AS proofPicName,
+        PIC_URL AS proofPicUrl
+      FROM
+      PMS_PRODUCT_PIC_URL
+      WHERE PRODUCT_ID = #{refundSerialNo, jdbcType=VARCHAR}
+  </select>
+
+
+
+  <select id="selectRefundWithOrderByExample" parameterType="string" resultMap="BaseResultWithOrderMap">
+    select
+    refund.*,o.PRODUCT_CASH,o.PRODUCT_INTEGRATION
+    from OMS_ORDER_REFUND refund  join OMS_ORDER o on refund.ORDER_SN = o.ORDER_SN
+     where 1=1
+     and refund.REFUND_TYPE != 2
+    <if test="custNo!=null and custNo!=''">
+      and refund.CUST_NO = #{custNo,jdbcType=VARCHAR}
+    </if>
+    <if test="seriNo!=null and seriNo!=''">
+     and refund.REFUND_SERIAL = #{seriNo,jdbcType =DECIMAL}
+    </if>
+      order by refund.CREATE_TIME desc
+  </select>
+
+ <!-- 异常退款订单处理 -->
+  <select id="selectErrorRefundList" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundLikeQueryDO" resultMap="BaseListMap">
+    select
+    o.*,
+    k.PRODUCT_SP_DATA,
+    k.SKU_PIC_URL,
+    d.PAY_AMOUNT,
+    d.PAY_TYPE,
+    d.ORDER_ID,
+    d.MERCHANT_NAME as ORDER_MERCHANT_NAME,
+    d.status,log.status as error_status
+    from OMS_ORDER_REFUND o  join  OMS_REFUND_ERROR_LOG log on log.REFUND_SERIAL=o.REFUND_SERIAL
+    left join oms_order d on o.ORDER_SN = d.ORDER_SN
+    left join pms_sku_stock k on o.PRODUCT_SKU_ID = k.PRODUCT_SKU_ID
+    where 1=1
+    <if test="categoryId2 != null">
+      and o.CATEGORY_ID_2 =#{categoryId2,jdbcType = DECIMAL}
+    </if>
+    <if test="refundType != null">
+      and o.REFUND_TYPE =#{refundType,jdbcType=DECIMAL}
+    </if>
+    <if test="orderSn != null">
+      and o.ORDER_SN =#{orderSn,jdbcType=VARCHAR}
+    </if>
+    <if test="refundSerial != null">
+      and o.REFUND_SERIAL =#{refundSerial,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+      and o.CREATE_TIME &gt;=#{startTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="endTime != null">
+      and o.CREATE_TIME &lt;=#{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="refundStatus != null">
+      and o.REFUND_STATUS =#{refundStatus,jdbcType =DECIMAL}
+    </if>
+    <if test="productName != null">
+      and d.PRODUCT_NAME like  '%' || #{productName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="merchantNo != null">
+      and d.MERCHANT_NO =#{merchantNo,jdbcType=VARCHAR}
+    </if>
+    <if test="merchantName != null">
+      and d.MERCHANT_NAME  like  '%' || #{merchantName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="productType != null">
+      and d.PRODUCT_TYPE =#{productType,jdbcType=DECIMAL}
+    </if>
+    <if test="errorStatus != null">
+      and log.STATUS =#{errorStatus,jdbcType=VARCHAR}
+    </if>
+    order by o.CREATE_TIME desc
+  </select>
+
+</mapper>

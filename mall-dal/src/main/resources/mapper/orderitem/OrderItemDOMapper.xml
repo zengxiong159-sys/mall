@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.orderitem.OrderItemDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.orderitem.OrderItemDO">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORDER_ID" jdbcType="DECIMAL" property="orderId" />
+    <result column="ORDER_SN" jdbcType="VARCHAR" property="orderSn" />
+    <result column="MERCHANT_ID" jdbcType="DECIMAL" property="merchantId" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="PRODUCT_PIC" jdbcType="VARCHAR" property="productPic" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PRODUCT_BRAND" jdbcType="VARCHAR" property="productBrand" />
+    <result column="PRODUCT_SN" jdbcType="VARCHAR" property="productSn" />
+    <result column="PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+    <result column="PRODUCT_QUANTITY" jdbcType="DECIMAL" property="productQuantity" />
+    <result column="PRODUCT_SKU_ID" jdbcType="DECIMAL" property="productSkuId" />
+    <result column="PRODUCT_SKU_CODE" jdbcType="VARCHAR" property="productSkuCode" />
+    <result column="PRODUCT_CATEGORY_ID" jdbcType="DECIMAL" property="productCategoryId" />
+    <result column="PROMOTION_NAME" jdbcType="VARCHAR" property="promotionName" />
+    <result column="PROMOTION_AMOUNT" jdbcType="DECIMAL" property="promotionAmount" />
+    <result column="COUPON_AMOUNT" jdbcType="DECIMAL" property="couponAmount" />
+    <result column="INTEGRATION_AMOUNT" jdbcType="DECIMAL" property="integrationAmount" />
+    <result column="REAL_AMOUNT" jdbcType="DECIMAL" property="realAmount" />
+    <result column="GIFT_INTEGRATION" jdbcType="DECIMAL" property="giftIntegration" />
+    <result column="GIFT_GROWTH" jdbcType="DECIMAL" property="giftGrowth" />
+    <result column="PRODUCT_ATTR" jdbcType="VARCHAR" property="productAttr" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, ORDER_ID, ORDER_SN, MERCHANT_ID, MERCHANT_NAME, PRODUCT_ID, PRODUCT_PIC, PRODUCT_NAME, 
+    PRODUCT_BRAND, PRODUCT_SN, PRODUCT_PRICE, PRODUCT_QUANTITY, PRODUCT_SKU_ID, PRODUCT_SKU_CODE, 
+    PRODUCT_CATEGORY_ID, PROMOTION_NAME, PROMOTION_AMOUNT, COUPON_AMOUNT, INTEGRATION_AMOUNT, 
+    REAL_AMOUNT, GIFT_INTEGRATION, GIFT_GROWTH, PRODUCT_ATTR, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.orderitem.OrderItemDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from OMS_ORDER_ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.orderitem.OrderItemDOExample">
+    delete from OMS_ORDER_ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.orderitem.OrderItemDO">
+    insert into OMS_ORDER_ITEM (ID, ORDER_ID, ORDER_SN, 
+      MERCHANT_ID, MERCHANT_NAME, PRODUCT_ID, 
+      PRODUCT_PIC, PRODUCT_NAME, PRODUCT_BRAND, 
+      PRODUCT_SN, PRODUCT_PRICE, PRODUCT_QUANTITY, 
+      PRODUCT_SKU_ID, PRODUCT_SKU_CODE, PRODUCT_CATEGORY_ID, 
+      PROMOTION_NAME, PROMOTION_AMOUNT, COUPON_AMOUNT, 
+      INTEGRATION_AMOUNT, REAL_AMOUNT, GIFT_INTEGRATION, 
+      GIFT_GROWTH, PRODUCT_ATTR, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, #{orderSn,jdbcType=VARCHAR}, 
+      #{merchantId,jdbcType=DECIMAL}, #{merchantName,jdbcType=VARCHAR}, #{productId,jdbcType=DECIMAL}, 
+      #{productPic,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productBrand,jdbcType=VARCHAR}, 
+      #{productSn,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productQuantity,jdbcType=DECIMAL}, 
+      #{productSkuId,jdbcType=DECIMAL}, #{productSkuCode,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=DECIMAL}, 
+      #{promotionName,jdbcType=VARCHAR}, #{promotionAmount,jdbcType=DECIMAL}, #{couponAmount,jdbcType=DECIMAL}, 
+      #{integrationAmount,jdbcType=DECIMAL}, #{realAmount,jdbcType=DECIMAL}, #{giftIntegration,jdbcType=DECIMAL}, 
+      #{giftGrowth,jdbcType=DECIMAL}, #{productAttr,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.orderitem.OrderItemDO">
+    insert into OMS_ORDER_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="orderId != null">
+        ORDER_ID,
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN,
+      </if>
+      <if test="merchantId != null">
+        MERCHANT_ID,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="productPic != null">
+        PRODUCT_PIC,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="productBrand != null">
+        PRODUCT_BRAND,
+      </if>
+      <if test="productSn != null">
+        PRODUCT_SN,
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE,
+      </if>
+      <if test="productQuantity != null">
+        PRODUCT_QUANTITY,
+      </if>
+      <if test="productSkuId != null">
+        PRODUCT_SKU_ID,
+      </if>
+      <if test="productSkuCode != null">
+        PRODUCT_SKU_CODE,
+      </if>
+      <if test="productCategoryId != null">
+        PRODUCT_CATEGORY_ID,
+      </if>
+      <if test="promotionName != null">
+        PROMOTION_NAME,
+      </if>
+      <if test="promotionAmount != null">
+        PROMOTION_AMOUNT,
+      </if>
+      <if test="couponAmount != null">
+        COUPON_AMOUNT,
+      </if>
+      <if test="integrationAmount != null">
+        INTEGRATION_AMOUNT,
+      </if>
+      <if test="realAmount != null">
+        REAL_AMOUNT,
+      </if>
+      <if test="giftIntegration != null">
+        GIFT_INTEGRATION,
+      </if>
+      <if test="giftGrowth != null">
+        GIFT_GROWTH,
+      </if>
+      <if test="productAttr != null">
+        PRODUCT_ATTR,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="productPic != null">
+        #{productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productBrand != null">
+        #{productBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="productSn != null">
+        #{productSn,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productQuantity != null">
+        #{productQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="productSkuId != null">
+        #{productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="productSkuCode != null">
+        #{productSkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryId != null">
+        #{productCategoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="promotionName != null">
+        #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionAmount != null">
+        #{promotionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponAmount != null">
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="integrationAmount != null">
+        #{integrationAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmount != null">
+        #{realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="giftIntegration != null">
+        #{giftIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="giftGrowth != null">
+        #{giftGrowth,jdbcType=DECIMAL},
+      </if>
+      <if test="productAttr != null">
+        #{productAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.orderitem.OrderItemDOExample" resultType="java.lang.Long">
+    select count(*) from OMS_ORDER_ITEM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OMS_ORDER_ITEM
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderId != null">
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderSn != null">
+        ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null">
+        MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productPic != null">
+        PRODUCT_PIC = #{record.productPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productBrand != null">
+        PRODUCT_BRAND = #{record.productBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productSn != null">
+        PRODUCT_SN = #{record.productSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPrice != null">
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productQuantity != null">
+        PRODUCT_QUANTITY = #{record.productQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productSkuId != null">
+        PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productSkuCode != null">
+        PRODUCT_SKU_CODE = #{record.productSkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCategoryId != null">
+        PRODUCT_CATEGORY_ID = #{record.productCategoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promotionName != null">
+        PROMOTION_NAME = #{record.promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionAmount != null">
+        PROMOTION_AMOUNT = #{record.promotionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponAmount != null">
+        COUPON_AMOUNT = #{record.couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integrationAmount != null">
+        INTEGRATION_AMOUNT = #{record.integrationAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.giftIntegration != null">
+        GIFT_INTEGRATION = #{record.giftIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.giftGrowth != null">
+        GIFT_GROWTH = #{record.giftGrowth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productAttr != null">
+        PRODUCT_ATTR = #{record.productAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update OMS_ORDER_ITEM
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      PRODUCT_PIC = #{record.productPic,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_BRAND = #{record.productBrand,jdbcType=VARCHAR},
+      PRODUCT_SN = #{record.productSn,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      PRODUCT_QUANTITY = #{record.productQuantity,jdbcType=DECIMAL},
+      PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      PRODUCT_SKU_CODE = #{record.productSkuCode,jdbcType=VARCHAR},
+      PRODUCT_CATEGORY_ID = #{record.productCategoryId,jdbcType=DECIMAL},
+      PROMOTION_NAME = #{record.promotionName,jdbcType=VARCHAR},
+      PROMOTION_AMOUNT = #{record.promotionAmount,jdbcType=DECIMAL},
+      COUPON_AMOUNT = #{record.couponAmount,jdbcType=DECIMAL},
+      INTEGRATION_AMOUNT = #{record.integrationAmount,jdbcType=DECIMAL},
+      REAL_AMOUNT = #{record.realAmount,jdbcType=DECIMAL},
+      GIFT_INTEGRATION = #{record.giftIntegration,jdbcType=DECIMAL},
+      GIFT_GROWTH = #{record.giftGrowth,jdbcType=DECIMAL},
+      PRODUCT_ATTR = #{record.productAttr,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

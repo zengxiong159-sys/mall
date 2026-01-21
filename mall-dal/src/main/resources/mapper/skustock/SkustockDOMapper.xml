@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.skustock.SkustockDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.skustock.SkustockDO">
+    <id column="PRODUCT_SKU_ID" jdbcType="DECIMAL" property="productSkuId" />
+    <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+    <result column="MARKET_PRICE" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="ADVICE_PRICE" jdbcType="DECIMAL" property="advicePrice" />
+    <result column="PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+    <result column="PRODUCT_CASH" jdbcType="DECIMAL" property="productCash" />
+    <result column="PRODUCT_INTEGRATION" jdbcType="DECIMAL" property="productIntegration" />
+    <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+    <result column="PROMOTION_START_TIME" jdbcType="TIMESTAMP" property="promotionStartTime" />
+    <result column="PROMOTION_END_TIME" jdbcType="TIMESTAMP" property="promotionEndTime" />
+    <result column="PROMOTION_PER_LIMIT" jdbcType="DECIMAL" property="promotionPerLimit" />
+    <result column="INTEGRATION_PAY_FLAG" jdbcType="DECIMAL" property="integrationPayFlag" />
+    <result column="PRODUCT_STOCK" jdbcType="DECIMAL" property="productStock" />
+    <result column="SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+    <result column="PRODUCT_LOCK_STOCK" jdbcType="DECIMAL" property="productLockStock" />
+    <result column="PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId" />
+    <result column="MAX_INTEGRAL_DEDUCT" jdbcType="DECIMAL" property="maxIntegralDeduct"/>
+    <result column="MIN_INTEGRAL_DEDUCT" jdbcType="DECIMAL" property="minIntegralDeduct"/>
+    <result column="DISCOUNT_AMOUNT" jdbcType="DECIMAL" property="discountAmount"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PRODUCT_SKU_ID, PRODUCT_ID, MARKET_PRICE, ADVICE_PRICE, PRODUCT_PRICE, PRODUCT_CASH, 
+    PRODUCT_INTEGRATION, PRODUCT_NAME, PROMOTION_START_TIME, PROMOTION_END_TIME, PROMOTION_PER_LIMIT, 
+    INTEGRATION_PAY_FLAG, PRODUCT_STOCK, SKU_PIC_URL, PRODUCT_LOCK_STOCK, PRODUCT_SP_DATA, 
+    CREATE_TIME, UPDATE_TIME, CREATED_BY, UPDATED_BY,STATUS,GROUP_ID,MAX_INTEGRAL_DEDUCT,MIN_INTEGRAL_DEDUCT,DISCOUNT_AMOUNT
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.skustock.SkustockDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_SKU_STOCK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_SKU_STOCK
+    where PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectAllByProductId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from PMS_SKU_STOCK
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+    order by PRODUCT_PRICE asc
+  </select>
+
+  <select id="selectByProductId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    PRODUCT_SKU_ID,
+    PRODUCT_SP_DATA
+    from PMS_SKU_STOCK
+    where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PMS_SKU_STOCK
+    where PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.skustock.SkustockDOExample">
+    delete from PMS_SKU_STOCK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+    insert into PMS_SKU_STOCK (PRODUCT_SKU_ID, PRODUCT_ID, MARKET_PRICE, 
+      ADVICE_PRICE, PRODUCT_PRICE, PRODUCT_CASH, 
+      PRODUCT_INTEGRATION, PRODUCT_NAME, PROMOTION_START_TIME, 
+      PROMOTION_END_TIME, PROMOTION_PER_LIMIT, INTEGRATION_PAY_FLAG, 
+      PRODUCT_STOCK, SKU_PIC_URL, PRODUCT_LOCK_STOCK, 
+      PRODUCT_SP_DATA, CREATE_TIME, UPDATE_TIME, 
+      CREATED_BY, UPDATED_BY,STATUS,GROUP_ID,MAX_INTEGRAL_DEDUCT,MIN_INTEGRAL_DEDUCT)
+    values (#{productSkuId,jdbcType=DECIMAL}, #{productId,jdbcType=DECIMAL}, #{marketPrice,jdbcType=DECIMAL}, 
+      #{advicePrice,jdbcType=DECIMAL}, #{productPrice,jdbcType=DECIMAL}, #{productCash,jdbcType=DECIMAL}, 
+      #{productIntegration,jdbcType=DECIMAL}, #{productName,jdbcType=VARCHAR}, #{promotionStartTime,jdbcType=TIMESTAMP},
+      #{promotionEndTime,jdbcType=TIMESTAMP}, #{promotionPerLimit,jdbcType=DECIMAL}, #{integrationPayFlag,jdbcType=DECIMAL},
+      #{productStock,jdbcType=DECIMAL}, #{skuPicUrl,jdbcType=VARCHAR}, #{productLockStock,jdbcType=BIGINT},
+      #{productSpData,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR},#{status,jdbcType=BIGINT},#{groupId,jdbcType=VARCHAR},#{maxIntegralDeduct,jdbcType=DECIMAL},#{minIntegralDeduct,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+    insert into PMS_SKU_STOCK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productSkuId != null">
+        PRODUCT_SKU_ID,
+      </if>
+      <if test="productId != null">
+        PRODUCT_ID,
+      </if>
+      <if test="marketPrice != null">
+        MARKET_PRICE,
+      </if>
+      <if test="advicePrice != null">
+        ADVICE_PRICE,
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE,
+      </if>
+      <if test="productCash != null">
+        PRODUCT_CASH,
+      </if>
+      <if test="productIntegration != null">
+        PRODUCT_INTEGRATION,
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME,
+      </if>
+      <if test="promotionStartTime != null">
+        PROMOTION_START_TIME,
+      </if>
+      <if test="promotionEndTime != null">
+        PROMOTION_END_TIME,
+      </if>
+      <if test="promotionPerLimit != null">
+        PROMOTION_PER_LIMIT,
+      </if>
+      <if test="integrationPayFlag != null">
+        INTEGRATION_PAY_FLAG,
+      </if>
+      <if test="productStock != null">
+        PRODUCT_STOCK,
+      </if>
+      <if test="skuPicUrl != null">
+        SKU_PIC_URL,
+      </if>
+      <if test="productLockStock != null">
+        PRODUCT_LOCK_STOCK,
+      </if>
+      <if test="productSpData != null">
+        PRODUCT_SP_DATA,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="groupId != null">
+        GROUP_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productSkuId != null">
+        #{productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="advicePrice != null">
+        #{advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productCash != null">
+        #{productCash,jdbcType=DECIMAL},
+      </if>
+      <if test="productIntegration != null">
+        #{productIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionStartTime != null">
+        #{promotionStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionEndTime != null">
+        #{promotionEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionPerLimit != null">
+        #{promotionPerLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="integrationPayFlag != null">
+        #{integrationPayFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="productStock != null">
+        #{productStock,jdbcType=DECIMAL},
+      </if>
+      <if test="skuPicUrl != null">
+        #{skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productLockStock != null">
+        #{productLockStock,jdbcType=DECIMAL},
+      </if>
+      <if test="productSpData != null">
+        #{productSpData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.skustock.SkustockDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_SKU_STOCK
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_SKU_STOCK
+    <set>
+      <if test="record.productSkuId != null">
+        PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productId != null">
+        PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.marketPrice != null">
+        MARKET_PRICE = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.advicePrice != null">
+        ADVICE_PRICE = #{record.advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productPrice != null">
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productCash != null">
+        PRODUCT_CASH = #{record.productCash,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productIntegration != null">
+        PRODUCT_INTEGRATION = #{record.productIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productName != null">
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promotionStartTime != null">
+        PROMOTION_START_TIME = #{record.promotionStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.promotionEndTime != null">
+        PROMOTION_END_TIME = #{record.promotionEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.promotionPerLimit != null">
+        PROMOTION_PER_LIMIT = #{record.promotionPerLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.integrationPayFlag != null">
+        INTEGRATION_PAY_FLAG = #{record.integrationPayFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productStock != null">
+        PRODUCT_STOCK = #{record.productStock,jdbcType=DECIMAL},
+      </if>
+      <if test="record.skuPicUrl != null">
+        SKU_PIC_URL = #{record.skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productLockStock != null">
+        PRODUCT_LOCK_STOCK = #{record.productLockStock,jdbcType=DECIMAL},
+      </if>
+      <if test="record.productSpData != null">
+        PRODUCT_SP_DATA = #{record.productSpData,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.groupId != null">
+        GROUP_ID = #{record.groupId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_SKU_STOCK
+    set PRODUCT_SKU_ID = #{record.productSkuId,jdbcType=DECIMAL},
+      PRODUCT_ID = #{record.productId,jdbcType=DECIMAL},
+      MARKET_PRICE = #{record.marketPrice,jdbcType=DECIMAL},
+      ADVICE_PRICE = #{record.advicePrice,jdbcType=DECIMAL},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=DECIMAL},
+      PRODUCT_CASH = #{record.productCash,jdbcType=DECIMAL},
+      PRODUCT_INTEGRATION = #{record.productIntegration,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PROMOTION_START_TIME = #{record.promotionStartTime,jdbcType=TIMESTAMP},
+      PROMOTION_END_TIME = #{record.promotionEndTime,jdbcType=TIMESTAMP},
+      PROMOTION_PER_LIMIT = #{record.promotionPerLimit,jdbcType=DECIMAL},
+      INTEGRATION_PAY_FLAG = #{record.integrationPayFlag,jdbcType=DECIMAL},
+      PRODUCT_STOCK = #{record.productStock,jdbcType=DECIMAL},
+      SKU_PIC_URL = #{record.skuPicUrl,jdbcType=VARCHAR},
+      PRODUCT_LOCK_STOCK = #{record.productLockStock,jdbcType=DECIMAL},
+      PRODUCT_SP_DATA = #{record.productSpData,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      GROUP_ID = #{record.groupId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+    update PMS_SKU_STOCK
+    <set>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        MARKET_PRICE = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="advicePrice != null">
+        ADVICE_PRICE = #{advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productCash != null">
+        PRODUCT_CASH = #{productCash,jdbcType=DECIMAL},
+      </if>
+      <if test="productIntegration != null">
+        PRODUCT_INTEGRATION = #{productIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+        PROMOTION_START_TIME = #{promotionStartTime,jdbcType=TIMESTAMP},
+        PROMOTION_END_TIME = #{promotionEndTime,jdbcType=TIMESTAMP},
+        PROMOTION_PER_LIMIT = #{promotionPerLimit,jdbcType=DECIMAL},
+      <if test="integrationPayFlag != null">
+        INTEGRATION_PAY_FLAG = #{integrationPayFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="productStock != null">
+        PRODUCT_STOCK = #{productStock,jdbcType=DECIMAL} + PRODUCT_LOCK_STOCK,
+      </if>
+      <if test="skuPicUrl != null">
+        SKU_PIC_URL = #{skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productLockStock != null">
+        PRODUCT_LOCK_STOCK = #{productLockStock,jdbcType=DECIMAL},
+      </if>
+      <if test="productSpData != null">
+        PRODUCT_SP_DATA = #{productSpData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="groupId != null">
+        GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="discountAmount != null">
+        DISCOUNT_AMOUNT = #{discountAmount,jdbcType=DECIMAL},
+      </if>
+      MAX_INTEGRAL_DEDUCT = #{maxIntegralDeduct,jdbcType=DECIMAL},
+      MIN_INTEGRAL_DEDUCT = #{minIntegralDeduct,jdbcType=DECIMAL}
+    </set>
+    where PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateByProductSkuId" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+    update PMS_SKU_STOCK
+    <set>
+      <if test="productId != null">
+        PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        MARKET_PRICE = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="advicePrice != null">
+        ADVICE_PRICE = #{advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productCash != null">
+        PRODUCT_CASH = #{productCash,jdbcType=DECIMAL},
+      </if>
+      <if test="productIntegration != null">
+        PRODUCT_INTEGRATION = #{productIntegration,jdbcType=DECIMAL},
+      </if>
+      <if test="productName != null">
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionStartTime != null">
+        PROMOTION_START_TIME = #{promotionStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionEndTime != null">
+        PROMOTION_END_TIME = #{promotionEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="promotionPerLimit != null">
+        PROMOTION_PER_LIMIT = #{promotionPerLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="integrationPayFlag != null">
+        INTEGRATION_PAY_FLAG = #{integrationPayFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="productStock != null">
+        PRODUCT_STOCK = #{productStock,jdbcType=DECIMAL},
+      </if>
+      <if test="skuPicUrl != null">
+        SKU_PIC_URL = #{skuPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="productLockStock != null">
+        PRODUCT_LOCK_STOCK = PRODUCT_LOCK_STOCK + #{productLockStock,jdbcType=DECIMAL},
+      </if>
+      <if test="productSpData != null">
+        PRODUCT_SP_DATA = #{productSpData,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="groupId != null">
+        GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+    update PMS_SKU_STOCK
+    set PRODUCT_ID = #{productId,jdbcType=DECIMAL},
+      MARKET_PRICE = #{marketPrice,jdbcType=DECIMAL},
+      ADVICE_PRICE = #{advicePrice,jdbcType=DECIMAL},
+      PRODUCT_PRICE = #{productPrice,jdbcType=DECIMAL},
+      PRODUCT_CASH = #{productCash,jdbcType=DECIMAL},
+      PRODUCT_INTEGRATION = #{productIntegration,jdbcType=DECIMAL},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PROMOTION_START_TIME = #{promotionStartTime,jdbcType=TIMESTAMP},
+      PROMOTION_END_TIME = #{promotionEndTime,jdbcType=TIMESTAMP},
+      PROMOTION_PER_LIMIT = #{promotionPerLimit,jdbcType=DECIMAL},
+      INTEGRATION_PAY_FLAG = #{integrationPayFlag,jdbcType=DECIMAL},
+      PRODUCT_STOCK = #{productStock,jdbcType=DECIMAL},
+      SKU_PIC_URL = #{skuPicUrl,jdbcType=VARCHAR},
+      PRODUCT_LOCK_STOCK = #{productLockStock,jdbcType=DECIMAL},
+      PRODUCT_SP_DATA = #{productSpData,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      GROUP_ID = #{groupId,jdbcType=VARCHAR}
+    where PRODUCT_SKU_ID = #{productSkuId,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateSkuStockById" >
+    update PMS_SKU_STOCK
+    set PRODUCT_LOCK_STOCK = PRODUCT_LOCK_STOCK+#{stockNum,jdbcType=DECIMAL}
+    where PRODUCT_SKU_ID=#{productSkuId,jdbcType=DECIMAL}
+    <if test="plusFlag">
+        and PRODUCT_STOCK >= PRODUCT_LOCK_STOCK+#{stockNum,jdbcType=DECIMAL}
+    </if>
+  </update>
+
+  <!-- 根据商品id更新规格信息数据 -->
+  <update id="updateByProductId" parameterType="com.qdbank.mall.model.skustock.SkustockDO">
+      update
+        PMS_SKU_STOCK
+      <set>
+        <if test="status != null">
+          STATUS = #{status,jdbcType=DECIMAL},
+        </if>
+      </set>
+      where PRODUCT_ID = #{productId,jdbcType=DECIMAL}
+  </update>
+
+  <!-- 将指定商品的规格部分信息置空处理 -->
+  <update id="resetProductSkuInfoByProductId" parameterType="java.lang.Long">
+    update PMS_SKU_STOCK
+    <set>
+      PRODUCT_CASH = null,
+      PRODUCT_INTEGRATION = null,
+      PRODUCT_PRICE = null,
+      PROMOTION_PER_LIMIT = null,
+      PROMOTION_START_TIME = null,
+      PROMOTION_END_TIME = null,
+      INTEGRATION_PAY_FLAG = null
+    </set>
+    where PRODUCT_ID = #{productId, jdbcType=DECIMAL} and  STATUS = 0
+  </update>
+</mapper>

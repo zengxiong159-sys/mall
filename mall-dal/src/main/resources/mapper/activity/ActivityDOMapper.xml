@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.activity.ActivityDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.activity.ActivityDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTIVITY_NAME" jdbcType="VARCHAR" property="activityName" />
+    <result column="ACTIVITY_LEVEL" jdbcType="DECIMAL" property="activityLevel" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="JUMP_URL" jdbcType="VARCHAR" property="jumpUrl" />
+    <result column="PIC_URL" jdbcType="VARCHAR" property="picUrl" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="GROUP_ID" jdbcType="VARCHAR" property="groupId"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, ACTIVITY_NAME, ACTIVITY_LEVEL, START_TIME, END_TIME ,JUMP_URL, PIC_URL, STATUS,GROUP_ID, CREATE_TIME,
+    UPDATE_TIME, CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.activity.ActivityDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CMS_ACTIVITY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CMS_ACTIVITY
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CMS_ACTIVITY
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.activity.ActivityDOExample">
+    delete from CMS_ACTIVITY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.activity.ActivityDO">
+    insert into CMS_ACTIVITY (ID, ACTIVITY_NAME, ACTIVITY_LEVEL, 
+      START_TIME, END_TIME,JUMP_URL, PIC_URL,
+      STATUS, GROUP_ID,CREATE_TIME, UPDATE_TIME,
+      CREATED_BY, UPDATED_BY)
+    values (#{id,jdbcType=DECIMAL}, #{activityName,jdbcType=VARCHAR}, #{activityLevel,jdbcType=DECIMAL}, 
+      #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP}, #{jumpUrl,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR},
+      #{status,jdbcType=DECIMAL},#{groupId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.activity.ActivityDO">
+    insert into CMS_ACTIVITY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="activityName != null">
+        ACTIVITY_NAME,
+      </if>
+      <if test="activityLevel != null">
+        ACTIVITY_LEVEL,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="jumpUrl != null">
+        JUMP_URL,
+      </if>
+      <if test="picUrl != null">
+        PIC_URL,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="groupId != null">
+        GROUP_ID,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="activityName != null">
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityLevel != null">
+        #{activityLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jumpUrl != null">
+        #{jumpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.activity.ActivityDOExample" resultType="java.lang.Long">
+    select count(*) from CMS_ACTIVITY
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CMS_ACTIVITY
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.activityName != null">
+        ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityLevel != null">
+        ACTIVITY_LEVEL = #{record.activityLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jumpUrl != null">
+        JUMP_URL = #{record.jumpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picUrl != null">
+        PIC_URL = #{record.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CMS_ACTIVITY
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ACTIVITY_NAME = #{record.activityName,jdbcType=VARCHAR},
+      ACTIVITY_LEVEL = #{record.activityLevel,jdbcType=DECIMAL},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      JUMP_URL = #{record.jumpUrl,jdbcType=VARCHAR},
+      PIC_URL = #{record.picUrl,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.activity.ActivityDO">
+    update CMS_ACTIVITY
+    <set>
+      <if test="activityName != null">
+        ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityLevel != null">
+        ACTIVITY_LEVEL = #{activityLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jumpUrl != null and jumpUrl != ''">
+        JUMP_URL = #{jumpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="groupId != null">
+       GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.activity.ActivityDO">
+    update CMS_ACTIVITY
+    set ACTIVITY_NAME = #{activityName,jdbcType=VARCHAR},
+      ACTIVITY_LEVEL = #{activityLevel,jdbcType=DECIMAL},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      JUMP_URL = #{jumpUrl,jdbcType=VARCHAR},
+      PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateExpireStatus">
+    update
+        CMS_ACTIVITY
+    set
+        STATUS = 0,
+        UPDATE_TIME = sysdate,
+        UPDATED_BY = 'SYSTEM'
+    WHERE
+        END_TIME &lt; sysdate
+    AND
+        STATUS = 1
+  </update>
+</mapper>

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.paymentFlow.PaymentFlowDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.paymentFlow.PaymentFlowDO">
+    <id column="PAYMENT_FOLW_ID" jdbcType="DECIMAL" property="paymentFolwId" />
+    <result column="CUST_NO" jdbcType="DECIMAL" property="custNo" />
+    <result column="ORDER_SN" jdbcType="VARCHAR" property="orderSn" />
+    <result column="ACCT_TYPE" jdbcType="VARCHAR" property="acctType" />
+    <result column="ORI_TRANS_DT" jdbcType="VARCHAR" property="oriTransDt" />
+    <result column="ORI_TRANSSER" jdbcType="VARCHAR" property="oriTransser" />
+    <result column="QUERY_TYPE" jdbcType="VARCHAR" property="queryType" />
+    <result column="TRANS_AMT" jdbcType="VARCHAR" property="transAmt" />
+    <result column="TRANSE" jdbcType="VARCHAR" property="transe" />
+    <result column="ACCESS_SIGN_ID" jdbcType="VARCHAR" property="accessSignId" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PAYMENT_FOLW_ID, CUST_NO, ORDER_SN, ACCT_TYPE, ORI_TRANS_DT, ORI_TRANSSER, QUERY_TYPE, 
+    TRANS_AMT, TRANSE, ACCESS_SIGN_ID, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from OMS_PAYMENT_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from OMS_PAYMENT_FLOW
+    where PAYMENT_FOLW_ID = #{paymentFolwId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from OMS_PAYMENT_FLOW
+    where PAYMENT_FOLW_ID = #{paymentFolwId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDOExample">
+    delete from OMS_PAYMENT_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDO">
+    insert into OMS_PAYMENT_FLOW (PAYMENT_FOLW_ID, CUST_NO, ORDER_SN, 
+      ACCT_TYPE, ORI_TRANS_DT, ORI_TRANSSER, 
+      QUERY_TYPE, TRANS_AMT, TRANSE, 
+      ACCESS_SIGN_ID, STATUS, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{paymentFolwId,jdbcType=DECIMAL}, #{custNo,jdbcType=DECIMAL}, #{orderSn,jdbcType=VARCHAR}, 
+      #{acctType,jdbcType=VARCHAR}, #{oriTransDt,jdbcType=VARCHAR}, #{oriTransser,jdbcType=VARCHAR}, 
+      #{queryType,jdbcType=VARCHAR}, #{transAmt,jdbcType=VARCHAR}, #{transe,jdbcType=VARCHAR}, 
+      #{accessSignId,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDO">
+    insert into OMS_PAYMENT_FLOW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paymentFolwId != null">
+        PAYMENT_FOLW_ID,
+      </if>
+      <if test="custNo != null">
+        CUST_NO,
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN,
+      </if>
+      <if test="acctType != null">
+        ACCT_TYPE,
+      </if>
+      <if test="oriTransDt != null">
+        ORI_TRANS_DT,
+      </if>
+      <if test="oriTransser != null">
+        ORI_TRANSSER,
+      </if>
+      <if test="queryType != null">
+        QUERY_TYPE,
+      </if>
+      <if test="transAmt != null">
+        TRANS_AMT,
+      </if>
+      <if test="transe != null">
+        TRANSE,
+      </if>
+      <if test="accessSignId != null">
+        ACCESS_SIGN_ID,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paymentFolwId != null">
+        #{paymentFolwId,jdbcType=DECIMAL},
+      </if>
+      <if test="custNo != null">
+        #{custNo,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null">
+        #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTransDt != null">
+        #{oriTransDt,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTransser != null">
+        #{oriTransser,jdbcType=VARCHAR},
+      </if>
+      <if test="queryType != null">
+        #{queryType,jdbcType=VARCHAR},
+      </if>
+      <if test="transAmt != null">
+        #{transAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="transe != null">
+        #{transe,jdbcType=VARCHAR},
+      </if>
+      <if test="accessSignId != null">
+        #{accessSignId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDOExample" resultType="java.lang.Long">
+    select count(*) from OMS_PAYMENT_FLOW
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OMS_PAYMENT_FLOW
+    <set>
+      <if test="record.paymentFolwId != null">
+        PAYMENT_FOLW_ID = #{record.paymentFolwId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.custNo != null">
+        CUST_NO = #{record.custNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderSn != null">
+        ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctType != null">
+        ACCT_TYPE = #{record.acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oriTransDt != null">
+        ORI_TRANS_DT = #{record.oriTransDt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oriTransser != null">
+        ORI_TRANSSER = #{record.oriTransser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryType != null">
+        QUERY_TYPE = #{record.queryType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transAmt != null">
+        TRANS_AMT = #{record.transAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transe != null">
+        TRANSE = #{record.transe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessSignId != null">
+        ACCESS_SIGN_ID = #{record.accessSignId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update OMS_PAYMENT_FLOW
+    set PAYMENT_FOLW_ID = #{record.paymentFolwId,jdbcType=DECIMAL},
+      CUST_NO = #{record.custNo,jdbcType=DECIMAL},
+      ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      ACCT_TYPE = #{record.acctType,jdbcType=VARCHAR},
+      ORI_TRANS_DT = #{record.oriTransDt,jdbcType=VARCHAR},
+      ORI_TRANSSER = #{record.oriTransser,jdbcType=VARCHAR},
+      QUERY_TYPE = #{record.queryType,jdbcType=VARCHAR},
+      TRANS_AMT = #{record.transAmt,jdbcType=VARCHAR},
+      TRANSE = #{record.transe,jdbcType=VARCHAR},
+      ACCESS_SIGN_ID = #{record.accessSignId,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDO">
+    update OMS_PAYMENT_FLOW
+    <set>
+      <if test="custNo != null">
+        CUST_NO = #{custNo,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null">
+        ACCT_TYPE = #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTransDt != null">
+        ORI_TRANS_DT = #{oriTransDt,jdbcType=VARCHAR},
+      </if>
+      <if test="oriTransser != null">
+        ORI_TRANSSER = #{oriTransser,jdbcType=VARCHAR},
+      </if>
+      <if test="queryType != null">
+        QUERY_TYPE = #{queryType,jdbcType=VARCHAR},
+      </if>
+      <if test="transAmt != null">
+        TRANS_AMT = #{transAmt,jdbcType=VARCHAR},
+      </if>
+      <if test="transe != null">
+        TRANSE = #{transe,jdbcType=VARCHAR},
+      </if>
+      <if test="accessSignId != null">
+        ACCESS_SIGN_ID = #{accessSignId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PAYMENT_FOLW_ID = #{paymentFolwId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.paymentFlow.PaymentFlowDO">
+    update OMS_PAYMENT_FLOW
+    set CUST_NO = #{custNo,jdbcType=DECIMAL},
+      ORDER_SN = #{orderSn,jdbcType=VARCHAR},
+      ACCT_TYPE = #{acctType,jdbcType=VARCHAR},
+      ORI_TRANS_DT = #{oriTransDt,jdbcType=VARCHAR},
+      ORI_TRANSSER = #{oriTransser,jdbcType=VARCHAR},
+      QUERY_TYPE = #{queryType,jdbcType=VARCHAR},
+      TRANS_AMT = #{transAmt,jdbcType=VARCHAR},
+      TRANSE = #{transe,jdbcType=VARCHAR},
+      ACCESS_SIGN_ID = #{accessSignId,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PAYMENT_FOLW_ID = #{paymentFolwId,jdbcType=DECIMAL}
+  </update>
+</mapper>

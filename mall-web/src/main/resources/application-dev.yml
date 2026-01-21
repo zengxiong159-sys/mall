@@ -1,0 +1,13 @@
+nacos:
+  config:
+    server-addr: 10.1.94.228:8848
+    auto-refresh: true # 是否开启自动刷新 ，对应的属性注解上也必须设置autoRefreshed = true才可以实时更新
+    data-id: mall-oms
+    namespace: dev
+    username: nacos
+    password: nacos
+    type: yaml
+    bootstrap:
+      enable: true #开启配置预加载功能
+      log-enable: true
+    remote-first: true #远程优先，相同的key nacos 会覆盖本地配置。

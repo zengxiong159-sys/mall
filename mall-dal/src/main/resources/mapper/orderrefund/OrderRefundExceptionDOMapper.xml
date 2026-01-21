@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.orderrefund.OrderRefundExceptionDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.orderrefund.OrderRefundExceptionDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="FLAG" jdbcType="VARCHAR" property="flag" />
+    <result column="CHANNEL" jdbcType="VARCHAR" property="channel" />
+    <result column="ORDER_ID" jdbcType="VARCHAR" property="ordId" />
+    <result column="ORDER_SN" jdbcType="VARCHAR" property="orderSn" />
+    <result column="ACCESS_SIGN_FLAG" jdbcType="VARCHAR" property="accessSignFlag" />
+    <result column="CURRNUM" jdbcType="VARCHAR" property="currNum" />
+    <result column="PROD_ID" jdbcType="VARCHAR" property="prodId" />
+    <result column="ORITRANSSER" jdbcType="VARCHAR" property="oriTransSer" />
+    <result column="ORITRANSDT" jdbcType="VARCHAR" property="oriTransDt" />
+    <result column="CUST_ID" jdbcType="VARCHAR" property="custId" />
+    <result column="ACCTYPE" jdbcType="VARCHAR" property="accType" />
+    <result column="QUERY_TYPE" jdbcType="VARCHAR" property="queryType" />
+    <result column="TRANSE" jdbcType="VARCHAR" property="transe" />
+    <result column="ERROR_MESSAGE" jdbcType="VARCHAR" property="errorMessage" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, FLAG, CHANNEL, ORDER_ID,ORDER_SN,ACCESS_SIGN_FLAG,CURRNUM,PROD_ID,ORITRANSSER,ORITRANSDT,CUST_ID,
+    ACCTYPE,QUERY_TYPE,TRANSE,ERROR_MESSAGE
+  </sql>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from oms_order_refund_exception
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Long">
+    delete from oms_order_refund_exception
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundExceptionDO">
+    insert into oms_order_refund_exception (ID, FLAG, CHANNEL, ORDER_ID,ORDER_SN,ACCESS_SIGN_FLAG,CURRNUM,PROD_ID,ORITRANSSER,ORITRANSDT,CUST_ID,
+    ACCTYPE,QUERY_TYPE,TRANSE,ERROR_MESSAGE)
+    values (#{id,jdbcType=DECIMAL}, #{flag,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR},#{ordId,jdbcType=VARCHAR},#{orderSn,jdbcType=VARCHAR},
+    #{accessSignFlag,jdbcType=VARCHAR},#{currNum,jdbcType=VARCHAR},#{prodId,jdbcType=VARCHAR},#{oriTransSer,jdbcType=VARCHAR},#{oriTransDt,jdbcType=VARCHAR},
+    #{custId,jdbcType=VARCHAR},#{accType,jdbcType=VARCHAR},#{queryType,jdbcType=VARCHAR},#{transe,jdbcType=VARCHAR},#{errorMessage,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateById" parameterType="com.qdbank.mall.model.orderrefund.OrderRefundExceptionDO">
+    update oms_order_refund_exception
+    <set>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: wechat-cms
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        prefix: wechat-cms-uat
+        username: nacos
+        password: nacos
+        namespace: uat
+        server-addr: 10.1.94.228:8848

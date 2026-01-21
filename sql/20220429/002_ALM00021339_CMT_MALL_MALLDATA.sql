@@ -1,0 +1,9 @@
+COMMENT ON TABLE oms_send_return IS '订单发货撤销流水表';
+COMMENT ON COLUMN oms_send_return.ID IS '主键';
+COMMENT ON COLUMN oms_send_return.ORDER_SN IS '订单号';
+COMMENT ON COLUMN oms_send_return.DELIVERY_COMPANY_NAME IS '物流公司名称';
+COMMENT ON COLUMN oms_send_return.DELIVERY_SN IS '物流单号';
+COMMENT ON COLUMN oms_send_return.return_reason IS '撤销原因';
+COMMENT ON COLUMN oms_send_return.create_time IS '创建时间';
+COMMENT ON COLUMN oms_send_return.update_time IS '修改时间';
+COMMENT ON COLUMN oms_send_return.return_status IS '状态：0 已发货 1 撤销发货';

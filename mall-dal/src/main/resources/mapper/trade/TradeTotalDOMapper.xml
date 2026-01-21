@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.trade.TradeTotalDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.trade.TradeTotalDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="ORDER_TYPE" jdbcType="VARCHAR" property="orderType" />
+    <result column="ORDER_COUNT" jdbcType="VARCHAR" property="orderCount" />
+    <result column="PRODUCT_PRICE" jdbcType="VARCHAR" property="productPrice" />
+    <result column="INTEGRATION_COUNT" jdbcType="VARCHAR" property="integrationCount" />
+    <result column="COUPON_COUNT" jdbcType="VARCHAR" property="couponCount" />
+    <result column="PRODUCT_COUPON_COUNT" jdbcType="VARCHAR" property="productCouponCount" />
+    <result column="ORDER_CASH" jdbcType="VARCHAR" property="orderCash" />
+    <result column="FREIGHT_AMOUNT" jdbcType="VARCHAR" property="freightAmount" />
+    <result column="CASH_FREIGHT_AMOUNT" jdbcType="VARCHAR" property="cashFreightAmount" />
+    <result column="PAYMENT_TIME" jdbcType="VARCHAR" property="paymentTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="COUPON_TYPE" jdbcType="VARCHAR" property="couponType" />
+    <result column="DISTRIBUTE_WAY" jdbcType="VARCHAR" property="distributeWay" />
+    <result column="DISCOUNT_AMOUNT" jdbcType="DECIMAL" property="discountAmount"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, MERCHANT_NO, MERCHANT_NAME, ORDER_TYPE, ORDER_COUNT, PRODUCT_PRICE, INTEGRATION_COUNT, 
+    COUPON_COUNT, PRODUCT_COUPON_COUNT, ORDER_CASH, FREIGHT_AMOUNT, CASH_FREIGHT_AMOUNT, 
+    PAYMENT_TIME, CREATE_TIME, COUPON_TYPE, DISTRIBUTE_WAY,DISCOUNT_AMOUNT
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.trade.TradeTotalDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from TRADE_TOTAL_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADE_TOTAL_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TRADE_TOTAL_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.trade.TradeTotalDOExample">
+    delete from TRADE_TOTAL_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.trade.TradeTotalDO">
+    insert into TRADE_TOTAL_REPORT (ID, MERCHANT_NO, MERCHANT_NAME, 
+      ORDER_TYPE, ORDER_COUNT, PRODUCT_PRICE, 
+      INTEGRATION_COUNT, COUPON_COUNT, PRODUCT_COUPON_COUNT, 
+      ORDER_CASH, FREIGHT_AMOUNT, CASH_FREIGHT_AMOUNT, 
+      PAYMENT_TIME, CREATE_TIME, COUPON_TYPE, 
+      DISTRIBUTE_WAY,DISCOUNT_AMOUNT)
+    values (#{id,jdbcType=DECIMAL}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{orderType,jdbcType=VARCHAR}, #{orderCount,jdbcType=VARCHAR}, #{productPrice,jdbcType=VARCHAR}, 
+      #{integrationCount,jdbcType=VARCHAR}, #{couponCount,jdbcType=VARCHAR}, #{productCouponCount,jdbcType=VARCHAR}, 
+      #{orderCash,jdbcType=VARCHAR}, #{freightAmount,jdbcType=VARCHAR}, #{cashFreightAmount,jdbcType=VARCHAR}, 
+      #{paymentTime,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{couponType,jdbcType=VARCHAR}, 
+      #{distributeWay,jdbcType=VARCHAR},#{discountAmount,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.trade.TradeTotalDO">
+    insert into TRADE_TOTAL_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="orderType != null">
+        ORDER_TYPE,
+      </if>
+      <if test="orderCount != null">
+        ORDER_COUNT,
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE,
+      </if>
+      <if test="integrationCount != null">
+        INTEGRATION_COUNT,
+      </if>
+      <if test="couponCount != null">
+        COUPON_COUNT,
+      </if>
+      <if test="productCouponCount != null">
+        PRODUCT_COUPON_COUNT,
+      </if>
+      <if test="orderCash != null">
+        ORDER_CASH,
+      </if>
+      <if test="freightAmount != null">
+        FREIGHT_AMOUNT,
+      </if>
+      <if test="cashFreightAmount != null">
+        CASH_FREIGHT_AMOUNT,
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="couponType != null">
+        COUPON_TYPE,
+      </if>
+      <if test="distributeWay != null">
+        DISTRIBUTE_WAY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCount != null">
+        #{orderCount,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="integrationCount != null">
+        #{integrationCount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponCount != null">
+        #{couponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="productCouponCount != null">
+        #{productCouponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCash != null">
+        #{orderCash,jdbcType=VARCHAR},
+      </if>
+      <if test="freightAmount != null">
+        #{freightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFreightAmount != null">
+        #{cashFreightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponType != null">
+        #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeWay != null">
+        #{distributeWay,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.trade.TradeTotalDOExample" resultType="java.lang.Long">
+    select count(*) from TRADE_TOTAL_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRADE_TOTAL_REPORT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderType != null">
+        ORDER_TYPE = #{record.orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCount != null">
+        ORDER_COUNT = #{record.orderCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPrice != null">
+        PRODUCT_PRICE = #{record.productPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.integrationCount != null">
+        INTEGRATION_COUNT = #{record.integrationCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponCount != null">
+        COUPON_COUNT = #{record.couponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCouponCount != null">
+        PRODUCT_COUPON_COUNT = #{record.productCouponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCash != null">
+        ORDER_CASH = #{record.orderCash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freightAmount != null">
+        FREIGHT_AMOUNT = #{record.freightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cashFreightAmount != null">
+        CASH_FREIGHT_AMOUNT = #{record.cashFreightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentTime != null">
+        PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponType != null">
+        COUPON_TYPE = #{record.couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distributeWay != null">
+        DISTRIBUTE_WAY = #{record.distributeWay,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRADE_TOTAL_REPORT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      ORDER_TYPE = #{record.orderType,jdbcType=VARCHAR},
+      ORDER_COUNT = #{record.orderCount,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{record.productPrice,jdbcType=VARCHAR},
+      INTEGRATION_COUNT = #{record.integrationCount,jdbcType=VARCHAR},
+      COUPON_COUNT = #{record.couponCount,jdbcType=VARCHAR},
+      PRODUCT_COUPON_COUNT = #{record.productCouponCount,jdbcType=VARCHAR},
+      ORDER_CASH = #{record.orderCash,jdbcType=VARCHAR},
+      FREIGHT_AMOUNT = #{record.freightAmount,jdbcType=VARCHAR},
+      CASH_FREIGHT_AMOUNT = #{record.cashFreightAmount,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      COUPON_TYPE = #{record.couponType,jdbcType=VARCHAR},
+      DISTRIBUTE_WAY = #{record.distributeWay,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.trade.TradeTotalDO">
+    update TRADE_TOTAL_REPORT
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null">
+        ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCount != null">
+        ORDER_COUNT = #{orderCount,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        PRODUCT_PRICE = #{productPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="integrationCount != null">
+        INTEGRATION_COUNT = #{integrationCount,jdbcType=VARCHAR},
+      </if>
+      <if test="couponCount != null">
+        COUPON_COUNT = #{couponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="productCouponCount != null">
+        PRODUCT_COUPON_COUNT = #{productCouponCount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCash != null">
+        ORDER_CASH = #{orderCash,jdbcType=VARCHAR},
+      </if>
+      <if test="freightAmount != null">
+        FREIGHT_AMOUNT = #{freightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="cashFreightAmount != null">
+        CASH_FREIGHT_AMOUNT = #{cashFreightAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponType != null">
+        COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="distributeWay != null">
+        DISTRIBUTE_WAY = #{distributeWay,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.trade.TradeTotalDO">
+    update TRADE_TOTAL_REPORT
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      ORDER_TYPE = #{orderType,jdbcType=VARCHAR},
+      ORDER_COUNT = #{orderCount,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{productPrice,jdbcType=VARCHAR},
+      INTEGRATION_COUNT = #{integrationCount,jdbcType=VARCHAR},
+      COUPON_COUNT = #{couponCount,jdbcType=VARCHAR},
+      PRODUCT_COUPON_COUNT = #{productCouponCount,jdbcType=VARCHAR},
+      ORDER_CASH = #{orderCash,jdbcType=VARCHAR},
+      FREIGHT_AMOUNT = #{freightAmount,jdbcType=VARCHAR},
+      CASH_FREIGHT_AMOUNT = #{cashFreightAmount,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COUPON_TYPE = #{couponType,jdbcType=VARCHAR},
+      DISTRIBUTE_WAY = #{distributeWay,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectTradeTotalResult" parameterType="com.qdbank.mall.model.orderreport.OrderReportExportDO" resultMap="BaseResultMap">
+    select
+    MERCHANT_NAME,
+    MERCHANT_NO,
+    ORDER_TYPE,
+    sum(ORDER_COUNT) as ORDER_COUNT,
+    sum(PRODUCT_PRICE) as PRODUCT_PRICE,
+    sum(INTEGRATION_COUNT) as INTEGRATION_COUNT,
+    sum(COUPON_COUNT) as COUPON_COUNT,
+    sum(ORDER_CASH) as ORDER_CASH,
+    sum(FREIGHT_AMOUNT) as FREIGHT_AMOUNT ,
+    sum(CASH_FREIGHT_AMOUNT) as CASH_FREIGHT_AMOUNT,
+    COUPON_TYPE,
+    DISTRIBUTE_WAY,
+    SUM(DISCOUNT_AMOUNT) AS DISCOUNT_AMOUNT
+    from
+      TRADE_TOTAL_REPORT
+    where
+     PAYMENT_TIME &gt;= to_char(#{startDate,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+    and
+     PAYMENT_TIME &lt;= to_char(#{endDate,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+    <if test="merchantNo != null and merchantNo != ''">
+     and MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+    </if>
+    group by  MERCHANT_NAME,MERCHANT_NO,ORDER_TYPE,COUPON_TYPE,DISTRIBUTE_WAY
+    order by MERCHANT_NAME,MERCHANT_NO,ORDER_TYPE asc,COUPON_TYPE,DISTRIBUTE_WAY
+  </select>
+  <delete id="deleteByCreateTime" parameterType="java.util.Date">
+    delete  from  TRADE_TOTAL_REPORT
+    where trunc(CREATE_TIME) = trunc(#{createTime,jdbcType=TIMESTAMP})
+  </delete>
+</mapper>

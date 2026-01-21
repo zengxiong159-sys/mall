@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.merchant.MerchantDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.merchant.MerchantDO">
+    <id column="MERCHANT_NO" jdbcType="DECIMAL" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="ACCOUNT_NAME" jdbcType="VARCHAR" property="accountName" />
+    <result column="BANK_NAME" jdbcType="VARCHAR" property="bankName" />
+    <result column="BANK_NO" jdbcType="VARCHAR" property="bankNo" />
+    <result column="ADMIN_NAME" jdbcType="VARCHAR" property="adminName" />
+    <result column="ID_NO" jdbcType="VARCHAR" property="idNo" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="support_phone" jdbcType="VARCHAR" property="supportPhone"/>
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="AGREEMENT_NO" jdbcType="VARCHAR" property="agreementNo" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MERCHANT_NO, MERCHANT_NAME, STATUS, ACCOUNT_NAME, BANK_NAME, BANK_NO, ADMIN_NAME, 
+    ID_NO, email, MOBILE,support_phone, AGREEMENT_NO, START_TIME, END_TIME, REMARK, CREATED_BY, UPDATED_BY,
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.merchant.MerchantDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from UMS_MERCHANT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from UMS_MERCHANT
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from UMS_MERCHANT
+    where email = #{email,jdbcType=VARCHAR} and status = 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from UMS_MERCHANT
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.merchant.MerchantDOExample">
+    delete from UMS_MERCHANT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.merchant.MerchantDO">
+    insert into UMS_MERCHANT (MERCHANT_NO, MERCHANT_NAME, STATUS, 
+      ACCOUNT_NAME, BANK_NAME, BANK_NO, 
+      ADMIN_NAME, ID_NO, email,
+      MOBILE,support_phone, AGREEMENT_NO, START_TIME,
+      END_TIME, REMARK, CREATED_BY, 
+      UPDATED_BY, CREATE_TIME, UPDATE_TIME
+      )
+    values (mall_merchant_seq.Nextval, #{merchantName,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL},
+      #{accountName,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, 
+      #{adminName,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR}, #{supportPhone,jdbcType=VARCHAR},#{agreementNo,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR},
+      #{updatedBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.merchant.MerchantDO">
+    insert into UMS_MERCHANT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="accountName != null">
+        ACCOUNT_NAME,
+      </if>
+      <if test="bankName != null">
+        BANK_NAME,
+      </if>
+      <if test="bankNo != null">
+        BANK_NO,
+      </if>
+      <if test="adminName != null">
+        ADMIN_NAME,
+      </if>
+      <if test="idNo != null">
+        ID_NO,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="agreementNo != null">
+        AGREEMENT_NO,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="accountName != null">
+        #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null">
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementNo != null">
+        #{agreementNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.merchant.MerchantDOExample" resultType="java.lang.Long">
+    select count(*) from UMS_MERCHANT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update UMS_MERCHANT
+    <set>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accountName != null">
+        ACCOUNT_NAME = #{record.accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null">
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankNo != null">
+        BANK_NO = #{record.bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminName != null">
+        ADMIN_NAME = #{record.adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null">
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+
+      <if test="record.supportPhone != null">
+        support_phone = #{record.supportPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementNo != null">
+        AGREEMENT_NO = #{record.agreementNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update UMS_MERCHANT
+    set MERCHANT_NO = #{record.merchantNo,jdbcType=DECIMAL},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      ACCOUNT_NAME = #{record.accountName,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      BANK_NO = #{record.bankNo,jdbcType=VARCHAR},
+      ADMIN_NAME = #{record.adminName,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      support_phone = #{record.supportPhone,jdbcType=VARCHAR},
+      AGREEMENT_NO = #{record.agreementNo,jdbcType=VARCHAR},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.merchant.MerchantDO">
+    update UMS_MERCHANT
+    <set>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="accountName != null">
+        ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        BANK_NO = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null">
+        ADMIN_NAME = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null">
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="supportPhone != null">
+        support_phone = #{supportPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementNo != null">
+        AGREEMENT_NO = #{agreementNo,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+        REMARK = #{remark,jdbcType=VARCHAR},
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.merchant.MerchantDO">
+    update UMS_MERCHANT
+    set MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL},
+      ACCOUNT_NAME = #{accountName,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      BANK_NO = #{bankNo,jdbcType=VARCHAR},
+      ADMIN_NAME = #{adminName,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      support_phone = #{supportPhone,jdbcType=VARCHAR},
+      AGREEMENT_NO = #{agreementNo,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </update>
+
+  <!-- 根据商户邮箱查询上商户信息,忽略是否启用状态 -->
+  <select id="selectByEmailIgnoreStatus" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+      UMS_MERCHANT
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+
+
+  <update id="updateStatusByPrimaryKey" parameterType="com.qdbank.mall.model.merchant.MerchantDO">
+    update UMS_MERCHANT
+    <set>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+  </update>
+</mapper>

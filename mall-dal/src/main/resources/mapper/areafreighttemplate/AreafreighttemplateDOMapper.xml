@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.areafreighttemplate.AreafreighttemplateDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="FREIGHT_TEMPLATE_ID" jdbcType="DECIMAL" property="freightTemplateId" />
+    <result column="PROVINCE_IDS" jdbcType="VARCHAR" property="provinceIds" />
+    <result column="TRANSFER_FLAG" jdbcType="DECIMAL" property="transferFlag" />
+    <result column="COUNT_UNIT" jdbcType="VARCHAR" property="countUnit" />
+    <result column="CHARGE_UNIT" jdbcType="VARCHAR" property="chargeUnit" />
+    <result column="ADD_COUNT" jdbcType="VARCHAR" property="addCount" />
+    <result column="ADD_CHARGE" jdbcType="VARCHAR" property="addCharge" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, FREIGHT_TEMPLATE_ID, PROVINCE_IDS, TRANSFER_FLAG, COUNT_UNIT, CHARGE_UNIT, ADD_COUNT, 
+    ADD_CHARGE, CREATE_TIME, UPDATE_TIME, CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from PMS_AREA_FREIGHT_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PMS_AREA_FREIGHT_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByFreightTemplateId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PMS_AREA_FREIGHT_TEMPLATE
+    where FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PMS_AREA_FREIGHT_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDOExample">
+    delete from PMS_AREA_FREIGHT_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDO">
+    insert into PMS_AREA_FREIGHT_TEMPLATE (ID, FREIGHT_TEMPLATE_ID, PROVINCE_IDS, 
+      TRANSFER_FLAG, COUNT_UNIT, CHARGE_UNIT, 
+      ADD_COUNT, ADD_CHARGE, CREATE_TIME, 
+      UPDATE_TIME, CREATED_BY, UPDATED_BY
+      )
+    values (#{id,jdbcType=DECIMAL}, #{freightTemplateId,jdbcType=DECIMAL}, #{provinceIds,jdbcType=VARCHAR}, 
+      #{transferFlag,jdbcType=DECIMAL}, #{countUnit,jdbcType=VARCHAR}, #{chargeUnit,jdbcType=VARCHAR},
+      #{addCount,jdbcType=VARCHAR}, #{addCharge,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List" >
+    INSERT INTO PMS_AREA_FREIGHT_TEMPLATE (ID, FREIGHT_TEMPLATE_ID, PROVINCE_IDS,
+    TRANSFER_FLAG, COUNT_UNIT, CHARGE_UNIT,
+    ADD_COUNT, ADD_CHARGE, CREATE_TIME,
+    UPDATE_TIME, CREATED_BY, UPDATED_BY
+    )
+    <foreach collection="list" index="index" item="item" separator="union all">
+      (SELECT #{item.id, jdbcType = DECIMAL} AS ID,
+      #{item.freightTemplateId, jdbcType = DECIMAL} AS FREIGHT_TEMPLATE_ID,
+      #{item.provinceIds, jdbcType = VARCHAR} AS PROVINCE_IDS,
+      #{item.transferFlag, jdbcType = DECIMAL} AS TRANSFER_FLAG,
+      #{item.countUnit, jdbcType = VARCHAR} AS COUNT_UNIT,
+      #{item.chargeUnit, jdbcType = VARCHAR} AS CHARGE_UNIT,
+      #{item.addCount, jdbcType = VARCHAR} AS ADD_COUNT,
+      #{item.addCharge, jdbcType = VARCHAR} AS ADD_CHARGE,
+      #{item.createTime, jdbcType = TIMESTAMP} AS CREATE_TIME,
+      #{item.updateTime, jdbcType = TIMESTAMP} AS UPDATE_TIME,
+      #{item.createdBy, jdbcType = VARCHAR} AS CREATED_BY,
+      #{item.updatedBy, jdbcType = VARCHAR} AS UPDATED_BY
+      FROM DUAL)
+    </foreach>
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDO">
+    insert into PMS_AREA_FREIGHT_TEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID,
+      </if>
+      <if test="provinceIds != null">
+        PROVINCE_IDS,
+      </if>
+      <if test="transferFlag != null">
+        TRANSFER_FLAG,
+      </if>
+      <if test="countUnit != null">
+        COUNT_UNIT,
+      </if>
+      <if test="chargeUnit != null">
+        CHARGE_UNIT,
+      </if>
+      <if test="addCount != null">
+        ADD_COUNT,
+      </if>
+      <if test="addCharge != null">
+        ADD_CHARGE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="freightTemplateId != null">
+        #{freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="provinceIds != null">
+        #{provinceIds,jdbcType=VARCHAR},
+      </if>
+      <if test="transferFlag != null">
+        #{transferFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="countUnit != null">
+        #{countUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeUnit != null">
+        #{chargeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="addCount != null">
+        #{addCount,jdbcType=VARCHAR},
+      </if>
+      <if test="addCharge != null">
+        #{addCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDOExample" resultType="java.lang.Long">
+    select count(*) from PMS_AREA_FREIGHT_TEMPLATE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PMS_AREA_FREIGHT_TEMPLATE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID = #{record.freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.provinceIds != null">
+        PROVINCE_IDS = #{record.provinceIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferFlag != null">
+        TRANSFER_FLAG = #{record.transferFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="record.countUnit != null">
+        COUNT_UNIT = #{record.countUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargeUnit != null">
+        CHARGE_UNIT = #{record.chargeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addCount != null">
+        ADD_COUNT = #{record.addCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addCharge != null">
+        ADD_CHARGE = #{record.addCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PMS_AREA_FREIGHT_TEMPLATE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      FREIGHT_TEMPLATE_ID = #{record.freightTemplateId,jdbcType=DECIMAL},
+      PROVINCE_IDS = #{record.provinceIds,jdbcType=VARCHAR},
+      TRANSFER_FLAG = #{record.transferFlag,jdbcType=DECIMAL},
+      COUNT_UNIT = #{record.countUnit,jdbcType=VARCHAR},
+      CHARGE_UNIT = #{record.chargeUnit,jdbcType=VARCHAR},
+      ADD_COUNT = #{record.addCount,jdbcType=VARCHAR},
+      ADD_CHARGE = #{record.addCharge,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDO">
+    update PMS_AREA_FREIGHT_TEMPLATE
+    <set>
+      <if test="freightTemplateId != null">
+        FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL},
+      </if>
+      <if test="provinceIds != null">
+        PROVINCE_IDS = #{provinceIds,jdbcType=VARCHAR},
+      </if>
+      <if test="transferFlag != null">
+        TRANSFER_FLAG = #{transferFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="countUnit != null">
+        COUNT_UNIT = #{countUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeUnit != null">
+        CHARGE_UNIT = #{chargeUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="addCount != null">
+        ADD_COUNT = #{addCount,jdbcType=VARCHAR},
+      </if>
+      <if test="addCharge != null">
+        ADD_CHARGE = #{addCharge,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    <foreach collection="list" item="userlist" index="index" open="begin" close=";end;" separator=";">
+      UPDATE PMS_AREA_FREIGHT_TEMPLATE
+      <set>
+        <if test="freightTemplateId != null">
+          FREIGHT_TEMPLATE_ID = #{userlist.freightTemplateId,jdbcType=DECIMAL},
+        </if>
+        <if test="provinceIds != null">
+          PROVINCE_IDS = #{userlist.provinceIds,jdbcType=VARCHAR},
+        </if>
+        <if test="transferFlag != null">
+          TRANSFER_FLAG = #{userlist.transferFlag,jdbcType=DECIMAL},
+        </if>
+        <if test="countUnit != null">
+          COUNT_UNIT = #{userlist.countUnit,jdbcType=VARCHAR},
+        </if>
+        <if test="chargeUnit != null">
+          CHARGE_UNIT = #{userlist.chargeUnit,jdbcType=VARCHAR},
+        </if>
+        <if test="addCount != null">
+          ADD_COUNT = #{userlist.addCount,jdbcType=VARCHAR},
+        </if>
+        <if test="addCharge != null">
+          ADD_CHARGE = #{userlist.addCharge,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null">
+          CREATE_TIME = #{userlist.createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null">
+          UPDATE_TIME = #{userlist.updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createdBy != null">
+          CREATED_BY = #{userlist.createdBy,jdbcType=VARCHAR},
+        </if>
+        <if test="updatedBy != null">
+          UPDATED_BY = #{userlist.updatedBy,jdbcType=VARCHAR},
+        </if>
+      </set>
+      WHERE ID = #{userlist.id,jdbcType=DECIMAL}
+    </foreach>
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.areafreighttemplate.AreafreighttemplateDO">
+    update PMS_AREA_FREIGHT_TEMPLATE
+    set FREIGHT_TEMPLATE_ID = #{freightTemplateId,jdbcType=DECIMAL},
+      PROVINCE_IDS = #{provinceIds,jdbcType=VARCHAR},
+      TRANSFER_FLAG = #{transferFlag,jdbcType=DECIMAL},
+      COUNT_UNIT = #{countUnit,jdbcType=VARCHAR},
+      CHARGE_UNIT = #{chargeUnit,jdbcType=VARCHAR},
+      ADD_COUNT = #{addCount,jdbcType=VARCHAR},
+      ADD_CHARGE = #{addCharge,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!-- 根据主键id批量删除数据 -->
+  <delete id="deleteBatch" parameterType="java.util.Set">
+    delete from PMS_AREA_FREIGHT_TEMPLATE
+    <where>
+      <if test="areaFreightTemplateIds != null and areaFreightTemplateIds.size()>0">
+        id in
+        <foreach collection="areaFreightTemplateIds" item="id"  open="(" separator="," close=")">
+          #{id,jdbcType=DECIMAL}
+        </foreach>
+      </if>
+    </where>
+  </delete>
+</mapper>

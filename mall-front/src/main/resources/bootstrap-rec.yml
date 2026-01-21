@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: wechat-front
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        prefix: wechat-front-rec
+        username: nacos
+        password: w6#H86a@@2
+        namespace: rec
+        extension-configs:
+          - data-id: gw_config
+            group: spg_base_info
+            refresh: true
+        server-addr: 10.8.228.106:8848,10.8.228.107:8848,10.8.228.108:8848

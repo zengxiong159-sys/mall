@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.cmsmenu.CmsMenuDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.menu.UmsMenuDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="MENU_LEVEL" jdbcType="DECIMAL" property="menuLevel" />
+    <result column="MENU_SORT" jdbcType="DECIMAL" property="menuSort" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="MENU_ICON" jdbcType="VARCHAR" property="menuIcon" />
+    <result column="ROUTE_NAME" jdbcType="VARCHAR" property="routeName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PARENT_ID, MENU_LEVEL, MENU_SORT, MENU_NAME, MENU_ICON, ROUTE_NAME, CREATE_TIME, 
+    UPDATE_TIME, CREATED_BY, UPDATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.menu.UmsMenuDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CMS_MENU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CMS_MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CMS_MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.menu.UmsMenuDOExample">
+    delete from CMS_MENU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.menu.UmsMenuDO">
+    insert into CMS_MENU (ID, PARENT_ID, MENU_LEVEL,
+      MENU_SORT, MENU_NAME, MENU_ICON, 
+      ROUTE_NAME, CREATE_TIME, UPDATE_TIME, 
+      CREATED_BY, UPDATED_BY)
+    values (#{id,jdbcType=DECIMAL}, #{parentId,jdbcType=DECIMAL}, #{menuLevel,jdbcType=DECIMAL}, 
+      #{menuSort,jdbcType=DECIMAL}, #{menuName,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR}, 
+      #{routeName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.menu.UmsMenuDO">
+    insert into CMS_MENU
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="menuLevel != null">
+        MENU_LEVEL,
+      </if>
+      <if test="menuSort != null">
+        MENU_SORT,
+      </if>
+      <if test="menuName != null">
+        MENU_NAME,
+      </if>
+      <if test="menuIcon != null">
+        MENU_ICON,
+      </if>
+      <if test="routeName != null">
+        ROUTE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuLevel != null">
+        #{menuLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="menuSort != null">
+        #{menuSort,jdbcType=DECIMAL},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null">
+        #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="routeName != null">
+        #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.menu.UmsMenuDOExample" resultType="java.lang.Long">
+    select count(*) from CMS_MENU
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CMS_MENU
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuLevel != null">
+        MENU_LEVEL = #{record.menuLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuSort != null">
+        MENU_SORT = #{record.menuSort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuName != null">
+        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuIcon != null">
+        MENU_ICON = #{record.menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.routeName != null">
+        ROUTE_NAME = #{record.routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CMS_MENU
+    set ID = #{record.id,jdbcType=DECIMAL},
+      PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+      MENU_LEVEL = #{record.menuLevel,jdbcType=DECIMAL},
+      MENU_SORT = #{record.menuSort,jdbcType=DECIMAL},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      MENU_ICON = #{record.menuIcon,jdbcType=VARCHAR},
+      ROUTE_NAME = #{record.routeName,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.menu.UmsMenuDO">
+    update CMS_MENU
+    <set>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuLevel != null">
+        MENU_LEVEL = #{menuLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="menuSort != null">
+        MENU_SORT = #{menuSort,jdbcType=DECIMAL},
+      </if>
+      <if test="menuName != null">
+        MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null">
+        MENU_ICON = #{menuIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="routeName != null">
+        ROUTE_NAME = #{routeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.menu.UmsMenuDO">
+    update CMS_MENU
+    set PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      MENU_LEVEL = #{menuLevel,jdbcType=DECIMAL},
+      MENU_SORT = #{menuSort,jdbcType=DECIMAL},
+      MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      MENU_ICON = #{menuIcon,jdbcType=VARCHAR},
+      ROUTE_NAME = #{routeName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

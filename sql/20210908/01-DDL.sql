@@ -1,0 +1,13 @@
+alter table TRADE_TOTAL_REPORT add COUPON_TYPE VARCHAR(2);
+alter table TRADE_TOTAL_REPORT add DISTRIBUTE_WAY VARCHAR(2);
+
+comment on column TRADE_TOTAL_REPORT.COUPON_TYPE is '优惠券类型';
+comment on column TRADE_TOTAL_REPORT.DISTRIBUTE_WAY is '发放方式: 0:用户兑换 1:行方发放';
+
+drop index UNQ_CREATE_TIME_MERCHANT_NO;
+create unique index UNQ_CREATE_TIME_MERCHANT_NO
+	on TRADE_TOTAL_REPORT (CREATE_TIME, MERCHANT_NO, ORDER_TYPE, COUPON_TYPE, DISTRIBUTE_WAY);
+
+alter table TRADE_MARKET_FEE_REPORT   add COUPON_TYPE NUMBER(1) default 1 not null;
+comment on column TRADE_MARKET_FEE_REPORT.COUPON_TYPE is '优惠券类型：0 积分兑换券 1 指定商品免费兑换券';
+

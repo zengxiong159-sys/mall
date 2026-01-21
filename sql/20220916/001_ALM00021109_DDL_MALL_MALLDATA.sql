@@ -1,0 +1,1 @@
+alter table pms_product add  product_attr  number(1) default 0 ;

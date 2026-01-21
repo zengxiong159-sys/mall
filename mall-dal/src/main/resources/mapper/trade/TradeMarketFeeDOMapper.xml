@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.trade.TradeMarketFeeDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.trade.TradeMarketFeeDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="PRODUCT_COUPON" jdbcType="VARCHAR" property="productCoupon" />
+    <result column="COUPON_NAME" jdbcType="VARCHAR" property="couponName" />
+    <result column="PAYMENT_TIME" jdbcType="VARCHAR" property="paymentTime" />
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="coupon_type" jdbcType="DECIMAL" property="couponType"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, MERCHANT_NO, MERCHANT_NAME, PRODUCT_COUPON, COUPON_NAME, PAYMENT_TIME, BATCH_NO, 
+    CREATE_TIME,COUPON_TYPE
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from TRADE_MARKET_FEE_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADE_MARKET_FEE_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TRADE_MARKET_FEE_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDOExample">
+    delete from TRADE_MARKET_FEE_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDO">
+    insert into TRADE_MARKET_FEE_REPORT (ID, MERCHANT_NO, MERCHANT_NAME, 
+      PRODUCT_COUPON, COUPON_NAME, PAYMENT_TIME, 
+      BATCH_NO, CREATE_TIME,coupon_type)
+    values (#{id,jdbcType=DECIMAL}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{productCoupon,jdbcType=VARCHAR}, #{couponName,jdbcType=VARCHAR}, #{paymentTime,jdbcType=VARCHAR}, 
+      #{batchNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{couponType,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDO">
+    insert into TRADE_MARKET_FEE_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="productCoupon != null">
+        PRODUCT_COUPON,
+      </if>
+      <if test="couponName != null">
+        COUPON_NAME,
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME,
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCoupon != null">
+        #{productCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDOExample" resultType="java.lang.Long">
+    select count(*) from TRADE_MARKET_FEE_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRADE_MARKET_FEE_REPORT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCoupon != null">
+        PRODUCT_COUPON = #{record.productCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponName != null">
+        COUPON_NAME = #{record.couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentTime != null">
+        PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRADE_MARKET_FEE_REPORT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      PRODUCT_COUPON = #{record.productCoupon,jdbcType=VARCHAR},
+      COUPON_NAME = #{record.couponName,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDO">
+    update TRADE_MARKET_FEE_REPORT
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCoupon != null">
+        PRODUCT_COUPON = #{productCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null">
+        COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.trade.TradeMarketFeeDO">
+    update TRADE_MARKET_FEE_REPORT
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      PRODUCT_COUPON = #{productCoupon,jdbcType=VARCHAR},
+      COUPON_NAME = #{couponName,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectTradeMarketFeeResult" parameterType="com.qdbank.mall.model.orderreport.OrderReportExportDO" resultMap="BaseResultMap">
+    select
+    *
+    from
+    TRADE_MARKET_FEE_REPORT
+    where
+    PAYMENT_TIME &gt;= to_char(#{startDate,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+    and
+    PAYMENT_TIME &lt;= to_char(#{endDate,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+    <if test="merchantNo != null and merchantNo != ''">
+      and MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+  </select>
+
+  <delete id="deleteByCreateTime" parameterType="java.util.Date">
+    delete  from  TRADE_MARKET_FEE_REPORT
+    where trunc(CREATE_TIME) = trunc(#{createTime,jdbcType=TIMESTAMP})
+  </delete>
+</mapper>

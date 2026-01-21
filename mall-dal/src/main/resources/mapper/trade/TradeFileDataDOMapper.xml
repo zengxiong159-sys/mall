@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.trade.TradeFileDataDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.trade.TradeFileDataDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MER_CODE" jdbcType="VARCHAR" property="merCode" />
+    <result column="MER_NAME" jdbcType="VARCHAR" property="merName" />
+    <result column="ORDER_SN" jdbcType="VARCHAR" property="orderSn" />
+    <result column="CUST_NO" jdbcType="VARCHAR" property="custNo" />
+    <result column="TXN_DATE" jdbcType="VARCHAR" property="txnDate" />
+    <result column="TXN_TIME" jdbcType="VARCHAR" property="txnTime" />
+    <result column="ORDER_STATUS" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="ORDER_AMT" jdbcType="DECIMAL" property="orderAmt" />
+    <result column="EXPEND_POINT" jdbcType="VARCHAR" property="expendPoint" />
+    <result column="EXPEND_AMT" jdbcType="DECIMAL" property="expendAmt" />
+    <result column="ITEM_ID" jdbcType="VARCHAR" property="itemId" />
+    <result column="ADVICE_PRICE" jdbcType="DECIMAL" property="advicePrice" />
+    <result column="RESERVED" jdbcType="VARCHAR" property="reserved" />
+    <result column="PAYMENT_METHOD" jdbcType="VARCHAR" property="paymentMethod" />
+    <result column="POINT_SET_MARK" jdbcType="VARCHAR" property="pointSetMark" />
+    <result column="TX_DT" jdbcType="VARCHAR" property="txDt" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="ORG" jdbcType="VARCHAR" property="org" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, MER_CODE, MER_NAME, ORDER_SN, CUST_NO, TXN_DATE, TXN_TIME, ORDER_STATUS, ORDER_AMT, 
+    EXPEND_POINT, EXPEND_AMT, ITEM_ID, ADVICE_PRICE, RESERVED, PAYMENT_METHOD, POINT_SET_MARK, 
+    TX_DT, CREATE_TIME, ORG
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.trade.TradeFileDataDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from TRADE_FILE_DATA
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADE_FILE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TRADE_FILE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.trade.TradeFileDataDOExample">
+    delete from TRADE_FILE_DATA
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.trade.TradeFileDataDO">
+    insert into TRADE_FILE_DATA (ID, MER_CODE, MER_NAME, 
+      ORDER_SN, CUST_NO, TXN_DATE, 
+      TXN_TIME, ORDER_STATUS, ORDER_AMT, 
+      EXPEND_POINT, EXPEND_AMT, ITEM_ID, 
+      ADVICE_PRICE, RESERVED, PAYMENT_METHOD, 
+      POINT_SET_MARK, TX_DT, CREATE_TIME, 
+      ORG)
+    values (#{id,jdbcType=DECIMAL}, #{merCode,jdbcType=VARCHAR}, #{merName,jdbcType=VARCHAR}, 
+      #{orderSn,jdbcType=VARCHAR}, #{custNo,jdbcType=VARCHAR}, #{txnDate,jdbcType=VARCHAR}, 
+      #{txnTime,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, 
+      #{expendPoint,jdbcType=VARCHAR}, #{expendAmt,jdbcType=DECIMAL}, #{itemId,jdbcType=VARCHAR}, 
+      #{advicePrice,jdbcType=DECIMAL}, #{reserved,jdbcType=VARCHAR}, #{paymentMethod,jdbcType=VARCHAR}, 
+      #{pointSetMark,jdbcType=VARCHAR}, #{txDt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{org,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.trade.TradeFileDataDO">
+    insert into TRADE_FILE_DATA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="merCode != null">
+        MER_CODE,
+      </if>
+      <if test="merName != null">
+        MER_NAME,
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN,
+      </if>
+      <if test="custNo != null">
+        CUST_NO,
+      </if>
+      <if test="txnDate != null">
+        TXN_DATE,
+      </if>
+      <if test="txnTime != null">
+        TXN_TIME,
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS,
+      </if>
+      <if test="orderAmt != null">
+        ORDER_AMT,
+      </if>
+      <if test="expendPoint != null">
+        EXPEND_POINT,
+      </if>
+      <if test="expendAmt != null">
+        EXPEND_AMT,
+      </if>
+      <if test="itemId != null">
+        ITEM_ID,
+      </if>
+      <if test="advicePrice != null">
+        ADVICE_PRICE,
+      </if>
+      <if test="reserved != null">
+        RESERVED,
+      </if>
+      <if test="paymentMethod != null">
+        PAYMENT_METHOD,
+      </if>
+      <if test="pointSetMark != null">
+        POINT_SET_MARK,
+      </if>
+      <if test="txDt != null">
+        TX_DT,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="org != null">
+        ORG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="merCode != null">
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null">
+        #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null">
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="custNo != null">
+        #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="txnDate != null">
+        #{txnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="txnTime != null">
+        #{txnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null">
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="expendPoint != null">
+        #{expendPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="expendAmt != null">
+        #{expendAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="advicePrice != null">
+        #{advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="reserved != null">
+        #{reserved,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null">
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="pointSetMark != null">
+        #{pointSetMark,jdbcType=VARCHAR},
+      </if>
+      <if test="txDt != null">
+        #{txDt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="org != null">
+        #{org,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.trade.TradeFileDataDOExample" resultType="java.lang.Long">
+    select count(*) from TRADE_FILE_DATA
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRADE_FILE_DATA
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merCode != null">
+        MER_CODE = #{record.merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merName != null">
+        MER_NAME = #{record.merName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderSn != null">
+        ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custNo != null">
+        CUST_NO = #{record.custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.txnDate != null">
+        TXN_DATE = #{record.txnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.txnTime != null">
+        TXN_TIME = #{record.txnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null">
+        ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderAmt != null">
+        ORDER_AMT = #{record.orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.expendPoint != null">
+        EXPEND_POINT = #{record.expendPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expendAmt != null">
+        EXPEND_AMT = #{record.expendAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.itemId != null">
+        ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advicePrice != null">
+        ADVICE_PRICE = #{record.advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.reserved != null">
+        RESERVED = #{record.reserved,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentMethod != null">
+        PAYMENT_METHOD = #{record.paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pointSetMark != null">
+        POINT_SET_MARK = #{record.pointSetMark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.txDt != null">
+        TX_DT = #{record.txDt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.org != null">
+        ORG = #{record.org,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRADE_FILE_DATA
+    set ID = #{record.id,jdbcType=DECIMAL},
+      MER_CODE = #{record.merCode,jdbcType=VARCHAR},
+      MER_NAME = #{record.merName,jdbcType=VARCHAR},
+      ORDER_SN = #{record.orderSn,jdbcType=VARCHAR},
+      CUST_NO = #{record.custNo,jdbcType=VARCHAR},
+      TXN_DATE = #{record.txnDate,jdbcType=VARCHAR},
+      TXN_TIME = #{record.txnTime,jdbcType=VARCHAR},
+      ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      ORDER_AMT = #{record.orderAmt,jdbcType=DECIMAL},
+      EXPEND_POINT = #{record.expendPoint,jdbcType=VARCHAR},
+      EXPEND_AMT = #{record.expendAmt,jdbcType=DECIMAL},
+      ITEM_ID = #{record.itemId,jdbcType=VARCHAR},
+      ADVICE_PRICE = #{record.advicePrice,jdbcType=DECIMAL},
+      RESERVED = #{record.reserved,jdbcType=VARCHAR},
+      PAYMENT_METHOD = #{record.paymentMethod,jdbcType=VARCHAR},
+      POINT_SET_MARK = #{record.pointSetMark,jdbcType=VARCHAR},
+      TX_DT = #{record.txDt,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      ORG = #{record.org,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.trade.TradeFileDataDO">
+    update TRADE_FILE_DATA
+    <set>
+      <if test="merCode != null">
+        MER_CODE = #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merName != null">
+        MER_NAME = #{merName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSn != null">
+        ORDER_SN = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="custNo != null">
+        CUST_NO = #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="txnDate != null">
+        TXN_DATE = #{txnDate,jdbcType=VARCHAR},
+      </if>
+      <if test="txnTime != null">
+        TXN_TIME = #{txnTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmt != null">
+        ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="expendPoint != null">
+        EXPEND_POINT = #{expendPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="expendAmt != null">
+        EXPEND_AMT = #{expendAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="itemId != null">
+        ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="advicePrice != null">
+        ADVICE_PRICE = #{advicePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="reserved != null">
+        RESERVED = #{reserved,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null">
+        PAYMENT_METHOD = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="pointSetMark != null">
+        POINT_SET_MARK = #{pointSetMark,jdbcType=VARCHAR},
+      </if>
+      <if test="txDt != null">
+        TX_DT = #{txDt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="org != null">
+        ORG = #{org,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.trade.TradeFileDataDO">
+    update TRADE_FILE_DATA
+    set MER_CODE = #{merCode,jdbcType=VARCHAR},
+      MER_NAME = #{merName,jdbcType=VARCHAR},
+      ORDER_SN = #{orderSn,jdbcType=VARCHAR},
+      CUST_NO = #{custNo,jdbcType=VARCHAR},
+      TXN_DATE = #{txnDate,jdbcType=VARCHAR},
+      TXN_TIME = #{txnTime,jdbcType=VARCHAR},
+      ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      ORDER_AMT = #{orderAmt,jdbcType=DECIMAL},
+      EXPEND_POINT = #{expendPoint,jdbcType=VARCHAR},
+      EXPEND_AMT = #{expendAmt,jdbcType=DECIMAL},
+      ITEM_ID = #{itemId,jdbcType=VARCHAR},
+      ADVICE_PRICE = #{advicePrice,jdbcType=DECIMAL},
+      RESERVED = #{reserved,jdbcType=VARCHAR},
+      PAYMENT_METHOD = #{paymentMethod,jdbcType=VARCHAR},
+      POINT_SET_MARK = #{pointSetMark,jdbcType=VARCHAR},
+      TX_DT = #{txDt,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ORG = #{org,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <delete id="deleteByCreateTime" parameterType="java.util.Date">
+    delete from TRADE_FILE_DATA WHERE to_char(CREATE_TIME,'yyyy-MM-dd') = to_char(#{createTime,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+  </delete>
+</mapper>

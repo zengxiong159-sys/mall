@@ -1,0 +1,12 @@
+COMMENT ON TABLE oms_download IS '异步导出下载表';
+COMMENT ON COLUMN oms_download.ID IS '主键';
+COMMENT ON COLUMN oms_download.merchant_no IS '商户号';
+COMMENT ON COLUMN oms_download.file_name IS '文件名称';
+COMMENT ON COLUMN oms_download.file_url IS '文件下载url';
+COMMENT ON COLUMN oms_download.file_type IS '文件类型：0 支付订单 1 退款订单 2 指定商品免费兑换券 3 行发积分兑换券 4 指定商品现金优惠券 5指定专区现金优惠券';
+COMMENT ON COLUMN oms_download.create_time IS '创建时间';
+COMMENT ON COLUMN oms_download.update_time IS '修改时间';
+COMMENT ON COLUMN oms_download.status IS '状态：0 处理中 1 已完成 2 已清理 3 文件生成失败';
+COMMENT ON COLUMN oms_download.file_group IS '文件分组';
+COMMENT ON COLUMN oms_download.file_path IS '文件服务器路径';
+COMMENT ON COLUMN oms_download.created_by IS '创建人';

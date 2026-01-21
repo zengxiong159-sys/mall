@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_HOME" value="/home/mall/logs" />
+    <property name="FILESIZE" value="100MB" />
+    <property name="MAXHISTORY" value="30" />
+    <property name="pattern" value="[TRACEID:%X{traceId}] %d{HH:mm:ss.SSS} %-5level %class{-1}.%M()/%L - %msg%xEx%n"/>
+
+    <!-- 控制台输出-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %X{openid} %X{actionid} %X{traceId} %logger{36} - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- 向日志文件中输出，按日期和文件大小 -->
+    <appender name="ROLLINGFILES" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder charset="utf-8">
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %X{openid} %X{actionid} %X{traceId} %logger{36} - %m%n
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/mall-task-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>${MAXHISTORY}</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${FILESIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <!-- SQL相关日志输出-->
+    <logger name="org.mybatis.spring" level="INFO" additivity="false" />
+    <logger name="JDBC" level="INFO" additivity="false" />
+    <!-- Logger 根目录 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ROLLINGFILES" />
+    </root>
+</configuration>

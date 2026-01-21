@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.download.DownloadDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.download.DownloadDO">
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="MERCHANT_NO" jdbcType="NUMERIC" property="merchantNo" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="FILE_TYPE" jdbcType="NUMERIC" property="fileType" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="STATUS" jdbcType="NUMERIC" property="status" />
+    <result column="FILE_GROUP" jdbcType="VARCHAR" property="fileGroup" />
+    <result column="FILE_PATH" jdbcType="VARCHAR" property="filePath" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, MERCHANT_NO, FILE_NAME, FILE_URL, FILE_TYPE, CREATE_TIME, UPDATE_TIME, STATUS, 
+    FILE_GROUP, FILE_PATH, CREATED_BY
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.download.DownloadDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from OMS_DOWNLOAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from OMS_DOWNLOAD
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from OMS_DOWNLOAD
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.download.DownloadDOExample">
+    delete from OMS_DOWNLOAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.download.DownloadDO">
+    insert into OMS_DOWNLOAD (ID, MERCHANT_NO, FILE_NAME, 
+      FILE_URL, FILE_TYPE, CREATE_TIME, 
+      UPDATE_TIME, STATUS, FILE_GROUP, 
+      FILE_PATH, CREATED_BY)
+    values (#{id,jdbcType=NUMERIC}, #{merchantNo,jdbcType=NUMERIC}, #{fileName,jdbcType=VARCHAR}, 
+      #{fileUrl,jdbcType=VARCHAR}, #{fileType,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=NUMERIC}, #{fileGroup,jdbcType=VARCHAR}, 
+      #{filePath,jdbcType=VARCHAR}, #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.download.DownloadDO">
+    insert into OMS_DOWNLOAD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="fileUrl != null">
+        FILE_URL,
+      </if>
+      <if test="fileType != null">
+        FILE_TYPE,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="fileGroup != null">
+        FILE_GROUP,
+      </if>
+      <if test="filePath != null">
+        FILE_PATH,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=NUMERIC},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=NUMERIC},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="fileGroup != null">
+        #{fileGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.download.DownloadDOExample" resultType="java.lang.Long">
+    select count(*) from OMS_DOWNLOAD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OMS_DOWNLOAD
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=NUMERIC},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fileName != null">
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileUrl != null">
+        FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileType != null">
+        FILE_TYPE = #{record.fileType,jdbcType=NUMERIC},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=NUMERIC},
+      </if>
+      <if test="record.fileGroup != null">
+        FILE_GROUP = #{record.fileGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filePath != null">
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update OMS_DOWNLOAD
+    set ID = #{record.id,jdbcType=NUMERIC},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=NUMERIC},
+      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      FILE_URL = #{record.fileUrl,jdbcType=VARCHAR},
+      FILE_TYPE = #{record.fileType,jdbcType=NUMERIC},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=NUMERIC},
+      FILE_GROUP = #{record.fileGroup,jdbcType=VARCHAR},
+      FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.download.DownloadDO">
+    update OMS_DOWNLOAD
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=NUMERIC},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        FILE_TYPE = #{fileType,jdbcType=NUMERIC},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=NUMERIC},
+      </if>
+      <if test="fileGroup != null">
+        FILE_GROUP = #{fileGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null">
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.download.DownloadDO">
+    update OMS_DOWNLOAD
+    set MERCHANT_NO = #{merchantNo,jdbcType=NUMERIC},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+      FILE_TYPE = #{fileType,jdbcType=NUMERIC},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=NUMERIC},
+      FILE_GROUP = #{fileGroup,jdbcType=VARCHAR},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

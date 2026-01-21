@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.trade.TradeIntegrationDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.trade.TradeIntegrationDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+    <result column="NEED_PAY_INTEGRATION" jdbcType="VARCHAR" property="needPayIntegration" />
+    <result column="NOT_NEED_PAY_INTEGRATION" jdbcType="VARCHAR" property="notNeedPayIntegration" />
+    <result column="INTEGRATION_COUPON" jdbcType="VARCHAR" property="integrationCoupon" />
+    <result column="NEED_PAY_TOTAL_INTEGRATION" jdbcType="VARCHAR" property="needPayTotalIntegration" />
+    <result column="TOTAL_INTEGRATION" jdbcType="VARCHAR" property="totalIntegration" />
+    <result column="PAYMENT_TIME" jdbcType="VARCHAR" property="paymentTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, MERCHANT_NO, MERCHANT_NAME, NEED_PAY_INTEGRATION, NOT_NEED_PAY_INTEGRATION, INTEGRATION_COUPON, 
+    NEED_PAY_TOTAL_INTEGRATION, TOTAL_INTEGRATION, PAYMENT_TIME, CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from TRADE_INTEGRATION_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADE_INTEGRATION_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from TRADE_INTEGRATION_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDOExample">
+    delete from TRADE_INTEGRATION_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDO">
+    insert into TRADE_INTEGRATION_REPORT (ID, MERCHANT_NO, MERCHANT_NAME, 
+      NEED_PAY_INTEGRATION, NOT_NEED_PAY_INTEGRATION, 
+      INTEGRATION_COUPON, NEED_PAY_TOTAL_INTEGRATION, 
+      TOTAL_INTEGRATION, PAYMENT_TIME, CREATE_TIME
+      )
+    values (#{id,jdbcType=DECIMAL}, #{merchantNo,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{needPayIntegration,jdbcType=VARCHAR}, #{notNeedPayIntegration,jdbcType=VARCHAR}, 
+      #{integrationCoupon,jdbcType=VARCHAR}, #{needPayTotalIntegration,jdbcType=VARCHAR}, 
+      #{totalIntegration,jdbcType=VARCHAR}, #{paymentTime,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDO">
+    insert into TRADE_INTEGRATION_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="merchantNo != null">
+        MERCHANT_NO,
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME,
+      </if>
+      <if test="needPayIntegration != null">
+        NEED_PAY_INTEGRATION,
+      </if>
+      <if test="notNeedPayIntegration != null">
+        NOT_NEED_PAY_INTEGRATION,
+      </if>
+      <if test="integrationCoupon != null">
+        INTEGRATION_COUPON,
+      </if>
+      <if test="needPayTotalIntegration != null">
+        NEED_PAY_TOTAL_INTEGRATION,
+      </if>
+      <if test="totalIntegration != null">
+        TOTAL_INTEGRATION,
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="needPayIntegration != null">
+        #{needPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="notNeedPayIntegration != null">
+        #{notNeedPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="integrationCoupon != null">
+        #{integrationCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="needPayTotalIntegration != null">
+        #{needPayTotalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="totalIntegration != null">
+        #{totalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDOExample" resultType="java.lang.Long">
+    select count(*) from TRADE_INTEGRATION_REPORT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TRADE_INTEGRATION_REPORT
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantNo != null">
+        MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantName != null">
+        MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.needPayIntegration != null">
+        NEED_PAY_INTEGRATION = #{record.needPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notNeedPayIntegration != null">
+        NOT_NEED_PAY_INTEGRATION = #{record.notNeedPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.integrationCoupon != null">
+        INTEGRATION_COUPON = #{record.integrationCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.needPayTotalIntegration != null">
+        NEED_PAY_TOTAL_INTEGRATION = #{record.needPayTotalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalIntegration != null">
+        TOTAL_INTEGRATION = #{record.totalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentTime != null">
+        PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TRADE_INTEGRATION_REPORT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      MERCHANT_NO = #{record.merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{record.merchantName,jdbcType=VARCHAR},
+      NEED_PAY_INTEGRATION = #{record.needPayIntegration,jdbcType=VARCHAR},
+      NOT_NEED_PAY_INTEGRATION = #{record.notNeedPayIntegration,jdbcType=VARCHAR},
+      INTEGRATION_COUPON = #{record.integrationCoupon,jdbcType=VARCHAR},
+      NEED_PAY_TOTAL_INTEGRATION = #{record.needPayTotalIntegration,jdbcType=VARCHAR},
+      TOTAL_INTEGRATION = #{record.totalIntegration,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{record.paymentTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDO">
+    update TRADE_INTEGRATION_REPORT
+    <set>
+      <if test="merchantNo != null">
+        MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="needPayIntegration != null">
+        NEED_PAY_INTEGRATION = #{needPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="notNeedPayIntegration != null">
+        NOT_NEED_PAY_INTEGRATION = #{notNeedPayIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="integrationCoupon != null">
+        INTEGRATION_COUPON = #{integrationCoupon,jdbcType=VARCHAR},
+      </if>
+      <if test="needPayTotalIntegration != null">
+        NEED_PAY_TOTAL_INTEGRATION = #{needPayTotalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="totalIntegration != null">
+        TOTAL_INTEGRATION = #{totalIntegration,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentTime != null">
+        PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.trade.TradeIntegrationDO">
+    update TRADE_INTEGRATION_REPORT
+    set MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+      MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+      NEED_PAY_INTEGRATION = #{needPayIntegration,jdbcType=VARCHAR},
+      NOT_NEED_PAY_INTEGRATION = #{notNeedPayIntegration,jdbcType=VARCHAR},
+      INTEGRATION_COUPON = #{integrationCoupon,jdbcType=VARCHAR},
+      NEED_PAY_TOTAL_INTEGRATION = #{needPayTotalIntegration,jdbcType=VARCHAR},
+      TOTAL_INTEGRATION = #{totalIntegration,jdbcType=VARCHAR},
+      PAYMENT_TIME = #{paymentTime,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectTradeIntegrationResult" parameterType="com.qdbank.mall.model.orderreport.OrderReportExportDO" resultMap="BaseResultMap">
+    select
+    *
+    from
+    TRADE_INTEGRATION_REPORT
+    where
+    PAYMENT_TIME &gt;= to_char(#{startDate,jdbcType=TIMESTAMP},'yyyy-MM-dd')
+    and
+    PAYMENT_TIME &lt;= to_char(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd')
+    <if test="merchantNo != null and merchantNo !=''">
+      and MERCHANT_NO = #{merchantNo,jdbcType=DECIMAL}
+    </if>
+  </select>
+
+  <delete id="deleteByCreateTime" parameterType="java.util.Date">
+    delete  from  TRADE_INTEGRATION_REPORT
+    where trunc(CREATE_TIME) = trunc(#{createTime,jdbcType=TIMESTAMP})
+  </delete>
+</mapper>

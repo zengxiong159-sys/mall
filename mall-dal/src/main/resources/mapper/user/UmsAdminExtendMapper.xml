@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.user.UmsAdminExtendMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.user.UserInfoDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="deptno" jdbcType="INTEGER" property="deptno" />
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+    <result column="deptname" jdbcType="VARCHAR" property="deptname"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, username, password,  email, nick_name, note, create_time, login_time, status,deptno,update_time,mobile,created_by,updated_by,deptname
+  </sql>
+
+
+  <select id="selectUserLikeQuery" parameterType="com.qdbank.mall.model.user.UserInfoDO" resultMap="BaseResultMap">
+    select
+    a.*,
+    a.nick_name as nickName,
+    a.login_time as loginTime,
+    a.create_time as createTime,
+    a.created_by as createdBy,
+    a.updated_by as updatedBy,
+    a.update_time as updateTime,
+    d.name as deptname
+    from ums_admin a left join  ums_department d
+    on a.deptno = d.id
+    where 1=1
+    <if test="nickName != null and nickName != ''">
+      and a.nick_name like  '%' || #{nickName,jdbcType=VARCHAR} || '%'
+    </if>
+    <if test="id != null">
+      and a.id =#{id,jdbcType = BIGINT}
+    </if>
+    <if test="username != null and username != ''">
+      and a.username =#{username,jdbcType=VARCHAR}
+    </if>
+    <if test="deptno != null">
+      and a.deptno =#{deptno,jdbcType =INTEGER}
+    </if>
+    <if test="status != null">
+      and a.status =#{status,jdbcType =INTEGER}
+    </if>
+    order by a.create_time desc
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.qdbank.mall.model.user.UserInfoDO">
+    select
+    a.*,
+     a.nick_name as nickName,
+     a.login_time as loginTime,
+     a.create_time as createTime,
+     a.created_by as createdBy,
+     a.updated_by as updatedBy,
+     d.name as deptname
+    from ums_admin a , ums_department d
+    where a.id = #{id,jdbcType=BIGINT} and a.deptno = d.id
+  </select>
+
+  <select id="selectCountByDeptNo" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(0) from ums_admin where deptno = #{deptNo,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectRoleNamesById" parameterType="java.lang.Long" resultType="java.lang.String">
+    select distinct u.ROLE_NAME from
+     ums_role u
+    left join ums_admin_role_relation r on r.role_id = u.id
+    where
+        r.admin_id = #{adminId,jdbcType=BIGINT}
+  </select>
+</mapper>

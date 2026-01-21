@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qdbank.mall.mapper.prefecture.PrefectureDOMapper">
+  <resultMap id="BaseResultMap" type="com.qdbank.mall.model.prefecture.PrefectureDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PREFECTURE_NAME" jdbcType="VARCHAR" property="prefectureName" />
+    <result column="PREFECTURE_DECRIPTION" jdbcType="VARCHAR" property="prefectureDecription" />
+    <result column="PREFECTURE_LEVEL" jdbcType="DECIMAL" property="prefectureLevel" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="PREFECTURE_TYPE" jdbcType="DECIMAL" property="prefectureType"/>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, PREFECTURE_NAME, PREFECTURE_DECRIPTION, PREFECTURE_LEVEL, START_TIME,END_TIME, STATUS,
+    CREATE_TIME, UPDATE_TIME, CREATED_BY, UPDATED_BY,PREFECTURE_TYPE
+  </sql>
+
+  <resultMap id="PrefectureInfoResultMap" type="com.qdbank.mall.model.prefecture.PrefectureInfoDO">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="PREFECTURE_NAME" jdbcType="VARCHAR" property="prefectureName" />
+    <result column="PREFECTURE_DECRIPTION" jdbcType="VARCHAR" property="prefectureDecription" />
+    <result column="PREFECTURE_LEVEL" jdbcType="DECIMAL" property="prefectureLevel" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="CREATED_BY" jdbcType="VARCHAR" property="createdBy" />
+    <result column="UPDATED_BY" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="PREFECTURE_TYPE" jdbcType="DECIMAL" property="prefectureType"/>
+    <collection property="productSkuDOS" ofType="com.qdbank.mall.model.product.ProductSkuDO">
+      <id column="pro_PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+      <result column="pro_MERCHANT_NO" jdbcType="DECIMAL" property="merchantNo" />
+      <result column="pro_MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+      <result column="pro_MAIL_PIC_URL" jdbcType="VARCHAR" property="mailPicUrl" />
+      <result column="pro_CATEGORY_ID_1" jdbcType="DECIMAL" property="categoryId1" />
+      <result column="pro_CATEGORY_ID_2" jdbcType="DECIMAL" property="categoryId2" />
+      <result column="pro_CATEGORY_ID_3" jdbcType="DECIMAL" property="categoryId3" />
+      <result column="pro_CATEGORY_ID_4" jdbcType="DECIMAL" property="categoryId4" />
+      <result column="pro_PUBLISH_STATUS" jdbcType="DECIMAL" property="publishStatus" />
+      <result column="pro_PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+      <result column="pro_PRODUCT_DESCRIPTION" jdbcType="VARCHAR" property="productDescription" />
+      <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+      <result column="pro_product_level" jdbcType="DECIMAL" property="productLevel"/>
+      <collection property="skustocks" ofType="com.qdbank.mall.model.skustock.SkustockDO">
+        <id column="sku_PRODUCT_SKU_ID" jdbcType="DECIMAL" property="productSkuId" />
+        <result column="sku_PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+        <result column="sku_MARKET_PRICE" jdbcType="DECIMAL" property="marketPrice" />
+        <result column="sku_ADVICE_PRICE" jdbcType="DECIMAL" property="advicePrice" />
+        <result column="sku_PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+        <result column="sku_PRODUCT_CASH" jdbcType="DECIMAL" property="productCash" />
+        <result column="sku_PRODUCT_INTEGRATION" jdbcType="DECIMAL" property="productIntegration" />
+        <result column="sku_PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+        <result column="sku_PROMOTION_START_TIME" jdbcType="TIMESTAMP" property="promotionStartTime" />
+        <result column="sku_PROMOTION_END_TIME" jdbcType="TIMESTAMP" property="promotionEndTime" />
+        <result column="sku_PROMOTION_PER_LIMIT" jdbcType="DECIMAL" property="promotionPerLimit" />
+        <result column="sku_INTEGRATION_PAY_FLAG" jdbcType="DECIMAL" property="integrationPayFlag" />
+        <result column="sku_PRODUCT_STOCK" jdbcType="DECIMAL" property="productStock" />
+        <result column="sku_SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+        <result column="sku_PRODUCT_LOCK_STOCK" jdbcType="DECIMAL" property="productLockStock" />
+        <result column="sku_PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+      </collection>
+    </collection>
+  </resultMap>
+
+
+  <resultMap id="PrefectureProductInfoResultMap" type="com.qdbank.mall.model.product.ProductSkuDO">
+      <id column="pro_PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+      <result column="pro_MERCHANT_NO" jdbcType="DECIMAL" property="merchantNo" />
+      <result column="pro_MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName" />
+      <result column="pro_MAIL_PIC_URL" jdbcType="VARCHAR" property="mailPicUrl" />
+      <result column="pro_CATEGORY_ID_1" jdbcType="DECIMAL" property="categoryId1" />
+      <result column="pro_CATEGORY_ID_2" jdbcType="DECIMAL" property="categoryId2" />
+      <result column="pro_CATEGORY_ID_3" jdbcType="DECIMAL" property="categoryId3" />
+      <result column="pro_CATEGORY_ID_4" jdbcType="DECIMAL" property="categoryId4" />
+      <result column="pro_PUBLISH_STATUS" jdbcType="DECIMAL" property="publishStatus" />
+      <result column="pro_PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+      <result column="pro_product_level" jdbcType="DECIMAL" property="productLevel"/>
+      <result column="pro_PRODUCT_DESCRIPTION" jdbcType="VARCHAR" property="productDescription" />
+      <result column="PRODUCT_DETAIL" jdbcType="CLOB" property="productDetail" />
+      <collection property="skustocks" ofType="com.qdbank.mall.model.skustock.SkustockDO" javaType="java.util.ArrayList"
+                  select="com.qdbank.mall.mapper.skustock.SkustockDOMapper.selectAllByProductId"  column="pro_PRODUCT_ID">
+        <id column="PRODUCT_SKU_ID" jdbcType="DECIMAL" property="productSkuId" />
+        <result column="PRODUCT_ID" jdbcType="DECIMAL" property="productId" />
+        <result column="MARKET_PRICE" jdbcType="DECIMAL" property="marketPrice" />
+        <result column="ADVICE_PRICE" jdbcType="DECIMAL" property="advicePrice" />
+        <result column="PRODUCT_PRICE" jdbcType="DECIMAL" property="productPrice" />
+        <result column="PRODUCT_CASH" jdbcType="DECIMAL" property="productCash" />
+        <result column="PRODUCT_INTEGRATION" jdbcType="DECIMAL" property="productIntegration" />
+        <result column="PRODUCT_NAME" jdbcType="VARCHAR" property="productName" />
+        <result column="PROMOTION_START_TIME" jdbcType="TIMESTAMP" property="promotionStartTime" />
+        <result column="PROMOTION_END_TIME" jdbcType="TIMESTAMP" property="promotionEndTime" />
+        <result column="PROMOTION_PER_LIMIT" jdbcType="DECIMAL" property="promotionPerLimit" />
+        <result column="INTEGRATION_PAY_FLAG" jdbcType="DECIMAL" property="integrationPayFlag" />
+        <result column="PRODUCT_STOCK" jdbcType="DECIMAL" property="productStock" />
+        <result column="SKU_PIC_URL" jdbcType="VARCHAR" property="skuPicUrl" />
+        <result column="PRODUCT_LOCK_STOCK" jdbcType="DECIMAL" property="productLockStock" />
+        <result column="PRODUCT_SP_DATA" jdbcType="VARCHAR" property="productSpData" />
+        <result column="MAX_INTEGRAL_DEDUCT" jdbcType="DECIMAL" property="maxIntegralDeduct" />
+      </collection>
+  </resultMap>
+
+
+
+  <select id="selectByExample" parameterType="com.qdbank.mall.model.prefecture.PrefectureDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CMS_PREFECTURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CMS_PREFECTURE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CMS_PREFECTURE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qdbank.mall.model.prefecture.PrefectureDOExample">
+    delete from CMS_PREFECTURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    insert into CMS_PREFECTURE (ID, PREFECTURE_NAME, PREFECTURE_DECRIPTION, 
+      PREFECTURE_LEVEL, START_TIME,END_TIME, STATUS,
+      CREATE_TIME, UPDATE_TIME, CREATED_BY, 
+      UPDATED_BY,PREFECTURE_TYPE)
+    values (#{id,jdbcType=DECIMAL}, #{prefectureName,jdbcType=VARCHAR}, #{prefectureDecription,jdbcType=VARCHAR}, 
+      #{prefectureLevel,jdbcType=DECIMAL}, #{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},  #{status,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, 
+      #{updatedBy,jdbcType=VARCHAR},#{prefectureType,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    insert into CMS_PREFECTURE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="prefectureName != null">
+        PREFECTURE_NAME,
+      </if>
+      <if test="prefectureDecription != null">
+        PREFECTURE_DECRIPTION,
+      </if>
+      <if test="prefectureLevel != null">
+        PREFECTURE_LEVEL,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="prefectureName != null">
+        #{prefectureName,jdbcType=VARCHAR},
+      </if>
+      <if test="prefectureDecription != null">
+        #{prefectureDecription,jdbcType=VARCHAR},
+      </if>
+      <if test="prefectureLevel != null">
+        #{prefectureLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qdbank.mall.model.prefecture.PrefectureDOExample" resultType="java.lang.Long">
+    select count(*) from CMS_PREFECTURE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CMS_PREFECTURE
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.prefectureName != null">
+        PREFECTURE_NAME = #{record.prefectureName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prefectureDecription != null">
+        PREFECTURE_DECRIPTION = #{record.prefectureDecription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prefectureLevel != null">
+        PREFECTURE_LEVEL = #{record.prefectureLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.startTime != null">
+        START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null">
+        CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedBy != null">
+        UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CMS_PREFECTURE
+    set ID = #{record.id,jdbcType=DECIMAL},
+      PREFECTURE_NAME = #{record.prefectureName,jdbcType=VARCHAR},
+      PREFECTURE_DECRIPTION = #{record.prefectureDecription,jdbcType=VARCHAR},
+      PREFECTURE_LEVEL = #{record.prefectureLevel,jdbcType=DECIMAL},
+      START_TIME = #{record.startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{record.createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{record.updatedBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    update CMS_PREFECTURE
+    <set>
+      <if test="prefectureName != null">
+        PREFECTURE_NAME = #{prefectureName,jdbcType=VARCHAR},
+      </if>
+      PREFECTURE_DECRIPTION = #{prefectureDecription,jdbcType=VARCHAR},
+      <if test="prefectureLevel != null">
+        PREFECTURE_LEVEL = #{prefectureLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    update CMS_PREFECTURE
+    set PREFECTURE_NAME = #{prefectureName,jdbcType=VARCHAR},
+      PREFECTURE_DECRIPTION = #{prefectureDecription,jdbcType=VARCHAR},
+      PREFECTURE_LEVEL = #{prefectureLevel,jdbcType=DECIMAL},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      UPDATED_BY = #{updatedBy,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+<select id="selectPrefectureInfo" resultMap="PrefectureInfoResultMap" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+select
+  c.*,
+  p.PRODUCT_ID as pro_PRODUCT_ID,
+  p.MERCHANT_NO as pro_MERCHANT_NO,
+  p.MERCHANT_NAME as pro_MERCHANT_NAME,
+  p.MAIL_PIC_URL as pro_MAIL_PIC_URL,
+  p.CATEGORY_ID_1 as pro_CATEGORY_ID_1,
+  p.CATEGORY_ID_2 as pro_CATEGORY_ID_2,
+  p.CATEGORY_ID_3 as pro_CATEGORY_ID_3,
+  p.CATEGORY_ID_4 as pro_CATEGORY_ID_4,
+  p.PRODUCT_NAME as pro_PRODUCT_NAME,
+  p.PUBLISH_STATUS as pro_PUBLISH_STATUS,
+  p.PRODUCT_DETAIL as pro_PRODUCT_DETAIL,
+  s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+  s.PRODUCT_ID as sku_PRODUCT_ID,
+  s.MARKET_PRICE as sku_MARKET_PRICE,
+  s.ADVICE_PRICE as sku_ADVICE_PRICE,
+  s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+  s.PRODUCT_CASH as sku_PRODUCT_CASH,
+  s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+  s.PRODUCT_NAME as sku_PRODUCT_NAME,
+  s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+  s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+  s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+  s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+  s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+  s.SKU_PIC_URL as sku_SKU_PIC_URL,
+  s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+  s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA,
+  r.product_level as pro_product_level
+  from
+  CMS_PREFECTURE c
+  left join CMS_PREFECTURE_STOCK_RELATION r on c.id = r.PREFECTURE_ID
+  left join pms_product p on p.product_id = r.PRODUCT_ID
+  left join pms_sku_stock s on p.product_id = s.product_id
+  where
+  p.PUBLISH_STATUS = 2
+  and
+  c.id = #{id,jdbcType=DECIMAL}
+  and
+  s.status = 0
+</select>
+
+
+  <select id="selectPrefectureInfoByParams" resultMap="PrefectureInfoResultMap" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    select
+    c.*,
+    p.PRODUCT_ID as pro_PRODUCT_ID,
+    p.MERCHANT_NO as pro_MERCHANT_NO,
+    p.MERCHANT_NAME as pro_MERCHANT_NAME,
+    p.MAIL_PIC_URL as pro_MAIL_PIC_URL,
+    p.CATEGORY_ID_1 as pro_CATEGORY_ID_1,
+    p.CATEGORY_ID_2 as pro_CATEGORY_ID_2,
+    p.CATEGORY_ID_3 as pro_CATEGORY_ID_3,
+    p.CATEGORY_ID_4 as pro_CATEGORY_ID_4,
+    p.PRODUCT_NAME as pro_PRODUCT_NAME,
+    <include refid="com.qdbank.mall.mapper.product.ProductDOMapper.Blob_Column_List"/>,
+    p.PUBLISH_STATUS as pro_PUBLISH_STATUS,
+    s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+    s.PRODUCT_ID as sku_PRODUCT_ID,
+    s.MARKET_PRICE as sku_MARKET_PRICE,
+    s.ADVICE_PRICE as sku_ADVICE_PRICE,
+    s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+    s.PRODUCT_CASH as sku_PRODUCT_CASH,
+    s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+    s.PRODUCT_NAME as sku_PRODUCT_NAME,
+    s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+    s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+    s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+    s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+    s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+    s.SKU_PIC_URL as sku_SKU_PIC_URL,
+    s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+    s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA
+    from
+    CMS_PREFECTURE c
+    left join CMS_PREFECTURE_STOCK_RELATION r on c.id = r.PREFECTURE_ID
+    left join pms_product p on p.product_id = r.PRODUCT_ID
+    left join pms_sku_stock s on p.product_id = s.product_id
+    where
+            p.PUBLISH_STATUS = 2
+    <if test="id != null and id != ''">
+      and c.ID =#{id,jdbcType=DECIMAL}
+    </if>
+    <if test="prefectureName != null and prefectureName != ''">
+      and c.PREFECTURE_NAME like concat('%',#{prefectureName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="startTime != null">
+      and c.START_TIME &gt;= #{startTime,jdbcType=TIMESTAMP},
+    </if>
+    <if test="endTime != null">
+      and c.END_TIME &lt;= #{endTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="status != null">
+      and c.status = #{status,jdbcType=DECIMAL}
+    </if>
+  </select>
+
+
+
+ <!-- <select id="selectPrefectureProductInfoByParams" resultMap="PrefectureProductInfoResultMap" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    select
+    p.PRODUCT_ID as pro_PRODUCT_ID,
+    p.MERCHANT_NO as pro_MERCHANT_NO,
+    p.MERCHANT_NAME as pro_MERCHANT_NAME,
+    p.MAIL_PIC_URL as pro_MAIL_PIC_URL,
+    p.CATEGORY_ID_1 as pro_CATEGORY_ID_1,
+    p.CATEGORY_ID_2 as pro_CATEGORY_ID_2,
+    p.CATEGORY_ID_3 as pro_CATEGORY_ID_3,
+    p.CATEGORY_ID_4 as pro_CATEGORY_ID_4,
+    p.PRODUCT_NAME as pro_PRODUCT_NAME,
+    <include refid="com.qdbank.mall.mapper.product.ProductDOMapper.Blob_Column_List"/>,
+    p.PUBLISH_STATUS as pro_PUBLISH_STATUS,
+    s.PRODUCT_SKU_ID as sku_PRODUCT_SKU_ID,
+    s.PRODUCT_ID as sku_PRODUCT_ID,
+    s.MARKET_PRICE as sku_MARKET_PRICE,
+    s.ADVICE_PRICE as sku_ADVICE_PRICE,
+    s.PRODUCT_PRICE as sku_PRODUCT_PRICE,
+    s.PRODUCT_CASH as sku_PRODUCT_CASH,
+    s.PRODUCT_INTEGRATION as sku_PRODUCT_INTEGRATION,
+    s.PRODUCT_NAME as sku_PRODUCT_NAME,
+    s.PROMOTION_START_TIME as sku_PROMOTION_START_TIME,
+    s.PROMOTION_END_TIME as sku_PROMOTION_END_TIME,
+    s.PROMOTION_PER_LIMIT as sku_PROMOTION_PER_LIMIT,
+    s.INTEGRATION_PAY_FLAG as sku_INTEGRATION_PAY_FLAG,
+    s.PRODUCT_STOCK as sku_PRODUCT_STOCK,
+    s.SKU_PIC_URL as sku_SKU_PIC_URL,
+    s.PRODUCT_LOCK_STOCK as sku_PRODUCT_LOCK_STOCK,
+    s.PRODUCT_SP_DATA as sku_PRODUCT_SP_DATA
+    from
+    CMS_PREFECTURE_STOCK_RELATION r
+    left join pms_product p on p.product_id = r.PRODUCT_ID
+    left join pms_sku_stock s on p.product_id = s.product_id
+    where
+    p.PUBLISH_STATUS = 2
+    <if test="id != null and id != ''">
+      and r.PREFECTURE_ID =#{id,jdbcType=DECIMAL}
+    </if>
+  </select>-->
+
+
+
+  <select id="selectPrefectureProductInfoByParams" resultMap="PrefectureProductInfoResultMap" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    select
+    r.product_level as pro_product_level,
+    r.PRODUCT_ID as pro_PRODUCT_ID,
+    p.MERCHANT_NO as pro_MERCHANT_NO,
+    p.MERCHANT_NAME as pro_MERCHANT_NAME,
+    p.MAIL_PIC_URL as pro_MAIL_PIC_URL,
+    p.CATEGORY_ID_1 as pro_CATEGORY_ID_1,
+    p.CATEGORY_ID_2 as pro_CATEGORY_ID_2,
+    p.CATEGORY_ID_3 as pro_CATEGORY_ID_3,
+    p.CATEGORY_ID_4 as pro_CATEGORY_ID_4,
+    p.PRODUCT_NAME as pro_PRODUCT_NAME,
+    <include refid="com.qdbank.mall.mapper.product.ProductDOMapper.Blob_Column_List"/>,
+    p.PUBLISH_STATUS as pro_PUBLISH_STATUS,
+    p.UPDATE_TIME as pro_UPDATE_TIME
+    from
+    CMS_PREFECTURE_STOCK_RELATION r
+    left join pms_product p on p.product_id = r.PRODUCT_ID
+    where
+    p.PUBLISH_STATUS = 2
+    <if test="id != null and id != ''">
+      and r.PREFECTURE_ID =#{id,jdbcType=DECIMAL}
+    </if>
+    order by  pro_product_level asc , pro_UPDATE_TIME desc
+  </select>
+
+  <update id="updateStatusByPrimaryKey" parameterType="com.qdbank.mall.model.prefecture.PrefectureDO">
+    update CMS_PREFECTURE
+    <set>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateExpireStatus">
+   update
+        CMS_PREFECTURE
+   set
+        STATUS = 0,
+        UPDATE_TIME = sysdate,
+        UPDATED_BY = 'SYSTEM'
+    where
+         END_TIME &lt; sysdate
+    and
+         STATUS = 1
+  </update>
+</mapper>
