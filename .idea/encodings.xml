@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-cms/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-cms/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-common/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-dal/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-dal/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-facade/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-facade/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-front-service/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-front-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-front/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-front/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-generator/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-security/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-security/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-service/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-task-service/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-task-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-task/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-web/src/main/java" charset="UTF-8" />
+    <file url="file://$USER_HOME$/Downloads/wechat-mall-master/mall-web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

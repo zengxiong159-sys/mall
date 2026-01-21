@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mall-front" />
+        <module name="mall-service" />
+        <module name="mall-security" />
+        <module name="mall-dal" />
+        <module name="mall-web" />
+        <module name="mall-front-service" />
+        <module name="mall-task-service" />
+        <module name="mall-common" />
+        <module name="mall-facade" />
+        <module name="mall-generator" />
+        <module name="mall-cms" />
+        <module name="mall-task" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

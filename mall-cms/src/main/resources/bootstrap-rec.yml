@@ -7,6 +7,6 @@ spring:
         file-extension: yaml
         prefix: wechat-cms-rec
         username: nacos
-        password: abcdef
+        password: w6#H86a@@2
         namespace: rec
-        server-addr: 10.678.228.106:8848,10.678.228.107:8848,10.678.228.108:8848
+        server-addr: 10.8.228.106:8848,10.8.228.107:8848,10.8.228.108:8848

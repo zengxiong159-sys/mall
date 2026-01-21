@@ -7,6 +7,6 @@ spring:
         file-extension: yaml
         prefix: wechat-cms-prod
         username: nacos
-        password: abcdef
+        password: w6#H86a@@2
         namespace: prod
-        server-addr: 10.123.228.106:8848,10.123.228.107:8848,10.123.228.108:8848
+        server-addr: 10.1.228.106:8848,10.1.228.107:8848,10.1.228.108:8848
